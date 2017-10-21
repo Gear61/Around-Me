@@ -25,4 +25,8 @@
         <item>Restaurants</item>
         <item>Supermarkets</item>
     </string-array>
+
+    <!-- Icons -->
+    <string name="edit_icon">{ion-edit}</string>
+    <string name="delete_icon">{ion-trash-a}</string>
 </resources>

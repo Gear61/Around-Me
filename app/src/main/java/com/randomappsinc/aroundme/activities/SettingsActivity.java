@@ -29,7 +29,10 @@ public class SettingsActivity extends StandardActivity implements SettingsAdapte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings);
         ButterKnife.bind(this);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         settingsOptions.addItemDecoration(new SimpleDividerItemDecoration(this));
         settingsOptions.setAdapter(new SettingsAdapter(this, this));

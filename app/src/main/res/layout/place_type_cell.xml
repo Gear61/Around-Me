@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/parent"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:ignore="RtlHardcoded">
+
+    <com.joanzapata.iconify.widget.IconTextView
+        android:id="@+id/delete_icon"
+        android:text="@string/delete_icon"
+        android:layout_alignParentRight="true"
+        style="@style/list_item_button"/>
+
+    <com.joanzapata.iconify.widget.IconTextView
+        android:id="@+id/edit_icon"
+        android:text="@string/edit_icon"
+        android:layout_toLeftOf="@id/delete_icon"
+        style="@style/list_item_button"/>
+
+    <TextView
+        android:id="@+id/place_type"
+        android:layout_toLeftOf="@id/edit_icon"
+        style="@style/item_name"/>
+</RelativeLayout>

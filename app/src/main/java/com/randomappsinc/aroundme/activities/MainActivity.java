@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,8 +16,10 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.joanzapata.iconify.IconDrawable;
 import com.joanzapata.iconify.fonts.IoniconsIcons;
 import com.randomappsinc.aroundme.R;
+import com.randomappsinc.aroundme.adapters.PlaceTypesAdapter;
 import com.randomappsinc.aroundme.persistence.PreferencesManager;
 import com.randomappsinc.aroundme.utils.MyApplication;
+import com.randomappsinc.aroundme.utils.SimpleDividerItemDecoration;
 import com.randomappsinc.aroundme.utils.UIUtils;
 
 import butterknife.BindView;
@@ -26,6 +29,7 @@ import butterknife.OnClick;
 public class MainActivity extends StandardActivity {
 
     @BindView(R.id.parent) View mParent;
+    @BindView(R.id.place_types) RecyclerView mPlaceTypes;
     @BindView(R.id.add_place_type) FloatingActionButton mAddPlaceType;
 
     @Override
@@ -37,6 +41,9 @@ public class MainActivity extends StandardActivity {
         mAddPlaceType.setImageDrawable(
                 new IconDrawable(this, IoniconsIcons.ion_android_add).colorRes(R.color.white));
 
+        mPlaceTypes.addItemDecoration(new SimpleDividerItemDecoration(this));
+        mPlaceTypes.setAdapter(new PlaceTypesAdapter(this, mItemSelectionListener));
+
         if (PreferencesManager.get().shouldAskForRating()) {
             showRatingPrompt();
         }
@@ -46,6 +53,14 @@ public class MainActivity extends StandardActivity {
     public void addPlaceType() {
 
     }
+
+    private final PlaceTypesAdapter.ItemSelectionListener mItemSelectionListener =
+            new PlaceTypesAdapter.ItemSelectionListener() {
+                @Override
+                public void onItemClick(int position) {
+
+                }
+            };
 
     private void showRatingPrompt() {
         new MaterialDialog.Builder(this)

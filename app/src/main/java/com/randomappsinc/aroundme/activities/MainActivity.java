@@ -27,7 +27,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MainActivity extends StandardActivity {
+public class MainActivity extends StandardActivity implements PlaceTypesAdapter.Listener {
 
     @BindView(R.id.parent) View mParent;
     @BindView(R.id.place_types) RecyclerView mPlaceTypes;
@@ -46,7 +46,7 @@ public class MainActivity extends StandardActivity {
                 new IconDrawable(this, IoniconsIcons.ion_android_add).colorRes(R.color.white));
 
         mPlaceTypes.addItemDecoration(new SimpleDividerItemDecoration(this));
-        mPlaceTypesAdapter = new PlaceTypesAdapter(this, mItemSelectionListener, mParent);
+        mPlaceTypesAdapter = new PlaceTypesAdapter(this, this, mParent);
         mPlaceTypes.setAdapter(mPlaceTypesAdapter);
 
         mPlaceTypeAdder = new PlaceTypeAdder(this, mTypeAddedListener);
@@ -64,18 +64,20 @@ public class MainActivity extends StandardActivity {
     private final PlaceTypeAdder.Listener mTypeAddedListener = new PlaceTypeAdder.Listener() {
         @Override
         public void onPlaceTypeAdded() {
-            mPlaceTypesAdapter.onPlaceTypeAdded();
+            mPlaceTypesAdapter.updateWithAdded();
             UIUtils.showSnackbar(mParent, R.string.place_type_added);
         }
     };
 
-    private final PlaceTypesAdapter.ItemSelectionListener mItemSelectionListener =
-            new PlaceTypesAdapter.ItemSelectionListener() {
-                @Override
-                public void onItemClick(int position) {
-                    String placeType = mPlaceTypesAdapter.getItem(position).getText();
-                }
-            };
+    @Override
+    public void onItemClick(int position) {
+
+    }
+
+    @Override
+    public void scrollToItem(int position) {
+        mPlaceTypes.smoothScrollToPosition(position);
+    }
 
     private void showRatingPrompt() {
         new MaterialDialog.Builder(this)

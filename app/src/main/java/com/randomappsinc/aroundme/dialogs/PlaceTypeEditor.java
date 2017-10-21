@@ -25,7 +25,7 @@ public class PlaceTypeEditor {
         mEditorDialog = new MaterialDialog.Builder(context)
                 .title(R.string.edit_place_type)
                 .alwaysCallInputCallback()
-                .inputType(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES)
+                .inputType(InputType.TYPE_TEXT_FLAG_CAP_WORDS)
                 .input(context.getString(R.string.place_type), "", new MaterialDialog.InputCallback() {
                     @Override
                     public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {

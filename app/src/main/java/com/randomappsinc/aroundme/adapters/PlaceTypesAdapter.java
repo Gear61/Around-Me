@@ -23,11 +23,13 @@ import butterknife.OnClick;
 
 public class PlaceTypesAdapter extends RecyclerView.Adapter<PlaceTypesAdapter.PlaceTypeViewHolder> {
 
-    public interface ItemSelectionListener {
+    public interface Listener {
         void onItemClick(int position);
+
+        void scrollToItem(int position);
     }
 
-    @NonNull private ItemSelectionListener mItemSelectionListener;
+    @NonNull private Listener mListener;
     private Context mContext;
     private List<PlaceType> mPlaceTypes;
     private View mParent;
@@ -35,8 +37,8 @@ public class PlaceTypesAdapter extends RecyclerView.Adapter<PlaceTypesAdapter.Pl
     private PlaceTypeEditor mPlaceTypeEditor;
     private PlaceTypeDeleter mPlaceTypeDeleter;
 
-    public PlaceTypesAdapter(Context context, @NonNull ItemSelectionListener itemSelectionListener, View parent) {
-        mItemSelectionListener = itemSelectionListener;
+    public PlaceTypesAdapter(Context context, @NonNull Listener listener, View parent) {
+        mListener = listener;
         mContext = context;
         mPlaceTypes = DatabaseManager.get().getPlaceTypesDBManager().getPlaceTypes();
         mParent = parent;
@@ -44,22 +46,40 @@ public class PlaceTypesAdapter extends RecyclerView.Adapter<PlaceTypesAdapter.Pl
         mPlaceTypeDeleter = new PlaceTypeDeleter(mContext, mDeletionListener);
     }
 
-    public void onPlaceTypeAdded() {
+    public void updateWithAdded() {
         PlaceType newlyAdded = DatabaseManager.get().getPlaceTypesDBManager().getLastUpdatedPlaceType();
         for (int i = 0; i < mPlaceTypes.size(); i++) {
+            // If the newly added place type comes before the current one, insert it here
             if (newlyAdded.getText().compareTo(mPlaceTypes.get(i).getText()) < 0) {
                 mPlaceTypes.add(i, newlyAdded);
                 notifyItemInserted(i);
+                mListener.scrollToItem(i);
                 return;
             }
         }
         mPlaceTypes.add(newlyAdded);
         notifyItemInserted(mPlaceTypes.size() - 1);
+        mListener.scrollToItem(mPlaceTypes.size() - 1);
     }
 
-    public void onPlaceTypeEdited() {
-        mPlaceTypes = DatabaseManager.get().getPlaceTypesDBManager().getPlaceTypes();
-        notifyDataSetChanged();
+    private void updateWithEdited() {
+        mPlaceTypes.remove(mLastClickedItem);
+
+        PlaceType newlyAdded = DatabaseManager.get().getPlaceTypesDBManager().getLastUpdatedPlaceType();
+        int newPosition = 0;
+        for (; newPosition < mPlaceTypes.size(); newPosition++) {
+            // If the edited place type comes before the current one, this is its new position
+            if (newlyAdded.getText().compareTo(getItem(newPosition).getText()) < 0) {
+                break;
+            }
+        }
+
+        mPlaceTypes.add(newPosition, newlyAdded);
+        if (newPosition == mLastClickedItem) {
+            notifyItemChanged(mLastClickedItem);
+        } else {
+            notifyDataSetChanged();
+        }
     }
 
     public PlaceType getItem(int position) {
@@ -69,7 +89,7 @@ public class PlaceTypesAdapter extends RecyclerView.Adapter<PlaceTypesAdapter.Pl
     private final PlaceTypeEditor.Listener mEditedListener = new PlaceTypeEditor.Listener() {
         @Override
         public void onPlaceTypeEdited() {
-            onPlaceTypeEdited();
+            updateWithEdited();
             UIUtils.showSnackbar(mParent, R.string.place_type_edited);
         }
     };
@@ -114,7 +134,7 @@ public class PlaceTypesAdapter extends RecyclerView.Adapter<PlaceTypesAdapter.Pl
         @OnClick(R.id.edit_icon)
         void editPlaceType() {
             mLastClickedItem = getAdapterPosition();
-            mPlaceTypeEditor.show(getItem(getAdapterPosition()));
+            mPlaceTypeEditor.show(getItem(mLastClickedItem));
         }
 
         @OnClick(R.id.delete_icon)
@@ -125,7 +145,7 @@ public class PlaceTypesAdapter extends RecyclerView.Adapter<PlaceTypesAdapter.Pl
 
         @OnClick(R.id.parent)
         void onPlaceTypeSelected() {
-            mItemSelectionListener.onItemClick(getAdapterPosition());
+            mListener.onItemClick(getAdapterPosition());
         }
     }
 }

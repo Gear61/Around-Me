@@ -23,7 +23,7 @@ public class PlaceTypeAdder {
         mAdderDialog = new MaterialDialog.Builder(context)
                 .title(R.string.add_place_type)
                 .alwaysCallInputCallback()
-                .inputType(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES)
+                .inputType(InputType.TYPE_TEXT_FLAG_CAP_WORDS)
                 .input(context.getString(R.string.place_type), "", new MaterialDialog.InputCallback() {
                     @Override
                     public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {

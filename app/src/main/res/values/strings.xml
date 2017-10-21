@@ -26,6 +26,14 @@
         <item>Supermarkets</item>
     </string-array>
 
+    <string name="add_place_type">Add Place Type</string>
+    <string name="place_type">Place type</string>
+    <string name="add">Add</string>
+
+    <string name="place_type_added">Place typed added.</string>
+    <string name="place_type_edited">Place type edited.</string>
+    <string name="place_type_deleted">Place type deleted.</string>
+
     <!-- Icons -->
     <string name="edit_icon">{ion-edit}</string>
     <string name="delete_icon">{ion-trash-a}</string>

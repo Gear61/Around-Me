@@ -7,6 +7,7 @@ import com.randomappsinc.aroundme.models.PlaceType;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.realm.Case;
 import io.realm.Realm;
 import io.realm.Sort;
 
@@ -76,5 +77,13 @@ public class PlaceTypesDBManager {
                 placeTypeDO.deleteFromRealm();
             }
         });
+    }
+
+    public boolean placeTypeAlreadyExists(String entry) {
+        PlaceTypeDO placeTypeDO = getRealm()
+                .where(PlaceTypeDO.class)
+                .equalTo("text", entry, Case.INSENSITIVE)
+                .findFirst();
+        return placeTypeDO != null;
     }
 }

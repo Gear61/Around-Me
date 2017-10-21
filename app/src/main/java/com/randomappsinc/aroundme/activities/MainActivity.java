@@ -17,6 +17,7 @@ import com.joanzapata.iconify.IconDrawable;
 import com.joanzapata.iconify.fonts.IoniconsIcons;
 import com.randomappsinc.aroundme.R;
 import com.randomappsinc.aroundme.adapters.PlaceTypesAdapter;
+import com.randomappsinc.aroundme.dialogs.PlaceTypeAdder;
 import com.randomappsinc.aroundme.persistence.PreferencesManager;
 import com.randomappsinc.aroundme.utils.MyApplication;
 import com.randomappsinc.aroundme.utils.SimpleDividerItemDecoration;
@@ -32,6 +33,9 @@ public class MainActivity extends StandardActivity {
     @BindView(R.id.place_types) RecyclerView mPlaceTypes;
     @BindView(R.id.add_place_type) FloatingActionButton mAddPlaceType;
 
+    private PlaceTypeAdder mPlaceTypeAdder;
+    private PlaceTypesAdapter mPlaceTypesAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +46,10 @@ public class MainActivity extends StandardActivity {
                 new IconDrawable(this, IoniconsIcons.ion_android_add).colorRes(R.color.white));
 
         mPlaceTypes.addItemDecoration(new SimpleDividerItemDecoration(this));
-        mPlaceTypes.setAdapter(new PlaceTypesAdapter(this, mItemSelectionListener));
+        mPlaceTypesAdapter = new PlaceTypesAdapter(this, mItemSelectionListener);
+        mPlaceTypes.setAdapter(mPlaceTypesAdapter);
+
+        mPlaceTypeAdder = new PlaceTypeAdder(this, mTypeAddedListener);
 
         if (PreferencesManager.get().shouldAskForRating()) {
             showRatingPrompt();
@@ -51,8 +58,16 @@ public class MainActivity extends StandardActivity {
 
     @OnClick(R.id.add_place_type)
     public void addPlaceType() {
-
+        mPlaceTypeAdder.show();
     }
+
+    private final PlaceTypeAdder.Listener mTypeAddedListener = new PlaceTypeAdder.Listener() {
+        @Override
+        public void onPlaceTypeAdded() {
+            mPlaceTypesAdapter.onPlaceTypeAdded();
+            UIUtils.showSnackbar(mParent, R.string.place_type_added);
+        }
+    };
 
     private final PlaceTypesAdapter.ItemSelectionListener mItemSelectionListener =
             new PlaceTypesAdapter.ItemSelectionListener() {

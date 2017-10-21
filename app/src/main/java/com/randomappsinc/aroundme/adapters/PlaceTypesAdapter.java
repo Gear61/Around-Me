@@ -34,6 +34,11 @@ public class PlaceTypesAdapter extends RecyclerView.Adapter<PlaceTypesAdapter.Pl
         mPlaceTypes = DatabaseManager.get().getPlaceTypesDBManager().getPlaceTypes();
     }
 
+    public void onPlaceTypeAdded() {
+        mPlaceTypes = DatabaseManager.get().getPlaceTypesDBManager().getPlaceTypes();
+        notifyDataSetChanged();
+    }
+
     public PlaceType getItem(int position) {
         return mPlaceTypes.get(position);
     }

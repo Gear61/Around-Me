@@ -31,6 +31,7 @@ public class PlaceTypesAdapter extends RecyclerView.Adapter<PlaceTypesAdapter.Pl
     private Context mContext;
     private List<PlaceType> mPlaceTypes;
     private View mParent;
+    private int mLastClickedItem;
     private PlaceTypeEditor mPlaceTypeEditor;
     private PlaceTypeDeleter mPlaceTypeDeleter;
 
@@ -43,7 +44,20 @@ public class PlaceTypesAdapter extends RecyclerView.Adapter<PlaceTypesAdapter.Pl
         mPlaceTypeDeleter = new PlaceTypeDeleter(mContext, mDeletionListener);
     }
 
-    public void onPlaceTypeUpserted() {
+    public void onPlaceTypeAdded() {
+        PlaceType newlyAdded = DatabaseManager.get().getPlaceTypesDBManager().getLastUpdatedPlaceType();
+        for (int i = 0; i < mPlaceTypes.size(); i++) {
+            if (newlyAdded.getText().compareTo(mPlaceTypes.get(i).getText()) < 0) {
+                mPlaceTypes.add(i, newlyAdded);
+                notifyItemInserted(i);
+                return;
+            }
+        }
+        mPlaceTypes.add(newlyAdded);
+        notifyItemInserted(mPlaceTypes.size() - 1);
+    }
+
+    public void onPlaceTypeEdited() {
         mPlaceTypes = DatabaseManager.get().getPlaceTypesDBManager().getPlaceTypes();
         notifyDataSetChanged();
     }
@@ -55,15 +69,16 @@ public class PlaceTypesAdapter extends RecyclerView.Adapter<PlaceTypesAdapter.Pl
     private final PlaceTypeEditor.Listener mEditedListener = new PlaceTypeEditor.Listener() {
         @Override
         public void onPlaceTypeEdited() {
-            onPlaceTypeUpserted();
+            onPlaceTypeEdited();
             UIUtils.showSnackbar(mParent, R.string.place_type_edited);
         }
     };
 
     private final PlaceTypeDeleter.Listener mDeletionListener = new PlaceTypeDeleter.Listener() {
         @Override
-        public void onPlaceTypeDeleted(int position) {
-            notifyItemRemoved(position);
+        public void onPlaceTypeDeleted() {
+            mPlaceTypes.remove(mLastClickedItem);
+            notifyItemRemoved(mLastClickedItem);
             UIUtils.showSnackbar(mParent, R.string.place_type_deleted);
         }
     };
@@ -98,12 +113,14 @@ public class PlaceTypesAdapter extends RecyclerView.Adapter<PlaceTypesAdapter.Pl
 
         @OnClick(R.id.edit_icon)
         void editPlaceType() {
+            mLastClickedItem = getAdapterPosition();
             mPlaceTypeEditor.show(getItem(getAdapterPosition()));
         }
 
         @OnClick(R.id.delete_icon)
         void deletePlaceType() {
-            mPlaceTypeDeleter.show(getItem(getAdapterPosition()), getAdapterPosition());
+            mLastClickedItem = getAdapterPosition();
+            mPlaceTypeDeleter.show(getItem(mLastClickedItem));
         }
 
         @OnClick(R.id.parent)

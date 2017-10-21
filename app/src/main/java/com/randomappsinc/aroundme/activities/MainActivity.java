@@ -64,7 +64,7 @@ public class MainActivity extends StandardActivity {
     private final PlaceTypeAdder.Listener mTypeAddedListener = new PlaceTypeAdder.Listener() {
         @Override
         public void onPlaceTypeAdded() {
-            mPlaceTypesAdapter.onPlaceTypeUpserted();
+            mPlaceTypesAdapter.onPlaceTypeAdded();
             UIUtils.showSnackbar(mParent, R.string.place_type_added);
         }
     };

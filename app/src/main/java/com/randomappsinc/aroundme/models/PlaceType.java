@@ -6,6 +6,7 @@ public class PlaceType {
 
     private int mPlaceTypeId;
     private String mText;
+    private long mTimeLastUpdated;
 
     public int getId() {
         return mPlaceTypeId;
@@ -23,10 +24,19 @@ public class PlaceType {
         mText = text;
     }
 
+    public long getTimeLastUpdated() {
+        return mTimeLastUpdated;
+    }
+
+    public void setTimeLastUpdated(long timeLastUpdated) {
+        mTimeLastUpdated = timeLastUpdated;
+    }
+
     public PlaceTypeDO toPlaceTypeDO() {
         PlaceTypeDO placeTypeDO = new PlaceTypeDO();
         placeTypeDO.setPlaceTypeId(mPlaceTypeId);
         placeTypeDO.setText(mText);
+        placeTypeDO.setTimeLastUpdated(mTimeLastUpdated);
         return placeTypeDO;
     }
 }

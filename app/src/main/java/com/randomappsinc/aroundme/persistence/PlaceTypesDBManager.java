@@ -43,6 +43,7 @@ public class PlaceTypesDBManager {
                 PlaceTypeDO placeTypeDO = new PlaceTypeDO();
                 placeTypeDO.setPlaceTypeId(placeTypeId);
                 placeTypeDO.setText(text);
+                placeTypeDO.setTimeLastUpdated(System.currentTimeMillis());
                 realm.insert(placeTypeDO);
             }
         });
@@ -64,6 +65,7 @@ public class PlaceTypesDBManager {
         getRealm().executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(@NonNull Realm realm) {
+                placeType.setTimeLastUpdated(System.currentTimeMillis());
                 realm.insertOrUpdate(placeType.toPlaceTypeDO());
             }
         });
@@ -74,6 +76,10 @@ public class PlaceTypesDBManager {
                 .where(PlaceTypeDO.class)
                 .equalTo("placeTypeId", placeType.getId())
                 .findFirst();
+
+        if (placeTypeDO == null) {
+            return;
+        }
 
         getRealm().executeTransaction(new Realm.Transaction() {
             @Override
@@ -89,5 +95,13 @@ public class PlaceTypesDBManager {
                 .equalTo("text", entry, Case.INSENSITIVE)
                 .findFirst();
         return placeTypeDO != null;
+    }
+
+    public PlaceType getLastUpdatedPlaceType() {
+        PlaceTypeDO placeTypeDO = getRealm()
+                .where(PlaceTypeDO.class)
+                .findAllSorted("timeLastUpdated", Sort.DESCENDING)
+                .first();
+        return DBConverter.getPlaceTypeFromDO(placeTypeDO);
     }
 }

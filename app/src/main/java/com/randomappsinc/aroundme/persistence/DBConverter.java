@@ -8,6 +8,7 @@ class DBConverter {
         PlaceType placeType = new PlaceType();
         placeType.setPlaceTypeId(placeTypeDO.getPlaceTypeId());
         placeType.setText(placeTypeDO.getText());
+        placeType.setTimeLastUpdated(placeTypeDO.getTimeLastUpdated());
         return placeType;
     }
 }

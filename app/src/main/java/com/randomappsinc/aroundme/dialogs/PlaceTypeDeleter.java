@@ -12,13 +12,12 @@ import com.randomappsinc.aroundme.persistence.DatabaseManager;
 public class PlaceTypeDeleter {
 
     public interface Listener {
-        void onPlaceTypeDeleted(int position);
+        void onPlaceTypeDeleted();
     }
 
     @NonNull private Listener mListener;
     private MaterialDialog mDeleterDialog;
     private PlaceType mPlaceType;
-    private int mPosition;
 
     public PlaceTypeDeleter(Context context, @NonNull Listener listener) {
         mListener = listener;
@@ -31,15 +30,14 @@ public class PlaceTypeDeleter {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                         DatabaseManager.get().getPlaceTypesDBManager().deletePlaceType(mPlaceType);
-                        mListener.onPlaceTypeDeleted(mPosition);
+                        mListener.onPlaceTypeDeleted();
                     }
                 })
                 .build();
     }
 
-    public void show(PlaceType placeType, int position) {
+    public void show(PlaceType placeType) {
         mPlaceType = placeType;
-        mPosition = position;
         mDeleterDialog.setTitle(placeType.getText());
         mDeleterDialog.show();
     }

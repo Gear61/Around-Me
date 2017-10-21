@@ -48,6 +48,7 @@ public class PlaceTypeAdder {
     }
 
     public void show() {
+        mAdderDialog.getInputEditText().setText("");
         mAdderDialog.show();
     }
 }

@@ -9,8 +9,9 @@ public class PlaceTypeDO extends RealmObject {
     private int placeTypeId;
 
     private String text;
+    private long timeLastUpdated;
 
-    public int getPlaceTypeId() {
+    int getPlaceTypeId() {
         return placeTypeId;
     }
 
@@ -24,5 +25,13 @@ public class PlaceTypeDO extends RealmObject {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public long getTimeLastUpdated() {
+        return timeLastUpdated;
+    }
+
+    public void setTimeLastUpdated(long timeLastUpdated) {
+        this.timeLastUpdated = timeLastUpdated;
     }
 }

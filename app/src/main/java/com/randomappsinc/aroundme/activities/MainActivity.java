@@ -46,7 +46,7 @@ public class MainActivity extends StandardActivity {
                 new IconDrawable(this, IoniconsIcons.ion_android_add).colorRes(R.color.white));
 
         mPlaceTypes.addItemDecoration(new SimpleDividerItemDecoration(this));
-        mPlaceTypesAdapter = new PlaceTypesAdapter(this, mItemSelectionListener);
+        mPlaceTypesAdapter = new PlaceTypesAdapter(this, mItemSelectionListener, mParent);
         mPlaceTypes.setAdapter(mPlaceTypesAdapter);
 
         mPlaceTypeAdder = new PlaceTypeAdder(this, mTypeAddedListener);
@@ -64,7 +64,7 @@ public class MainActivity extends StandardActivity {
     private final PlaceTypeAdder.Listener mTypeAddedListener = new PlaceTypeAdder.Listener() {
         @Override
         public void onPlaceTypeAdded() {
-            mPlaceTypesAdapter.onPlaceTypeAdded();
+            mPlaceTypesAdapter.onPlaceTypeUpserted();
             UIUtils.showSnackbar(mParent, R.string.place_type_added);
         }
     };
@@ -73,7 +73,7 @@ public class MainActivity extends StandardActivity {
             new PlaceTypesAdapter.ItemSelectionListener() {
                 @Override
                 public void onItemClick(int position) {
-
+                    String placeType = mPlaceTypesAdapter.getItem(position).getText();
                 }
             };
 

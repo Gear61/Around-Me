@@ -30,6 +30,14 @@
     <string name="place_type">Place type</string>
     <string name="add">Add</string>
 
+    <string name="edit_place_type">Edit Place Type</string>
+    <string name="edit">Edit</string>
+
+    <string name="confirm_place_type_deletion">
+        Are you sure you want to delete this place type?
+    </string>
+    <string name="yes">Yes</string>
+
     <string name="place_type_added">Place typed added.</string>
     <string name="place_type_edited">Place type edited.</string>
     <string name="place_type_deleted">Place type deleted.</string>

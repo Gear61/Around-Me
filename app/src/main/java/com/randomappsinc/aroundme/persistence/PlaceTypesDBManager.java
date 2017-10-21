@@ -69,11 +69,15 @@ public class PlaceTypesDBManager {
         });
     }
 
-    public void deletePlaceType(final PlaceType placeType) {
+    public void deletePlaceType(PlaceType placeType) {
+        final PlaceTypeDO placeTypeDO = getRealm()
+                .where(PlaceTypeDO.class)
+                .equalTo("placeTypeId", placeType.getId())
+                .findFirst();
+
         getRealm().executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(@NonNull Realm realm) {
-                PlaceTypeDO placeTypeDO = placeType.toPlaceTypeDO();
                 placeTypeDO.deleteFromRealm();
             }
         });

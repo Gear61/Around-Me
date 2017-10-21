@@ -10,6 +10,7 @@ public class PreferencesManager {
 
     private SharedPreferences prefs;
 
+    private static final String FIRST_TIME_KEY = "firstTime";
     private static final String BEARER_TOKEN_KEY = "bearerToken";
     private static final String NUM_APP_OPENS = "numAppOpens";
     private static final int OPENS_BEFORE_RATING = 5;
@@ -33,6 +34,12 @@ public class PreferencesManager {
     private PreferencesManager() {
         Context context = MyApplication.getAppContext();
         prefs = PreferenceManager.getDefaultSharedPreferences(context);
+    }
+
+    public boolean isFirstAppOpen() {
+        boolean isFirstAppOpen = prefs.getBoolean(FIRST_TIME_KEY, true);
+        prefs.edit().putBoolean(FIRST_TIME_KEY, false).apply();
+        return isFirstAppOpen;
     }
 
     public String getBearerToken() {

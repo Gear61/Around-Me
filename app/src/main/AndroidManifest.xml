@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.randomappsinc.aroundme">
 
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -14,6 +15,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <meta-data
+            tools:replace="android:value"
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version"/>
 
         <activity
             android:name=".activities.MainActivity"
@@ -29,6 +35,11 @@
         <activity
             android:name=".activities.SettingsActivity"
             android:label="@string/settings"
+            android:configChanges="orientation|screenSize">
+        </activity>
+
+        <activity
+            android:name=".activities.SearchActivity"
             android:configChanges="orientation|screenSize">
         </activity>
     </application>

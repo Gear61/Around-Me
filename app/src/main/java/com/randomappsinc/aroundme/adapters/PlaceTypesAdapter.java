@@ -24,7 +24,7 @@ import butterknife.OnClick;
 public class PlaceTypesAdapter extends RecyclerView.Adapter<PlaceTypesAdapter.PlaceTypeViewHolder> {
 
     public interface Listener {
-        void onItemClick(int position);
+        void onItemClick(PlaceType placeType);
 
         void scrollToItem(int position);
     }
@@ -145,7 +145,7 @@ public class PlaceTypesAdapter extends RecyclerView.Adapter<PlaceTypesAdapter.Pl
 
         @OnClick(R.id.parent)
         void onPlaceTypeSelected() {
-            mListener.onItemClick(getAdapterPosition());
+            mListener.onItemClick(getItem(getAdapterPosition()));
         }
     }
 }

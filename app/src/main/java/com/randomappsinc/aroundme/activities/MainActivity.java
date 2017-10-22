@@ -18,6 +18,7 @@ import com.joanzapata.iconify.fonts.IoniconsIcons;
 import com.randomappsinc.aroundme.R;
 import com.randomappsinc.aroundme.adapters.PlaceTypesAdapter;
 import com.randomappsinc.aroundme.dialogs.PlaceTypeAdder;
+import com.randomappsinc.aroundme.models.PlaceType;
 import com.randomappsinc.aroundme.persistence.PreferencesManager;
 import com.randomappsinc.aroundme.utils.MyApplication;
 import com.randomappsinc.aroundme.utils.SimpleDividerItemDecoration;
@@ -70,8 +71,10 @@ public class MainActivity extends StandardActivity implements PlaceTypesAdapter.
     };
 
     @Override
-    public void onItemClick(int position) {
-
+    public void onItemClick(PlaceType placeType) {
+        Intent intent = new Intent(this, SearchActivity.class);
+        intent.putExtra(SearchActivity.SEARCH_TERM_KEY, placeType.getText());
+        startActivity(intent);
     }
 
     @Override

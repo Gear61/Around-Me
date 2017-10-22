@@ -32,4 +32,7 @@
     <string name="miles_away">%.1f mi</string>
     <string name="one_review">1 review</string>
     <string name="num_reviews">%d reviews</string>
+
+    <string name="open">Open</string>
+    <string name="closed">Closed</string>
 </resources>

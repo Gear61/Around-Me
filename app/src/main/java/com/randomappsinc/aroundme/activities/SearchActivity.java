@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,11 +17,13 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.joanzapata.iconify.fonts.IoniconsIcons;
 import com.randomappsinc.aroundme.R;
+import com.randomappsinc.aroundme.adapters.PlacesAdapter;
 import com.randomappsinc.aroundme.api.RestClient;
 import com.randomappsinc.aroundme.dialogs.LocationForm;
 import com.randomappsinc.aroundme.models.Place;
 import com.randomappsinc.aroundme.utils.LocationServicesManager;
 import com.randomappsinc.aroundme.utils.PermissionUtils;
+import com.randomappsinc.aroundme.utils.SimpleDividerItemDecoration;
 import com.randomappsinc.aroundme.utils.UIUtils;
 
 import java.util.List;
@@ -30,17 +33,21 @@ import butterknife.ButterKnife;
 import io.nlopez.smartlocation.OnLocationUpdatedListener;
 import io.nlopez.smartlocation.SmartLocation;
 
-public class SearchActivity extends StandardActivity implements LocationForm.Listener, RestClient.PlacesListener {
+public class SearchActivity extends StandardActivity
+        implements LocationForm.Listener, RestClient.PlacesListener, PlacesAdapter.ItemSelectionListener {
 
     public static final String SEARCH_TERM_KEY = "searchTerm";
     private static final int LOCATION_SERVICES_CODE = 1;
 
     @BindView(R.id.parent) View mParent;
+    @BindView(R.id.search_results) RecyclerView mPlaces;
 
     private String mSearchTerm;
     @Nullable private String mCurrentLocation;
     private RestClient mRestClient;
+    private PlacesAdapter mPlacesAdapter;
 
+    // Location
     private boolean mLocationFetched;
     private Handler mLocationChecker;
     private Runnable mLocationCheckTask;
@@ -123,13 +130,19 @@ public class SearchActivity extends StandardActivity implements LocationForm.Lis
                     }
                 })
                 .build();
+
+        mPlaces.addItemDecoration(new SimpleDividerItemDecoration(this));
+        mPlacesAdapter = new PlacesAdapter(this, this);
+        mPlaces.setAdapter(mPlacesAdapter);
     }
 
     @Override
     public void onPlacesFetched(List<Place> places) {
-        if (mCurrentLocation == null) {
+        mPlacesAdapter.setPlaces(places);
+    }
 
-        }
+    @Override
+    public void onPlaceClicked(Place place) {
     }
 
     @Override

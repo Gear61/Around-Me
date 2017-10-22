@@ -14,11 +14,13 @@ import com.joanzapata.iconify.IconDrawable;
 import com.joanzapata.iconify.fonts.IoniconsIcons;
 import com.randomappsinc.aroundme.R;
 import com.randomappsinc.aroundme.models.Place;
+import com.randomappsinc.aroundme.utils.UIUtils;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindDrawable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -29,8 +31,7 @@ public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.PlaceViewH
         void onPlaceClicked(Place place);
     }
 
-    @NonNull
-    private ItemSelectionListener mItemSelectionListener;
+    @NonNull private ItemSelectionListener mItemSelectionListener;
     private Context mContext;
     private List<Place> mPlaces = new ArrayList<>();
     private Drawable mDefaultThumbnail;
@@ -70,7 +71,12 @@ public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.PlaceViewH
     class PlaceViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.place_thumbnail) ImageView thumbnail;
         @BindView(R.id.place_name) TextView name;
+        @BindView(R.id.rating) ImageView rating;
+        @BindView(R.id.num_reviews) TextView numReviews;
         @BindView(R.id.place_address) TextView address;
+        @BindView(R.id.distance) TextView distance;
+
+        @BindDrawable(R.drawable.gray_border) Drawable grayBorder;
 
         PlaceViewHolder(View view) {
             super(view);
@@ -81,16 +87,29 @@ public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.PlaceViewH
             Place place = getItem(position);
 
             if (!place.getImageUrl().isEmpty()) {
+                thumbnail.setBackground(null);
                 Picasso.with(mContext)
                         .load(place.getImageUrl())
                         .error(mDefaultThumbnail)
                         .fit().centerCrop()
                         .into(thumbnail);
             } else {
+                thumbnail.setBackground(grayBorder);
                 thumbnail.setImageDrawable(mDefaultThumbnail);
             }
             name.setText(place.getName());
             address.setText(place.getAddress());
+            Picasso.with(mContext)
+                    .load(UIUtils.getRatingDrawableId(place))
+                    .into(rating);
+
+            String numReviewsText = place.getReviewCount() == 1
+                    ? mContext.getString(R.string.one_review)
+                    : String.format(mContext.getString(R.string.num_reviews), place.getReviewCount());
+            numReviews.setText(numReviewsText);
+
+            String distanceText = String.format(mContext.getString(R.string.miles_away), place.getDistance());
+            distance.setText(distanceText);
         }
 
         @OnClick(R.id.parent)

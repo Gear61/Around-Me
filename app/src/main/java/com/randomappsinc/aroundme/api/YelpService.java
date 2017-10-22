@@ -21,5 +21,6 @@ public interface YelpService {
     @GET("v3/businesses/search")
     Call<SearchResults> findPlaces(@Query("term") String term,
                                    @Query("location") String location,
-                                   @Query("limit") int limit);
+                                   @Query("limit") int limit,
+                                   @Query("sort_by") String sortBy);
 }

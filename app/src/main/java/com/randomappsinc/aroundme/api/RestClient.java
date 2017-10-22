@@ -73,7 +73,11 @@ public class RestClient {
                 if (mCurrentFetchPlacesCall != null) {
                     mCurrentFetchPlacesCall.cancel();
                 }
-                mCurrentFetchPlacesCall = mYelpService.findPlaces(searchTerm, location, ApiConstants.DEFAULT_NUM_PLACES);
+                mCurrentFetchPlacesCall = mYelpService.findPlaces(
+                        searchTerm,
+                        location,
+                        ApiConstants.DEFAULT_NUM_PLACES,
+                        ApiConstants.DISTANCE_SORT);
                 mCurrentFetchPlacesCall.enqueue(new FindPlacesCallback());
             }
         });

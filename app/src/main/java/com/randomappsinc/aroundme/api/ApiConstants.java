@@ -13,4 +13,5 @@ public class ApiConstants {
     public static final int HTTP_STATUS_UNAUTHORIZED = 401;
 
     static final int DEFAULT_NUM_PLACES = 20;
+    static final String DISTANCE_SORT = "distance";
 }

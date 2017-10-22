@@ -5,96 +5,128 @@ import android.os.Parcelable;
 
 public class Place implements Parcelable {
 
-    private String id;
-    private String name;
-    private String imageUrl;
-    private String phoneNumber;
-    private String city;
-    private String zipCode;
-    private String country;
-    private String state;
-    private String address;
-    private double latitude;
-    private double longitude;
+    private String mId;
+    private String mName;
+    private String mImageUrl;
+    private double mRating;
+    private int mReviewCount;
+    private String mPhoneNumber;
+    private String mCity;
+    private String mZipCode;
+    private String mCountry;
+    private String mState;
+    private String mAddress;
+    private double mLatitude;
+    private double mLongitude;
+
+    // Distance from the search location in miles
+    private double mDistance;
 
     public Place() {}
 
     public String getId() {
-        return id;
+        return mId;
     }
 
     public void setId(String id) {
-        this.id = id;
+        this.mId = id;
     }
 
     public String getName() {
-        return name;
+        return mName;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.mName = name;
     }
 
     public String getImageUrl() {
-        return imageUrl;
+        return mImageUrl;
     }
 
     public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+        this.mImageUrl = imageUrl;
+    }
+
+    public double getRating() {
+        return mRating;
+    }
+
+    public void setRating(double rating) {
+        this.mRating = rating;
+    }
+
+    public int getReviewCount() {
+        return mReviewCount;
+    }
+
+    public void setReviewCount(int reviewCount) {
+        this.mReviewCount = reviewCount;
     }
 
     public String getPhoneNumber() {
-        return phoneNumber;
+        return mPhoneNumber;
     }
 
     public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+        this.mPhoneNumber = phoneNumber;
     }
 
     public void setCity(String city) {
-        this.city = city;
+        this.mCity = city;
     }
 
     public void setZipCode(String zipCode) {
-        this.zipCode = zipCode;
+        this.mZipCode = zipCode;
     }
 
     public void setCountry(String country) {
-        this.country = country;
+        this.mCountry = country;
     }
 
     public void setState(String state) {
-        this.state = state;
+        this.mState = state;
     }
 
     public String getAddress() {
-        return address;
+        return mAddress;
     }
 
     public void setAddress(String address) {
-        this.address = address;
+        this.mAddress = address;
     }
 
     public void setLatitude(double latitude) {
-        this.latitude = latitude;
+        this.mLatitude = latitude;
     }
 
     public void setLongitude(double longitude) {
-        this.longitude = longitude;
+        this.mLongitude = longitude;
+    }
+
+    public double getDistance() {
+        return mDistance;
+    }
+
+    public void setDistance(double distance) {
+        this.mDistance = distance;
     }
 
     protected Place(Parcel in) {
-        id = in.readString();
-        name = in.readString();
-        imageUrl = in.readString();
-        phoneNumber = in.readString();
-        city = in.readString();
-        zipCode = in.readString();
-        country = in.readString();
-        state = in.readString();
-        address = in.readString();
-        latitude = in.readDouble();
-        longitude = in.readDouble();
+        mId = in.readString();
+        mName = in.readString();
+        mImageUrl = in.readString();
+        mRating = in.readDouble();
+        mReviewCount = in.readInt();
+        mPhoneNumber = in.readString();
+        mCity = in.readString();
+        mZipCode = in.readString();
+        mCountry = in.readString();
+        mState = in.readString();
+        mAddress = in.readString();
+        mLatitude = in.readDouble();
+        mLongitude = in.readDouble();
+        mDistance = in.readDouble();
     }
 
     @Override
@@ -104,17 +136,20 @@ public class Place implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(id);
-        dest.writeString(name);
-        dest.writeString(imageUrl);
-        dest.writeString(phoneNumber);
-        dest.writeString(city);
-        dest.writeString(zipCode);
-        dest.writeString(country);
-        dest.writeString(state);
-        dest.writeString(address);
-        dest.writeDouble(latitude);
-        dest.writeDouble(longitude);
+        dest.writeString(mId);
+        dest.writeString(mName);
+        dest.writeString(mImageUrl);
+        dest.writeDouble(mRating);
+        dest.writeInt(mReviewCount);
+        dest.writeString(mPhoneNumber);
+        dest.writeString(mCity);
+        dest.writeString(mZipCode);
+        dest.writeString(mCountry);
+        dest.writeString(mState);
+        dest.writeString(mAddress);
+        dest.writeDouble(mLatitude);
+        dest.writeDouble(mLongitude);
+        dest.writeDouble(mDistance);
     }
 
     @SuppressWarnings("unused")

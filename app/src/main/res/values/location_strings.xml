@@ -28,4 +28,8 @@
     <string name="give_location_permission">Give us location permission</string>
 
     <string name="location_services_on">Location services turned on. Fetching current location&#8230;</string>
+
+    <string name="miles_away">%.1f mi</string>
+    <string name="one_review">1 review</string>
+    <string name="num_reviews">%d reviews</string>
 </resources>

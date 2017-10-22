@@ -9,6 +9,8 @@ import java.util.List;
 
 public class SearchResults {
 
+    public static final double METER_TO_MILES = 0.000621371;
+
     @SerializedName("businesses")
     @Expose
     private List<Business> businesses;
@@ -25,6 +27,14 @@ public class SearchResults {
         @SerializedName("image_url")
         @Expose
         private String imageUrl;
+
+        @SerializedName("rating")
+        @Expose
+        private double rating;
+
+        @SerializedName("review_count")
+        @Expose
+        private int reviewCount;
 
         @SerializedName("display_phone")
         @Expose
@@ -105,20 +115,28 @@ public class SearchResults {
             }
         }
 
+        // Distance in meters from the search location
+        @SerializedName("distance")
+        @Expose
+        private double distance;
+
         Place toPlace() {
-            Place restaurant = new Place();
-            restaurant.setId(id);
-            restaurant.setName(name);
-            restaurant.setImageUrl(imageUrl);
-            restaurant.setPhoneNumber(phoneNumber);
-            restaurant.setCity(location.getCity());
-            restaurant.setZipCode(location.getZipCode());
-            restaurant.setState(location.getState());
-            restaurant.setCountry(location.getCountry());
-            restaurant.setAddress(location.getAddress());
-            restaurant.setLatitude(coordinates.getLatitude());
-            restaurant.setLongitude(coordinates.getLongitude());
-            return restaurant;
+            Place place = new Place();
+            place.setId(id);
+            place.setName(name);
+            place.setImageUrl(imageUrl);
+            place.setRating(rating);
+            place.setReviewCount(reviewCount);
+            place.setPhoneNumber(phoneNumber);
+            place.setCity(location.getCity());
+            place.setZipCode(location.getZipCode());
+            place.setState(location.getState());
+            place.setCountry(location.getCountry());
+            place.setAddress(location.getAddress());
+            place.setLatitude(coordinates.getLatitude());
+            place.setLongitude(coordinates.getLongitude());
+            place.setDistance(distance * METER_TO_MILES);
+            return place;
         }
     }
 

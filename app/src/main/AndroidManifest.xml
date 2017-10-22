@@ -42,5 +42,10 @@
             android:name=".activities.SearchActivity"
             android:configChanges="orientation|screenSize">
         </activity>
+
+        <activity
+            android:name=".activities.PlaceActivity"
+            android:configChanges="orientation|screenSize">
+        </activity>
     </application>
 </manifest>

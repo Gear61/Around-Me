@@ -143,6 +143,9 @@ public class SearchActivity extends StandardActivity
 
     @Override
     public void onPlaceClicked(Place place) {
+        Intent intent = new Intent(this, PlaceActivity.class);
+        intent.putExtra(PlaceActivity.PLACE_KEY, place);
+        startActivity(intent);
     }
 
     @Override

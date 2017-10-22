@@ -7,15 +7,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.joanzapata.iconify.IconDrawable;
 import com.joanzapata.iconify.fonts.IoniconsIcons;
 import com.randomappsinc.aroundme.R;
 import com.randomappsinc.aroundme.models.Place;
-import com.randomappsinc.aroundme.utils.UIUtils;
-import com.squareup.picasso.Picasso;
+import com.randomappsinc.aroundme.views.PlaceInfoView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,47 +66,20 @@ public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.PlaceViewH
     }
 
     class PlaceViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.place_thumbnail) ImageView thumbnail;
-        @BindView(R.id.place_name) TextView name;
-        @BindView(R.id.rating) ImageView rating;
-        @BindView(R.id.num_reviews) TextView numReviews;
-        @BindView(R.id.place_address) TextView address;
-        @BindView(R.id.distance) TextView distance;
+        @BindView(R.id.parent) View placeInfo;
 
         @BindDrawable(R.drawable.gray_border) Drawable grayBorder;
+
+        private PlaceInfoView mPlaceInfoView;
 
         PlaceViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
+            mPlaceInfoView = new PlaceInfoView(mContext, placeInfo, mDefaultThumbnail);
         }
 
         void loadPlace(int position) {
-            Place place = getItem(position);
-
-            if (!place.getImageUrl().isEmpty()) {
-                thumbnail.setBackground(null);
-                Picasso.with(mContext)
-                        .load(place.getImageUrl())
-                        .error(mDefaultThumbnail)
-                        .fit().centerCrop()
-                        .into(thumbnail);
-            } else {
-                thumbnail.setBackground(grayBorder);
-                thumbnail.setImageDrawable(mDefaultThumbnail);
-            }
-            name.setText(place.getName());
-            address.setText(place.getAddress());
-            Picasso.with(mContext)
-                    .load(UIUtils.getRatingDrawableId(place))
-                    .into(rating);
-
-            String numReviewsText = place.getReviewCount() == 1
-                    ? mContext.getString(R.string.one_review)
-                    : String.format(mContext.getString(R.string.num_reviews), place.getReviewCount());
-            numReviews.setText(numReviewsText);
-
-            String distanceText = String.format(mContext.getString(R.string.miles_away), place.getDistance());
-            distance.setText(distanceText);
+            mPlaceInfoView.loadPlace(getItem(position));
         }
 
         @OnClick(R.id.parent)

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="location">Location</string>
-    <string name="location_form">Enter Location</string>
+    <string name="set_location">Set location</string>
+    <string name="location_form_title">Set Location</string>
     <string name="location_form_prompt">Where do you want Around Me to search?</string>
 
     <string name="auto_location_fail">

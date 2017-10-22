@@ -16,17 +16,21 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.joanzapata.iconify.fonts.IoniconsIcons;
 import com.randomappsinc.aroundme.R;
+import com.randomappsinc.aroundme.api.RestClient;
 import com.randomappsinc.aroundme.dialogs.LocationForm;
+import com.randomappsinc.aroundme.models.Place;
 import com.randomappsinc.aroundme.utils.LocationServicesManager;
 import com.randomappsinc.aroundme.utils.PermissionUtils;
 import com.randomappsinc.aroundme.utils.UIUtils;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.nlopez.smartlocation.OnLocationUpdatedListener;
 import io.nlopez.smartlocation.SmartLocation;
 
-public class SearchActivity extends StandardActivity implements LocationForm.Listener {
+public class SearchActivity extends StandardActivity implements LocationForm.Listener, RestClient.PlacesListener {
 
     public static final String SEARCH_TERM_KEY = "searchTerm";
     private static final int LOCATION_SERVICES_CODE = 1;
@@ -35,6 +39,7 @@ public class SearchActivity extends StandardActivity implements LocationForm.Lis
 
     private String mSearchTerm;
     @Nullable private String mCurrentLocation;
+    private RestClient mRestClient;
 
     private boolean mLocationFetched;
     private Handler mLocationChecker;
@@ -57,6 +62,9 @@ public class SearchActivity extends StandardActivity implements LocationForm.Lis
 
         mSearchTerm = getIntent().getStringExtra(SEARCH_TERM_KEY);
         setTitle(mSearchTerm);
+
+        mRestClient = RestClient.getInstance();
+        mRestClient.registerPlacesListener(this);
 
         mDenialLock = false;
         mLocationServicesManager = new LocationServicesManager(this);
@@ -118,6 +126,13 @@ public class SearchActivity extends StandardActivity implements LocationForm.Lis
     }
 
     @Override
+    public void onPlacesFetched(List<Place> places) {
+        if (mCurrentLocation == null) {
+
+        }
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
 
@@ -155,7 +170,7 @@ public class SearchActivity extends StandardActivity implements LocationForm.Lis
                         mCurrentLocation = String.valueOf(location.getLatitude())
                                 + ", "
                                 + String.valueOf(location.getLongitude());
-                        // TODO: Make search API call here
+                        mRestClient.fetchPlaces(mSearchTerm, mCurrentLocation);
                     }
                 });
         mLocationChecker.postDelayed(mLocationCheckTask, 10000L);
@@ -197,7 +212,18 @@ public class SearchActivity extends StandardActivity implements LocationForm.Lis
         stopFetchingCurrentLocation();
 
         mCurrentLocation = location;
-        // TODO: Make search API call here
+        mRestClient.fetchPlaces(mSearchTerm, mCurrentLocation);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        stopFetchingCurrentLocation();
+
+        // Stop listening for place search results
+        mRestClient.cancelPlacesFetch();
+        mRestClient.unregisterPlacesListener();
     }
 
     @Override

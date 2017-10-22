@@ -34,7 +34,7 @@ public class SearchResults {
         @Expose
         private Coordinates coordinates;
 
-        public class Coordinates {
+        class Coordinates {
             @SerializedName("latitude")
             @Expose
             private double latitude;
@@ -43,11 +43,11 @@ public class SearchResults {
             @Expose
             private double longitude;
 
-            public double getLatitude() {
+            double getLatitude() {
                 return latitude;
             }
 
-            public double getLongitude() {
+            double getLongitude() {
                 return longitude;
             }
         }
@@ -56,7 +56,7 @@ public class SearchResults {
         @Expose
         private Location location;
 
-        public class Location {
+        class Location {
             @SerializedName("city")
             @Expose
             private String city;
@@ -77,23 +77,23 @@ public class SearchResults {
             @Expose
             private List<String> displayAddress;
 
-            public String getCity() {
+            String getCity() {
                 return city;
             }
 
-            public String getZipCode() {
+            String getZipCode() {
                 return zipCode;
             }
 
-            public String getCountry() {
+            String getCountry() {
                 return country;
             }
 
-            public String getState() {
+            String getState() {
                 return state;
             }
 
-            public String getAddress() {
+            String getAddress() {
                 StringBuilder address = new StringBuilder();
                 for (int i = 0; i < displayAddress.size(); i++) {
                     if (i > 0) {
@@ -105,7 +105,7 @@ public class SearchResults {
             }
         }
 
-        public Place toEstablishment() {
+        Place toPlace() {
             Place restaurant = new Place();
             restaurant.setId(id);
             restaurant.setName(name);
@@ -122,10 +122,10 @@ public class SearchResults {
         }
     }
 
-    public List<Place> getEstablishments() {
+    public List<Place> getPlaces() {
         List<Place> restaurants = new ArrayList<>();
         for (Business business : businesses) {
-            restaurants.add(business.toEstablishment());
+            restaurants.add(business.toPlace());
         }
         return restaurants;
     }

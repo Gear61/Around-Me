@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.joanzapata.iconify.Icon;
 import com.joanzapata.iconify.IconDrawable;
 import com.randomappsinc.aroundme.R;
-import com.randomappsinc.aroundme.models.Place;
 
 public class UIUtils {
 
@@ -50,9 +49,7 @@ public class UIUtils {
         snackbar.show();
     }
 
-    public static int getRatingDrawableId(Place place) {
-        double rating = place.getRating();
-
+    public static int getRatingDrawableId(double rating) {
         if (rating < 1.0) {
             return R.drawable.stars_0;
         }

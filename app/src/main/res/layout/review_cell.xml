@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/parent"
+    android:layout_width="250dp"
+    android:layout_height="wrap_content"
+    android:layout_marginRight="8dp"
+    android:foreground="?android:attr/selectableItemBackground"
+    card_view:cardUseCompatPadding="true"
+    card_view:cardCornerRadius="3dp"
+    card_view:cardElevation="2dp"
+    card_view:contentPadding="8dp"
+    tools:ignore="ContentDescription, RtlHardcoded, Deprecation, SpUsage">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="24dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/user_image"
+                android:layout_width="24dp"
+                android:layout_height="24dp"/>
+
+            <com.joanzapata.iconify.widget.IconTextView
+                android:id="@+id/user_icon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:gravity="center"
+                android:text="@string/user_icon"
+                android:textColor="@color/dark_gray"
+                android:textSize="24dp"/>
+
+            <TextView
+                android:id="@+id/user_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:textColor="@color/dark_gray"
+                android:textSize="19dp"
+                android:singleLine="true"
+                android:ellipsize="end"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/review_text"
+            android:layout_width="match_parent"
+            android:layout_height="110dp"
+            android:layout_marginTop="4dp"
+            android:textColor="@color/gray"
+            android:textSize="15dp"
+            android:maxLines="6"
+            android:ellipsize="end"/>
+
+        <ImageView
+            android:id="@+id/rating"
+            android:layout_marginTop="4dp"
+            android:layout_height="17dp"
+            android:layout_width="92dp"/>
+    </LinearLayout>
+</android.support.v7.widget.CardView>

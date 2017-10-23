@@ -34,4 +34,5 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'io.nlopez.smartlocation:library:3.2.4'
     compile 'com.google.android.gms:play-services-location:11.4.0'
+    compile 'de.hdodenhof:circleimageview:2.2.0'
 }

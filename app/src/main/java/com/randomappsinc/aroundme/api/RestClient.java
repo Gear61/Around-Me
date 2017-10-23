@@ -12,6 +12,7 @@ import com.randomappsinc.aroundme.api.models.PlacePhotos;
 import com.randomappsinc.aroundme.api.models.PlaceReviews;
 import com.randomappsinc.aroundme.api.models.SearchResults;
 import com.randomappsinc.aroundme.models.Place;
+import com.randomappsinc.aroundme.models.Review;
 
 import java.util.List;
 
@@ -31,7 +32,7 @@ public class RestClient {
     }
 
     public interface ReviewsListener {
-        void onReviewsFetched(List<PlaceReviews.Review> photos);
+        void onReviewsFetched(List<Review> photos);
     }
 
     private static final PlacesListener DUMMY_PLACES_LISTENER = new PlacesListener() {
@@ -46,7 +47,7 @@ public class RestClient {
 
     private static final ReviewsListener DUMMY_REVIEWS_LISTENER = new ReviewsListener() {
         @Override
-        public void onReviewsFetched(List<PlaceReviews.Review> photos) {}
+        public void onReviewsFetched(List<Review> reviews) {}
     };
 
     private static RestClient mInstance;
@@ -193,7 +194,7 @@ public class RestClient {
         mReviewsListener = DUMMY_REVIEWS_LISTENER;
     }
 
-    public void processReviews(List<PlaceReviews.Review> reviews) {
+    public void processReviews(List<Review> reviews) {
         mReviewsListener.onReviewsFetched(reviews);
     }
 

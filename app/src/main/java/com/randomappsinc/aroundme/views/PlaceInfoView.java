@@ -40,7 +40,8 @@ public class PlaceInfoView {
     }
 
     public void loadPlace(Place place) {
-        if (!place.getImageUrl().isEmpty()) {
+        String placeImageUrl = place.getImageUrl();
+        if (placeImageUrl != null && !placeImageUrl.isEmpty()) {
             thumbnail.setBackground(null);
             Picasso.with(mContext)
                     .load(place.getImageUrl())
@@ -54,7 +55,7 @@ public class PlaceInfoView {
         name.setText(place.getName());
         address.setText(place.getAddress());
         Picasso.with(mContext)
-                .load(UIUtils.getRatingDrawableId(place))
+                .load(UIUtils.getRatingDrawableId(place.getRating()))
                 .into(rating);
 
         String numReviewsText = place.getReviewCount() == 1

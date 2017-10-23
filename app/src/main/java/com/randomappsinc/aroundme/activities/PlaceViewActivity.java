@@ -10,9 +10,10 @@ import com.joanzapata.iconify.IconDrawable;
 import com.joanzapata.iconify.fonts.IoniconsIcons;
 import com.randomappsinc.aroundme.R;
 import com.randomappsinc.aroundme.adapters.PlacePhotosAdapter;
+import com.randomappsinc.aroundme.adapters.PlaceReviewsAdapter;
 import com.randomappsinc.aroundme.api.RestClient;
-import com.randomappsinc.aroundme.api.models.PlaceReviews;
 import com.randomappsinc.aroundme.models.Place;
+import com.randomappsinc.aroundme.models.Review;
 import com.randomappsinc.aroundme.views.PlaceInfoView;
 
 import java.util.List;
@@ -28,11 +29,13 @@ public class PlaceViewActivity extends StandardActivity
 
     @BindView(R.id.parent) View mPlaceInfo;
     @BindView(R.id.place_photos) RecyclerView mPhotos;
+    @BindView(R.id.place_reviews) RecyclerView mReviews;
 
     private Place mPlace;
     private PlaceInfoView mPlaceInfoView;
     private RestClient mRestClient;
     private PlacePhotosAdapter mPhotosAdapter;
+    private PlaceReviewsAdapter mReviewsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +52,8 @@ public class PlaceViewActivity extends StandardActivity
 
         mPhotosAdapter = new PlacePhotosAdapter(this);
         mPhotos.setAdapter(mPhotosAdapter);
+        mReviewsAdapter = new PlaceReviewsAdapter(this);
+        mReviews.setAdapter(mReviewsAdapter);
 
         mRestClient = RestClient.getInstance();
         mRestClient.registerPhotosListener(this);
@@ -85,8 +90,8 @@ public class PlaceViewActivity extends StandardActivity
     }
 
     @Override
-    public void onReviewsFetched(List<PlaceReviews.Review> photos) {
-
+    public void onReviewsFetched(List<Review> reviews) {
+        mReviewsAdapter.setReviews(reviews);
     }
 
     @Override

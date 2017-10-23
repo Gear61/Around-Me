@@ -1,6 +1,6 @@
 package com.randomappsinc.aroundme.adapters;
 
-import android.app.Activity;
+import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -21,14 +21,14 @@ import butterknife.ButterKnife;
 
 public class PlacePhotosAdapter extends RecyclerView.Adapter<PlacePhotosAdapter.PlacePhotoViewHolder> {
 
-    private Activity mActivity;
+    private Context mContext;
     private List<String> mPhotoUrls;
     private Drawable mDefaultThumbnail;
 
-    public PlacePhotosAdapter(Activity activity) {
-        mActivity = activity;
+    public PlacePhotosAdapter(Context context) {
+        mContext = context;
         mPhotoUrls = new ArrayList<>();
-        mDefaultThumbnail = new IconDrawable(activity, IoniconsIcons.ion_image).colorRes(R.color.dark_gray);
+        mDefaultThumbnail = new IconDrawable(mContext, IoniconsIcons.ion_image).colorRes(R.color.dark_gray);
     }
 
     public void setPhotoUrls(List<String> photoUrls) {
@@ -39,7 +39,7 @@ public class PlacePhotosAdapter extends RecyclerView.Adapter<PlacePhotosAdapter.
 
     @Override
     public PlacePhotoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(mActivity).inflate(R.layout.place_photo_cell, parent, false);
+        View itemView = LayoutInflater.from(mContext).inflate(R.layout.place_photo_cell, parent, false);
         return new PlacePhotoViewHolder(itemView);
     }
 
@@ -63,7 +63,7 @@ public class PlacePhotosAdapter extends RecyclerView.Adapter<PlacePhotosAdapter.
         }
 
         void loadPhoto(int position) {
-            Picasso.with(mActivity)
+            Picasso.with(mContext)
                     .load(mPhotoUrls.get(position))
                     .error(mDefaultThumbnail)
                     .fit()

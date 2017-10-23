@@ -1,5 +1,7 @@
 package com.randomappsinc.aroundme.activities;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 
@@ -11,8 +13,9 @@ import com.randomappsinc.aroundme.views.PlaceInfoView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
-public class PlaceActivity extends StandardActivity {
+public class PlaceViewActivity extends StandardActivity {
 
     public static final String PLACE_KEY = "place";
 
@@ -39,5 +42,21 @@ public class PlaceActivity extends StandardActivity {
                 mPlaceInfo,
                 new IconDrawable(this, IoniconsIcons.ion_location).colorRes(R.color.dark_gray));
         mPlaceInfoView.loadPlace(mPlace);
+    }
+
+    @OnClick(R.id.navigate_button)
+    public void navigateToPlace() {
+        String mapUri = "google.navigation:q=" + mPlace.getAddress() + " " + mPlace.getName();
+        startActivity(Intent.createChooser(
+                new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(mapUri)),
+                getString(R.string.navigate_with)));
+    }
+
+    @OnClick(R.id.call_button)
+    public void callPlace() {
+        String phoneUri = "tel:" + mPlace.getPhoneNumber();
+        startActivity(Intent.createChooser(
+                new Intent(Intent.ACTION_DIAL, Uri.parse(phoneUri)),
+                getString(R.string.call_with)));
     }
 }

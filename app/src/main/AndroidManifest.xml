@@ -44,7 +44,7 @@
         </activity>
 
         <activity
-            android:name=".activities.PlaceActivity"
+            android:name=".activities.PlaceViewActivity"
             android:configChanges="orientation|screenSize">
         </activity>
     </application>

@@ -46,4 +46,5 @@
     <string name="edit_icon">{ion-edit}</string>
     <string name="delete_icon">{ion-trash-a}</string>
     <string name="navigate_icon">{ion-navigate}</string>
+    <string name="call_icon">{ion-android-call}</string>
 </resources>

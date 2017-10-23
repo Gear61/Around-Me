@@ -4,8 +4,10 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.support.annotation.NonNull;
 
+import com.randomappsinc.aroundme.api.callbacks.FetchPhotosCallback;
 import com.randomappsinc.aroundme.api.callbacks.FetchTokenCallback;
 import com.randomappsinc.aroundme.api.callbacks.FindPlacesCallback;
+import com.randomappsinc.aroundme.api.models.PlacePhotos;
 import com.randomappsinc.aroundme.api.models.SearchResults;
 import com.randomappsinc.aroundme.models.Place;
 
@@ -22,9 +24,18 @@ public class RestClient {
         void onPlacesFetched(List<Place> places);
     }
 
+    public interface PhotosListener {
+        void onPhotosFetched(List<String> photos);
+    }
+
     private static final PlacesListener DUMMY_PLACES_LISTENER = new PlacesListener() {
         @Override
         public void onPlacesFetched(List<Place> places) {}
+    };
+
+    private static final PhotosListener DUMMYY_PHOTOS_LISTENER = new PhotosListener() {
+        @Override
+        public void onPhotosFetched(List<String> photos) {}
     };
 
     private static RestClient mInstance;
@@ -35,6 +46,10 @@ public class RestClient {
     // Places
     @NonNull private PlacesListener mPlacesListener = DUMMY_PLACES_LISTENER;
     private Call<SearchResults> mCurrentFetchPlacesCall;
+
+    // Photos
+    @NonNull private PhotosListener mPhotosListener = DUMMYY_PHOTOS_LISTENER;
+    private Call<PlacePhotos> mCurrentFetchPhotosCall;
 
     public static RestClient getInstance() {
         if (mInstance == null) {
@@ -101,6 +116,42 @@ public class RestClient {
             public void run() {
                 if (mCurrentFetchPlacesCall != null) {
                     mCurrentFetchPlacesCall.cancel();
+                }
+            }
+        });
+    }
+
+    public void fetchPlacePhotos(final Place place) {
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                if (mCurrentFetchPhotosCall != null) {
+                    mCurrentFetchPhotosCall.cancel();
+                }
+                mCurrentFetchPhotosCall = mYelpService.fetchPlacePhotos(place.getId());
+                mCurrentFetchPhotosCall.enqueue(new FetchPhotosCallback());
+            }
+        });
+    }
+
+    public void registerPhotosListener(PhotosListener photosListener) {
+        mPhotosListener = photosListener;
+    }
+
+    public void unregisterPhotosListener() {
+        mPhotosListener = DUMMYY_PHOTOS_LISTENER;
+    }
+
+    public void processPhotos(List<String> photoUrls) {
+        mPhotosListener.onPhotosFetched(photoUrls);
+    }
+
+    public void cancelPhotosFetch() {
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                if (mCurrentFetchPhotosCall != null) {
+                    mCurrentFetchPhotosCall.cancel();
                 }
             }
         });

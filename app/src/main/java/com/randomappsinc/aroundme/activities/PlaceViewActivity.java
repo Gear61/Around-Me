@@ -3,26 +3,34 @@ package com.randomappsinc.aroundme.activities;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.joanzapata.iconify.IconDrawable;
 import com.joanzapata.iconify.fonts.IoniconsIcons;
 import com.randomappsinc.aroundme.R;
+import com.randomappsinc.aroundme.adapters.PlacePhotosAdapter;
+import com.randomappsinc.aroundme.api.RestClient;
 import com.randomappsinc.aroundme.models.Place;
 import com.randomappsinc.aroundme.views.PlaceInfoView;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class PlaceViewActivity extends StandardActivity {
+public class PlaceViewActivity extends StandardActivity implements RestClient.PhotosListener {
 
     public static final String PLACE_KEY = "place";
 
     @BindView(R.id.parent) View mPlaceInfo;
+    @BindView(R.id.place_photos) RecyclerView mPhotos;
 
     private Place mPlace;
     private PlaceInfoView mPlaceInfoView;
+    private RestClient mRestClient;
+    private PlacePhotosAdapter mPhotosAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +44,13 @@ public class PlaceViewActivity extends StandardActivity {
 
         mPlace = getIntent().getParcelableExtra(PLACE_KEY);
         setTitle(mPlace.getName());
+
+        mPhotosAdapter = new PlacePhotosAdapter(this);
+        mPhotos.setAdapter(mPhotosAdapter);
+
+        mRestClient = RestClient.getInstance();
+        mRestClient.registerPhotosListener(this);
+        mRestClient.fetchPlacePhotos(mPlace);
 
         mPlaceInfoView = new PlaceInfoView(
                 this,
@@ -58,5 +73,19 @@ public class PlaceViewActivity extends StandardActivity {
         startActivity(Intent.createChooser(
                 new Intent(Intent.ACTION_DIAL, Uri.parse(phoneUri)),
                 getString(R.string.call_with)));
+    }
+
+    @Override
+    public void onPhotosFetched(List<String> photos) {
+        mPhotosAdapter.setPhotoUrls(photos);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        // Stop listening for place search results
+        mRestClient.cancelPhotosFetch();
+        mRestClient.unregisterPhotosListener();
     }
 }

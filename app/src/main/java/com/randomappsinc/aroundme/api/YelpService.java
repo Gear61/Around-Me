@@ -1,5 +1,6 @@
 package com.randomappsinc.aroundme.api;
 
+import com.randomappsinc.aroundme.api.models.PlacePhotos;
 import com.randomappsinc.aroundme.api.models.SearchResults;
 import com.randomappsinc.aroundme.api.models.TokenResponse;
 
@@ -8,6 +9,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface YelpService {
@@ -23,4 +25,7 @@ public interface YelpService {
                                    @Query("location") String location,
                                    @Query("limit") int limit,
                                    @Query("sort_by") String sortBy);
+
+    @GET("v3/businesses/{id}")
+    Call<PlacePhotos> fetchPlacePhotos(@Path("id") String placeId);
 }

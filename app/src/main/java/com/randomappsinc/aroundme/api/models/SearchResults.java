@@ -9,7 +9,7 @@ import java.util.List;
 
 public class SearchResults {
 
-    public static final double METER_TO_MILES = 0.000621371;
+    private static final double METER_TO_MILES = 0.000621371;
 
     @SerializedName("businesses")
     @Expose

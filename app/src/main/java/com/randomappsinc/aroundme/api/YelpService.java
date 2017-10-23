@@ -1,6 +1,7 @@
 package com.randomappsinc.aroundme.api;
 
 import com.randomappsinc.aroundme.api.models.PlacePhotos;
+import com.randomappsinc.aroundme.api.models.PlaceReviews;
 import com.randomappsinc.aroundme.api.models.SearchResults;
 import com.randomappsinc.aroundme.api.models.TokenResponse;
 
@@ -28,4 +29,7 @@ public interface YelpService {
 
     @GET("v3/businesses/{id}")
     Call<PlacePhotos> fetchPlacePhotos(@Path("id") String placeId);
+
+    @GET("v3/businesses/{id}/reviews")
+    Call<PlaceReviews> fetchPlaceReviews(@Path("id") String placeId);
 }

@@ -5,9 +5,11 @@ import android.os.HandlerThread;
 import android.support.annotation.NonNull;
 
 import com.randomappsinc.aroundme.api.callbacks.FetchPhotosCallback;
+import com.randomappsinc.aroundme.api.callbacks.FetchReviewsCallback;
 import com.randomappsinc.aroundme.api.callbacks.FetchTokenCallback;
 import com.randomappsinc.aroundme.api.callbacks.FindPlacesCallback;
 import com.randomappsinc.aroundme.api.models.PlacePhotos;
+import com.randomappsinc.aroundme.api.models.PlaceReviews;
 import com.randomappsinc.aroundme.api.models.SearchResults;
 import com.randomappsinc.aroundme.models.Place;
 
@@ -28,14 +30,23 @@ public class RestClient {
         void onPhotosFetched(List<String> photos);
     }
 
+    public interface ReviewsListener {
+        void onReviewsFetched(List<PlaceReviews.Review> photos);
+    }
+
     private static final PlacesListener DUMMY_PLACES_LISTENER = new PlacesListener() {
         @Override
         public void onPlacesFetched(List<Place> places) {}
     };
 
-    private static final PhotosListener DUMMYY_PHOTOS_LISTENER = new PhotosListener() {
+    private static final PhotosListener DUMMY_PHOTOS_LISTENER = new PhotosListener() {
         @Override
         public void onPhotosFetched(List<String> photos) {}
+    };
+
+    private static final ReviewsListener DUMMY_REVIEWS_LISTENER = new ReviewsListener() {
+        @Override
+        public void onReviewsFetched(List<PlaceReviews.Review> photos) {}
     };
 
     private static RestClient mInstance;
@@ -48,8 +59,12 @@ public class RestClient {
     private Call<SearchResults> mCurrentFetchPlacesCall;
 
     // Photos
-    @NonNull private PhotosListener mPhotosListener = DUMMYY_PHOTOS_LISTENER;
+    @NonNull private PhotosListener mPhotosListener = DUMMY_PHOTOS_LISTENER;
     private Call<PlacePhotos> mCurrentFetchPhotosCall;
+
+    // Reviews
+    @NonNull private ReviewsListener mReviewsListener = DUMMY_REVIEWS_LISTENER;
+    private Call<PlaceReviews> mCurrentFetchReviewsCall;
 
     public static RestClient getInstance() {
         if (mInstance == null) {
@@ -139,7 +154,7 @@ public class RestClient {
     }
 
     public void unregisterPhotosListener() {
-        mPhotosListener = DUMMYY_PHOTOS_LISTENER;
+        mPhotosListener = DUMMY_PHOTOS_LISTENER;
     }
 
     public void processPhotos(List<String> photoUrls) {
@@ -152,6 +167,42 @@ public class RestClient {
             public void run() {
                 if (mCurrentFetchPhotosCall != null) {
                     mCurrentFetchPhotosCall.cancel();
+                }
+            }
+        });
+    }
+
+    public void fetchPlaceReviews(final Place place) {
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                if (mCurrentFetchReviewsCall != null) {
+                    mCurrentFetchReviewsCall.cancel();
+                }
+                mCurrentFetchReviewsCall = mYelpService.fetchPlaceReviews(place.getId());
+                mCurrentFetchReviewsCall.enqueue(new FetchReviewsCallback());
+            }
+        });
+    }
+
+    public void registerReviewsListener(ReviewsListener reviewsListener) {
+        mReviewsListener = reviewsListener;
+    }
+
+    public void unregisterReviewsListener() {
+        mReviewsListener = DUMMY_REVIEWS_LISTENER;
+    }
+
+    public void processReviews(List<PlaceReviews.Review> reviews) {
+        mReviewsListener.onReviewsFetched(reviews);
+    }
+
+    public void cancelReviewsFetch() {
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                if (mCurrentFetchReviewsCall != null) {
+                    mCurrentFetchReviewsCall.cancel();
                 }
             }
         });

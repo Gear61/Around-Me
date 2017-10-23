@@ -11,6 +11,7 @@ import com.joanzapata.iconify.fonts.IoniconsIcons;
 import com.randomappsinc.aroundme.R;
 import com.randomappsinc.aroundme.adapters.PlacePhotosAdapter;
 import com.randomappsinc.aroundme.api.RestClient;
+import com.randomappsinc.aroundme.api.models.PlaceReviews;
 import com.randomappsinc.aroundme.models.Place;
 import com.randomappsinc.aroundme.views.PlaceInfoView;
 
@@ -20,7 +21,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class PlaceViewActivity extends StandardActivity implements RestClient.PhotosListener {
+public class PlaceViewActivity extends StandardActivity
+        implements RestClient.PhotosListener, RestClient.ReviewsListener {
 
     public static final String PLACE_KEY = "place";
 
@@ -51,6 +53,8 @@ public class PlaceViewActivity extends StandardActivity implements RestClient.Ph
         mRestClient = RestClient.getInstance();
         mRestClient.registerPhotosListener(this);
         mRestClient.fetchPlacePhotos(mPlace);
+        mRestClient.registerReviewsListener(this);
+        mRestClient.fetchPlaceReviews(mPlace);
 
         mPlaceInfoView = new PlaceInfoView(
                 this,
@@ -81,11 +85,20 @@ public class PlaceViewActivity extends StandardActivity implements RestClient.Ph
     }
 
     @Override
+    public void onReviewsFetched(List<PlaceReviews.Review> photos) {
+
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
 
-        // Stop listening for place search results
+        // Stop listening for photo fetch results
         mRestClient.cancelPhotosFetch();
         mRestClient.unregisterPhotosListener();
+
+        // Stop listening for review fetch results
+        mRestClient.cancelReviewsFetch();
+        mRestClient.unregisterReviewsListener();
     }
 }

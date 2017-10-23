@@ -6,9 +6,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <LinearLayout
+        android:id="@+id/skeleton_results"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/skeleton_place_cell"/>
+
+        <include layout="@layout/skeleton_place_cell"/>
+
+        <include layout="@layout/skeleton_place_cell"/>
+
+        <include layout="@layout/skeleton_place_cell"/>
+
+        <include layout="@layout/skeleton_place_cell"/>
+
+        <include layout="@layout/skeleton_place_cell"/>
+
+        <include layout="@layout/skeleton_place_cell"/>
+    </LinearLayout>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/search_results"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="gone"
         app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
 </android.support.design.widget.CoordinatorLayout>

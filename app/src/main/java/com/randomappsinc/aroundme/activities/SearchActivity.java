@@ -40,6 +40,7 @@ public class SearchActivity extends StandardActivity
     private static final int LOCATION_SERVICES_CODE = 1;
 
     @BindView(R.id.parent) View mParent;
+    @BindView(R.id.skeleton_results) View mSkeletonResults;
     @BindView(R.id.search_results) RecyclerView mPlaces;
 
     private String mSearchTerm;
@@ -138,7 +139,9 @@ public class SearchActivity extends StandardActivity
 
     @Override
     public void onPlacesFetched(List<Place> places) {
+        mSkeletonResults.setVisibility(View.GONE);
         mPlacesAdapter.setPlaces(places);
+        mPlaces.setVisibility(View.VISIBLE);
     }
 
     @Override

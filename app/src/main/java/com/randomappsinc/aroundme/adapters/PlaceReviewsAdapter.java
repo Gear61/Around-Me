@@ -55,15 +55,17 @@ public class PlaceReviewsAdapter extends RecyclerView.Adapter<PlaceReviewsAdapte
 
     @Override
     public int getItemCount() {
-        return mReviews.size();
+        return mReviews.isEmpty() ? 1 : mReviews.size();
     }
 
     class PlaceReviewItemHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.review_content) View mReviewContent;
         @BindView(R.id.user_image) CircleImageView mUserImage;
         @BindView(R.id.user_icon) View mUserIcon;
         @BindView(R.id.user_name) TextView mUserName;
         @BindView(R.id.review_text) TextView mReviewText;
         @BindView(R.id.rating) ImageView mRating;
+        @BindView(R.id.no_reviews) View mNoReviews;
 
         PlaceReviewItemHolder(View view) {
             super(view);
@@ -71,30 +73,38 @@ public class PlaceReviewsAdapter extends RecyclerView.Adapter<PlaceReviewsAdapte
         }
 
         void loadReview(int position) {
-            Review review = mReviews.get(position);
-
-            String userImageUrl = review.getUser().getImageUrl();
-            if (userImageUrl == null || userImageUrl.isEmpty()) {
-                mUserImage.setVisibility(View.GONE);
-                mUserIcon.setVisibility(View.VISIBLE);
+            if (mReviews.isEmpty()) {
+                mReviewContent.setVisibility(View.GONE);
+                mNoReviews.setVisibility(View.VISIBLE);
             } else {
-                mUserIcon.setVisibility(View.GONE);
-                mUserImage.setVisibility(View.VISIBLE);
+                mNoReviews.setVisibility(View.GONE);
+                mReviewContent.setVisibility(View.VISIBLE);
+
+                Review review = mReviews.get(position);
+
+                String userImageUrl = review.getUser().getImageUrl();
+                if (userImageUrl == null || userImageUrl.isEmpty()) {
+                    mUserImage.setVisibility(View.GONE);
+                    mUserIcon.setVisibility(View.VISIBLE);
+                } else {
+                    mUserIcon.setVisibility(View.GONE);
+                    mUserImage.setVisibility(View.VISIBLE);
+                    Picasso.with(mContext)
+                            .load(review.getUser().getImageUrl())
+                            .error(mDefaultThumbnail)
+                            .fit()
+                            .centerCrop()
+                            .noFade()
+                            .into(mUserImage);
+                }
+
+                mUserName.setText(review.getUser().getName());
+                mReviewText.setText(review.getText());
+
                 Picasso.with(mContext)
-                        .load(review.getUser().getImageUrl())
-                        .error(mDefaultThumbnail)
-                        .fit()
-                        .centerCrop()
-                        .noFade()
-                        .into(mUserImage);
+                        .load(UIUtils.getRatingDrawableId(review.getRating()))
+                        .into(mRating);
             }
-
-            mUserName.setText(review.getUser().getName());
-            mReviewText.setText(review.getText());
-
-            Picasso.with(mContext)
-                    .load(UIUtils.getRatingDrawableId(review.getRating()))
-                    .into(mRating);
         }
 
         @OnClick(R.id.parent)

@@ -18,5 +18,7 @@
     <string name="call_with">Call with</string>
 
     <string name="photos"><u>Photos</u></string>
+    <string name="no_photos">There are no photos attached to this place.</string>
     <string name="what_others_saying"><u>What People Are Saying</u></string>
+    <string name="no_reviews">There are no reviews attached to this place.</string>
 </resources>

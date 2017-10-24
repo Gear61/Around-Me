@@ -50,12 +50,13 @@ public class PlacePhotosAdapter extends RecyclerView.Adapter<PlacePhotosAdapter.
 
     @Override
     public int getItemCount() {
-        return mPhotoUrls.size();
+        return mPhotoUrls.isEmpty() ? 1 : mPhotoUrls.size();
     }
 
     class PlacePhotoViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.place_photo) ImageView mPhotoView;
+        @BindView(R.id.no_photos) View mNoPhotos;
 
         PlacePhotoViewHolder(View view) {
             super(view);
@@ -63,12 +64,19 @@ public class PlacePhotosAdapter extends RecyclerView.Adapter<PlacePhotosAdapter.
         }
 
         void loadPhoto(int position) {
-            Picasso.with(mContext)
-                    .load(mPhotoUrls.get(position))
-                    .error(mDefaultThumbnail)
-                    .fit()
-                    .centerCrop()
-                    .into(mPhotoView);
+            if (mPhotoUrls.isEmpty()) {
+                mPhotoView.setVisibility(View.GONE);
+                mNoPhotos.setVisibility(View.VISIBLE);
+            } else {
+                mNoPhotos.setVisibility(View.GONE);
+                mPhotoView.setVisibility(View.VISIBLE);
+                Picasso.with(mContext)
+                        .load(mPhotoUrls.get(position))
+                        .error(mDefaultThumbnail)
+                        .fit()
+                        .centerCrop()
+                        .into(mPhotoView);
+            }
         }
     }
 }

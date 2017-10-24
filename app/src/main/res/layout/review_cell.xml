@@ -15,6 +15,7 @@
     tools:ignore="ContentDescription, RtlHardcoded, Deprecation, SpUsage">
 
     <LinearLayout
+        android:id="@+id/review_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -66,4 +67,14 @@
             android:layout_height="17dp"
             android:layout_width="92dp"/>
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/no_reviews"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:padding="8dp"
+        android:text="@string/no_reviews"
+        android:textSize="17sp"
+        android:textColor="@color/dark_gray"/>
 </android.support.v7.widget.CardView>

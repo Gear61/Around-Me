@@ -210,9 +210,8 @@ public class SearchActivity extends StandardActivity
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
-        if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            fetchCurrentLocation();
-        } else {
+        // No need to check if the location permission has been granted because of the onResume() block
+        if (!(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
             mDenialLock = true;
             mLocationPermissionDialog.show();
         }

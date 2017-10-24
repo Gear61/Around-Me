@@ -50,7 +50,7 @@ public class PlaceTypesAdapter extends RecyclerView.Adapter<PlaceTypesAdapter.Pl
         PlaceType newlyAdded = DatabaseManager.get().getPlaceTypesDBManager().getLastUpdatedPlaceType();
         for (int i = 0; i < mPlaceTypes.size(); i++) {
             // If the newly added place type comes before the current one, insert it here
-            if (newlyAdded.getText().compareTo(mPlaceTypes.get(i).getText()) < 0) {
+            if (newlyAdded.getText().toLowerCase().compareTo(mPlaceTypes.get(i).getText().toLowerCase()) < 0) {
                 mPlaceTypes.add(i, newlyAdded);
                 notifyItemInserted(i);
                 mListener.scrollToItem(i);
@@ -69,7 +69,7 @@ public class PlaceTypesAdapter extends RecyclerView.Adapter<PlaceTypesAdapter.Pl
         int newPosition = 0;
         for (; newPosition < mPlaceTypes.size(); newPosition++) {
             // If the edited place type comes before the current one, this is its new position
-            if (newlyAdded.getText().compareTo(getItem(newPosition).getText()) < 0) {
+            if (newlyAdded.getText().toLowerCase().compareTo(getItem(newPosition).getText().toLowerCase()) < 0) {
                 break;
             }
         }

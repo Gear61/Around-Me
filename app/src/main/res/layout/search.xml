@@ -33,4 +33,15 @@
         android:layout_height="match_parent"
         android:visibility="gone"
         app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
+
+    <com.joanzapata.iconify.widget.IconTextView
+        android:id="@+id/no_places"
+        android:layout_marginTop="76dp"
+        android:layout_width="260dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/no_places"
+        android:textColor="@color/dark_gray"
+        android:textSize="21sp"
+        android:visibility="gone"/>
 </android.support.design.widget.CoordinatorLayout>

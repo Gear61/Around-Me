@@ -42,6 +42,7 @@ public class SearchActivity extends StandardActivity
     @BindView(R.id.parent) View mParent;
     @BindView(R.id.skeleton_results) View mSkeletonResults;
     @BindView(R.id.search_results) RecyclerView mPlaces;
+    @BindView(R.id.no_places) View mNoPlaces;
 
     private String mSearchTerm;
     @Nullable private String mCurrentLocation;
@@ -140,8 +141,15 @@ public class SearchActivity extends StandardActivity
     @Override
     public void onPlacesFetched(List<Place> places) {
         mSkeletonResults.setVisibility(View.GONE);
-        mPlacesAdapter.setPlaces(places);
-        mPlaces.setVisibility(View.VISIBLE);
+
+        if (places.isEmpty()) {
+            mPlaces.setVisibility(View.GONE);
+            mNoPlaces.setVisibility(View.VISIBLE);
+        } else {
+            mNoPlaces.setVisibility(View.GONE);
+            mPlacesAdapter.setPlaces(places);
+            mPlaces.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

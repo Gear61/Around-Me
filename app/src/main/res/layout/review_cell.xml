@@ -5,7 +5,7 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/parent"
     android:layout_width="250dp"
-    android:layout_height="wrap_content"
+    android:layout_height="184dp"
     android:layout_marginRight="8dp"
     android:foreground="?android:attr/selectableItemBackground"
     card_view:cardUseCompatPadding="true"

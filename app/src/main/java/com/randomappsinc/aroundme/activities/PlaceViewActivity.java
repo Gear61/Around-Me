@@ -28,7 +28,9 @@ public class PlaceViewActivity extends StandardActivity
     public static final String PLACE_KEY = "place";
 
     @BindView(R.id.parent) View mPlaceInfo;
+    @BindView(R.id.photos_stub) View mPhotosStub;
     @BindView(R.id.place_photos) RecyclerView mPhotos;
+    @BindView(R.id.reviews_stub) View mReviewsStub;
     @BindView(R.id.place_reviews) RecyclerView mReviews;
 
     private Place mPlace;
@@ -86,11 +88,15 @@ public class PlaceViewActivity extends StandardActivity
 
     @Override
     public void onPhotosFetched(List<String> photos) {
+        mPhotosStub.setVisibility(View.GONE);
+        mPhotos.setVisibility(View.VISIBLE);
         mPhotosAdapter.setPhotoUrls(photos);
     }
 
     @Override
     public void onReviewsFetched(List<Review> reviews) {
+        mReviewsStub.setVisibility(View.GONE);
+        mReviews.setVisibility(View.VISIBLE);
         mReviewsAdapter.setReviews(reviews);
     }
 

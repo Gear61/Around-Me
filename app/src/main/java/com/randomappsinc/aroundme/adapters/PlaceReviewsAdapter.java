@@ -2,6 +2,7 @@ package com.randomappsinc.aroundme.adapters;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,11 +27,17 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class PlaceReviewsAdapter extends RecyclerView.Adapter<PlaceReviewsAdapter.PlaceReviewItemHolder> {
 
+    public interface Listener {
+        void onReviewClicked(Review review);
+    }
+
+    @NonNull private Listener mListener;
     private Context mContext;
     private List<Review> mReviews;
     private Drawable mDefaultThumbnail;
 
-    public PlaceReviewsAdapter(Context context) {
+    public PlaceReviewsAdapter(Context context, @NonNull Listener listener) {
+        mListener = listener;
         mContext = context;
         mReviews = new ArrayList<>();
         mDefaultThumbnail = new IconDrawable(mContext, IoniconsIcons.ion_android_person).colorRes(R.color.dark_gray);
@@ -109,7 +116,8 @@ public class PlaceReviewsAdapter extends RecyclerView.Adapter<PlaceReviewsAdapte
 
         @OnClick(R.id.parent)
         public void onReviewClicked() {
-
+            Review review = mReviews.get(getAdapterPosition());
+            mListener.onReviewClicked(review);
         }
     }
 }

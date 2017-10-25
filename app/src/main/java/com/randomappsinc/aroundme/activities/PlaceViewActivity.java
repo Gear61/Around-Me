@@ -23,7 +23,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class PlaceViewActivity extends StandardActivity
-        implements RestClient.PhotosListener, RestClient.ReviewsListener {
+        implements RestClient.PhotosListener, RestClient.ReviewsListener, PlaceReviewsAdapter.Listener {
 
     public static final String PLACE_KEY = "place";
 
@@ -54,7 +54,7 @@ public class PlaceViewActivity extends StandardActivity
 
         mPhotosAdapter = new PlacePhotosAdapter(this);
         mPhotos.setAdapter(mPhotosAdapter);
-        mReviewsAdapter = new PlaceReviewsAdapter(this);
+        mReviewsAdapter = new PlaceReviewsAdapter(this, this);
         mReviews.setAdapter(mReviewsAdapter);
 
         mRestClient = RestClient.getInstance();
@@ -98,6 +98,12 @@ public class PlaceViewActivity extends StandardActivity
         mReviewsStub.setVisibility(View.GONE);
         mReviews.setVisibility(View.VISIBLE);
         mReviewsAdapter.setReviews(reviews);
+    }
+
+    @Override
+    public void onReviewClicked(Review review) {
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(review.getUrl()));
+        startActivity(intent);
     }
 
     @Override

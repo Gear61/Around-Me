@@ -36,13 +36,13 @@ public class SearchResults {
         @Expose
         private int reviewCount;
 
-        @SerializedName("is_closed")
-        @Expose
-        private boolean isClosed;
-
         @SerializedName("display_phone")
         @Expose
         private String phoneNumber;
+
+        @SerializedName("price")
+        @Expose
+        private String price;
 
         @SerializedName("coordinates")
         @Expose
@@ -131,8 +131,8 @@ public class SearchResults {
             place.setImageUrl(imageUrl);
             place.setRating(rating);
             place.setReviewCount(reviewCount);
-            place.setIsClosed(isClosed);
             place.setPhoneNumber(phoneNumber);
+            place.setPrice(price);
             place.setCity(location.getCity());
             place.setZipCode(location.getZipCode());
             place.setState(location.getState());

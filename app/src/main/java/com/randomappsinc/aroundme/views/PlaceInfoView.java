@@ -24,7 +24,7 @@ public class PlaceInfoView {
     @BindView(R.id.num_reviews) TextView numReviews;
     @BindView(R.id.place_address) TextView address;
     @BindView(R.id.distance) TextView distance;
-    @BindView(R.id.is_closed) TextView isClosed;
+    @BindView(R.id.price) TextView price;
 
     @BindColor(R.color.green) int green;
     @BindColor(R.color.red) int red;
@@ -66,7 +66,12 @@ public class PlaceInfoView {
         String distanceText = String.format(mContext.getString(R.string.miles_away), place.getDistance());
         distance.setText(distanceText);
 
-        isClosed.setTextColor(place.isClosed() ? red : green);
-        isClosed.setText(place.isClosed() ? R.string.closed : R.string.open);
+        String placePrice = place.getPrice();
+        if (placePrice == null || placePrice.isEmpty()) {
+            price.setVisibility(View.GONE);
+        } else {
+            price.setText(place.getPrice());
+            price.setVisibility(View.VISIBLE);
+        }
     }
 }

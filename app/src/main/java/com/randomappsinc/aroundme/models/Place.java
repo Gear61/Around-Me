@@ -9,9 +9,9 @@ public class Place implements Parcelable {
     private String mName;
     private String mImageUrl;
     private double mRating;
-    private boolean mIsClosed;
     private int mReviewCount;
     private String mPhoneNumber;
+    private String mPrice;
     private String mCity;
     private String mZipCode;
     private String mCountry;
@@ -65,20 +65,20 @@ public class Place implements Parcelable {
         this.mReviewCount = reviewCount;
     }
 
-    public boolean isClosed() {
-        return mIsClosed;
-    }
-
-    public void setIsClosed(boolean isClosed) {
-        mIsClosed = isClosed;
-    }
-
     public String getPhoneNumber() {
         return mPhoneNumber;
     }
 
     public void setPhoneNumber(String phoneNumber) {
         this.mPhoneNumber = phoneNumber;
+    }
+
+    public String getPrice() {
+        return mPrice;
+    }
+
+    public void setPrice(String price) {
+        mPrice = price;
     }
 
     public void setCity(String city) {
@@ -126,9 +126,9 @@ public class Place implements Parcelable {
         mName = in.readString();
         mImageUrl = in.readString();
         mRating = in.readDouble();
-        mIsClosed = in.readByte() != 0x00;
         mReviewCount = in.readInt();
         mPhoneNumber = in.readString();
+        mPrice = in.readString();
         mCity = in.readString();
         mZipCode = in.readString();
         mCountry = in.readString();
@@ -150,9 +150,9 @@ public class Place implements Parcelable {
         dest.writeString(mName);
         dest.writeString(mImageUrl);
         dest.writeDouble(mRating);
-        dest.writeByte((byte) (mIsClosed ? 0x01 : 0x00));
         dest.writeInt(mReviewCount);
         dest.writeString(mPhoneNumber);
+        dest.writeString(mPrice);
         dest.writeString(mCity);
         dest.writeString(mZipCode);
         dest.writeString(mCountry);

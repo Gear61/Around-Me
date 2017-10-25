@@ -16,14 +16,15 @@ import com.randomappsinc.aroundme.models.Place;
 import com.randomappsinc.aroundme.models.Review;
 import com.randomappsinc.aroundme.views.PlaceInfoView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class PlaceViewActivity extends StandardActivity
-        implements RestClient.PhotosListener, RestClient.ReviewsListener, PlaceReviewsAdapter.Listener {
+public class PlaceViewActivity extends StandardActivity implements RestClient.PhotosListener,
+        RestClient.ReviewsListener, PlaceReviewsAdapter.Listener, PlacePhotosAdapter.Listener {
 
     public static final String PLACE_KEY = "place";
 
@@ -52,7 +53,7 @@ public class PlaceViewActivity extends StandardActivity
         mPlace = getIntent().getParcelableExtra(PLACE_KEY);
         setTitle(mPlace.getName());
 
-        mPhotosAdapter = new PlacePhotosAdapter(this);
+        mPhotosAdapter = new PlacePhotosAdapter(this, this);
         mPhotos.setAdapter(mPhotosAdapter);
         mReviewsAdapter = new PlaceReviewsAdapter(this, this);
         mReviews.setAdapter(mReviewsAdapter);
@@ -104,6 +105,15 @@ public class PlaceViewActivity extends StandardActivity
     public void onReviewClicked(Review review) {
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(review.getUrl()));
         startActivity(intent);
+    }
+
+    @Override
+    public void onPhotoClicked(ArrayList<String> imageUrls, int position) {
+        Intent intent = new Intent(this, PictureFullViewActivity.class);
+        intent.putStringArrayListExtra(PictureFullViewActivity.IMAGE_URLS_KEY, imageUrls);
+        intent.putExtra(PictureFullViewActivity.POSITION_KEY, position);
+        startActivity(intent);
+        overridePendingTransition(0, 0);
     }
 
     @Override

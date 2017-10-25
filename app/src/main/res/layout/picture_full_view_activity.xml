@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/theater_black"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:ignore="SpUsage">
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pictures_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <com.joanzapata.iconify.widget.IconTextView
+        android:id="@+id/close"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_gravity="top|start"
+        android:gravity="center"
+        android:text="@string/close_icon"
+        android:textColor="@color/white"
+        android:textSize="32dp"
+        android:shadowColor="@color/shadow_black"
+        android:shadowDx="3"
+        android:shadowDy="3"
+        android:shadowRadius="1"/>
+</FrameLayout>

@@ -2,6 +2,7 @@ package com.randomappsinc.aroundme.adapters;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,14 +19,21 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class PlacePhotosAdapter extends RecyclerView.Adapter<PlacePhotosAdapter.PlacePhotoViewHolder> {
 
+    public interface Listener {
+        void onPhotoClicked(ArrayList<String> imageUrls, int position);
+    }
+
+    @NonNull private Listener mListener;
     private Context mContext;
-    private List<String> mPhotoUrls;
+    private ArrayList<String> mPhotoUrls;
     private Drawable mDefaultThumbnail;
 
-    public PlacePhotosAdapter(Context context) {
+    public PlacePhotosAdapter(Context context, @NonNull Listener listener) {
+        mListener = listener;
         mContext = context;
         mPhotoUrls = new ArrayList<>();
         mDefaultThumbnail = new IconDrawable(mContext, IoniconsIcons.ion_image).colorRes(R.color.dark_gray);
@@ -77,6 +85,15 @@ public class PlacePhotosAdapter extends RecyclerView.Adapter<PlacePhotosAdapter.
                         .centerCrop()
                         .into(mPhotoView);
             }
+        }
+
+        @OnClick(R.id.parent)
+        public void onPhotoClicked() {
+            if (mPhotoUrls.isEmpty()) {
+                return;
+            }
+
+            mListener.onPhotoClicked(mPhotoUrls, getAdapterPosition());
         }
     }
 }

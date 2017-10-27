@@ -47,6 +47,7 @@
     <string name="delete_icon">{ion-trash-a}</string>
     <string name="navigate_icon">{ion-navigate}</string>
     <string name="call_icon">{ion-android-call}</string>
+    <string name="share_icon">{ion-android-share-alt}</string>
     <string name="user_icon">{ion-android-person}</string>
     <string name="close_icon">{ion-android-close}</string>
 </resources>

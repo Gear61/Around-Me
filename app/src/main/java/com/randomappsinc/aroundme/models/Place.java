@@ -31,7 +31,7 @@ public class Place implements Parcelable {
     }
 
     public void setId(String id) {
-        this.mId = id;
+        mId = id;
     }
 
     public String getName() {
@@ -39,7 +39,7 @@ public class Place implements Parcelable {
     }
 
     public void setName(String name) {
-        this.mName = name;
+        mName = name;
     }
 
     public String getImageUrl() {
@@ -47,15 +47,15 @@ public class Place implements Parcelable {
     }
 
     public void setImageUrl(String imageUrl) {
-        this.mImageUrl = imageUrl;
+        mImageUrl = imageUrl;
     }
 
     public String getUrl() {
         return mUrl;
     }
 
-    public void setUrl(String mUrl) {
-        this.mUrl = mUrl;
+    public void setUrl(String url) {
+        mUrl = url;
     }
 
     public double getRating() {
@@ -63,7 +63,7 @@ public class Place implements Parcelable {
     }
 
     public void setRating(double rating) {
-        this.mRating = rating;
+        mRating = rating;
     }
 
     public int getReviewCount() {
@@ -71,7 +71,7 @@ public class Place implements Parcelable {
     }
 
     public void setReviewCount(int reviewCount) {
-        this.mReviewCount = reviewCount;
+        mReviewCount = reviewCount;
     }
 
     public String getPhoneNumber() {
@@ -79,7 +79,7 @@ public class Place implements Parcelable {
     }
 
     public void setPhoneNumber(String phoneNumber) {
-        this.mPhoneNumber = phoneNumber;
+        mPhoneNumber = phoneNumber;
     }
 
     public String getPrice() {
@@ -91,19 +91,19 @@ public class Place implements Parcelable {
     }
 
     public void setCity(String city) {
-        this.mCity = city;
+        mCity = city;
     }
 
     public void setZipCode(String zipCode) {
-        this.mZipCode = zipCode;
+        mZipCode = zipCode;
     }
 
     public void setCountry(String country) {
-        this.mCountry = country;
+        mCountry = country;
     }
 
     public void setState(String state) {
-        this.mState = state;
+        mState = state;
     }
 
     public String getAddress() {
@@ -111,15 +111,15 @@ public class Place implements Parcelable {
     }
 
     public void setAddress(String address) {
-        this.mAddress = address;
+        mAddress = address;
     }
 
     public void setLatitude(double latitude) {
-        this.mLatitude = latitude;
+        mLatitude = latitude;
     }
 
     public void setLongitude(double longitude) {
-        this.mLongitude = longitude;
+        mLongitude = longitude;
     }
 
     public double getDistance() {
@@ -127,7 +127,7 @@ public class Place implements Parcelable {
     }
 
     public void setDistance(double distance) {
-        this.mDistance = distance;
+        mDistance = distance;
     }
 
     protected Place(Parcel in) {

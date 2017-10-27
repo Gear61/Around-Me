@@ -3,6 +3,7 @@ package com.randomappsinc.aroundme.activities;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.ShareCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -85,6 +86,17 @@ public class PlaceViewActivity extends StandardActivity implements RestClient.Ph
         startActivity(Intent.createChooser(
                 new Intent(Intent.ACTION_DIAL, Uri.parse(phoneUri)),
                 getString(R.string.call_with)));
+    }
+
+    @OnClick(R.id.share_button)
+    public void sharePlace() {
+        Intent shareIntent = ShareCompat.IntentBuilder.from(this)
+                .setType("text/plain")
+                .setText(mPlace.getUrl())
+                .getIntent();
+        if (shareIntent.resolveActivity(getPackageManager()) != null) {
+            startActivity(shareIntent);
+        }
     }
 
     @Override

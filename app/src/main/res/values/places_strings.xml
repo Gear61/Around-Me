@@ -8,8 +8,9 @@
     <string name="one_review">1 review</string>
     <string name="num_reviews">%d reviews</string>
 
-    <string name="navigate_here">Start heading here</string>
-    <string name="call_place">Call this place</string>
+    <string name="navigate_here">Navigate</string>
+    <string name="call_place">Call</string>
+    <string name="share_place">Share</string>
 
     <string name="navigate_with">Navigate with</string>
     <string name="call_with">Call with</string>

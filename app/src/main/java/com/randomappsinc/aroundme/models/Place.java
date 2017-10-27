@@ -8,6 +8,7 @@ public class Place implements Parcelable {
     private String mId;
     private String mName;
     private String mImageUrl;
+    private String mUrl;
     private double mRating;
     private int mReviewCount;
     private String mPhoneNumber;
@@ -47,6 +48,14 @@ public class Place implements Parcelable {
 
     public void setImageUrl(String imageUrl) {
         this.mImageUrl = imageUrl;
+    }
+
+    public String getUrl() {
+        return mUrl;
+    }
+
+    public void setUrl(String mUrl) {
+        this.mUrl = mUrl;
     }
 
     public double getRating() {
@@ -125,6 +134,7 @@ public class Place implements Parcelable {
         mId = in.readString();
         mName = in.readString();
         mImageUrl = in.readString();
+        mUrl = in.readString();
         mRating = in.readDouble();
         mReviewCount = in.readInt();
         mPhoneNumber = in.readString();
@@ -149,6 +159,7 @@ public class Place implements Parcelable {
         dest.writeString(mId);
         dest.writeString(mName);
         dest.writeString(mImageUrl);
+        dest.writeString(mUrl);
         dest.writeDouble(mRating);
         dest.writeInt(mReviewCount);
         dest.writeString(mPhoneNumber);

@@ -28,6 +28,10 @@ public class SearchResults {
         @Expose
         private String imageUrl;
 
+        @SerializedName("url")
+        @Expose
+        private String url;
+
         @SerializedName("rating")
         @Expose
         private double rating;
@@ -129,6 +133,7 @@ public class SearchResults {
             place.setId(id);
             place.setName(name);
             place.setImageUrl(imageUrl);
+            place.setUrl(url);
             place.setRating(rating);
             place.setReviewCount(reviewCount);
             place.setPhoneNumber(phoneNumber);

@@ -50,4 +50,11 @@
     <string name="share_icon">{ion-android-share-alt}</string>
     <string name="user_icon">{ion-android-person}</string>
     <string name="close_icon">{ion-android-close}</string>
+
+    <!-- Bottom navigation icons -->
+    <string name="home_icon">{ion-android-home}</string>
+    <string name="events_icon">{ion-android-calendar}</string>
+    <string name="microphone_icon">{ion-android-microphone}</string>
+    <string name="favorites_icon">{ion-ios-heart}</string>
+    <string name="settings_icon">{ion-android-settings}</string>
 </resources>

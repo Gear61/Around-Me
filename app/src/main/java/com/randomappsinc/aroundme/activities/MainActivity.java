@@ -3,83 +3,63 @@ package com.randomappsinc.aroundme.activities;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.widget.RecyclerView;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.support.annotation.StringRes;
 import android.view.View;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.joanzapata.iconify.IconDrawable;
-import com.joanzapata.iconify.fonts.IoniconsIcons;
 import com.randomappsinc.aroundme.R;
-import com.randomappsinc.aroundme.adapters.PlaceTypesAdapter;
-import com.randomappsinc.aroundme.dialogs.PlaceTypeAdder;
-import com.randomappsinc.aroundme.models.PlaceType;
+import com.randomappsinc.aroundme.fragments.HomepageFragmentController;
 import com.randomappsinc.aroundme.persistence.PreferencesManager;
-import com.randomappsinc.aroundme.utils.MyApplication;
-import com.randomappsinc.aroundme.utils.SimpleDividerItemDecoration;
-import com.randomappsinc.aroundme.utils.UIUtils;
+import com.randomappsinc.aroundme.views.BottomNavigationView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
-public class MainActivity extends StandardActivity implements PlaceTypesAdapter.Listener {
+public class MainActivity extends StandardActivity {
 
-    @BindView(R.id.parent) View mParent;
-    @BindView(R.id.place_types) RecyclerView mPlaceTypes;
-    @BindView(R.id.add_place_type) FloatingActionButton mAddPlaceType;
+    @BindView(R.id.bottom_navigation) View mBottomNavigation;
 
-    private PlaceTypeAdder mPlaceTypeAdder;
-    private PlaceTypesAdapter mPlaceTypesAdapter;
+    private final BottomNavigationView.Listener mListener = new BottomNavigationView.Listener() {
+        @Override
+        public void onNavItemSelected(@IdRes int viewId) {
+            mNavigationController.onNavItemSelected(viewId);
+        }
+
+        @Override
+        public void doVoiceSearch() {
+            // TODO: Voice search
+        }
+    };
+
+    private BottomNavigationView mBottomNavigationView;
+    private HomepageFragmentController mNavigationController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Kill activity if it's above an existing stack due to launcher bug
+        if (!isTaskRoot()
+                && getIntent().hasCategory(Intent.CATEGORY_LAUNCHER)
+                && getIntent().getAction() != null && getIntent().getAction().equals(Intent.ACTION_MAIN)) {
+            finish();
+            return;
+        }
+
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        mAddPlaceType.setImageDrawable(
-                new IconDrawable(this, IoniconsIcons.ion_android_add).colorRes(R.color.white));
-
-        mPlaceTypes.addItemDecoration(new SimpleDividerItemDecoration(this));
-        mPlaceTypesAdapter = new PlaceTypesAdapter(this, this, mParent);
-        mPlaceTypes.setAdapter(mPlaceTypesAdapter);
-
-        mPlaceTypeAdder = new PlaceTypeAdder(this, mTypeAddedListener);
+        mNavigationController = new HomepageFragmentController(getFragmentManager(), R.id.container);
+        mBottomNavigationView = new BottomNavigationView(mBottomNavigation, mListener);
+        mNavigationController.loadHome();
 
         if (PreferencesManager.get().shouldAskForRating()) {
             showRatingPrompt();
         }
-    }
-
-    @OnClick(R.id.add_place_type)
-    public void addPlaceType() {
-        mPlaceTypeAdder.show();
-    }
-
-    private final PlaceTypeAdder.Listener mTypeAddedListener = new PlaceTypeAdder.Listener() {
-        @Override
-        public void onPlaceTypeAdded() {
-            mPlaceTypesAdapter.updateWithAdded();
-            UIUtils.showSnackbar(mParent, R.string.place_type_added);
-        }
-    };
-
-    @Override
-    public void onItemClick(PlaceType placeType) {
-        Intent intent = new Intent(this, SearchActivity.class);
-        intent.putExtra(SearchActivity.SEARCH_TERM_KEY, placeType.getText());
-        startActivity(intent);
-    }
-
-    @Override
-    public void scrollToItem(int position) {
-        mPlaceTypes.smoothScrollToPosition(position);
     }
 
     private void showRatingPrompt() {
@@ -93,10 +73,7 @@ public class MainActivity extends StandardActivity implements PlaceTypesAdapter.
                         Uri uri =  Uri.parse("market://details?id=" + getApplicationContext().getPackageName());
                         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                         if (!(getPackageManager().queryIntentActivities(intent, 0).size() > 0)) {
-                            Toast.makeText(
-                                    MyApplication.getAppContext(),
-                                    R.string.play_store_error,
-                                    Toast.LENGTH_LONG).show();
+                            showToast(R.string.play_store_error);
                             return;
                         }
                         startActivity(intent);
@@ -105,21 +82,7 @@ public class MainActivity extends StandardActivity implements PlaceTypesAdapter.
                 .show();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        UIUtils.loadMenuIcon(menu, R.id.settings, IoniconsIcons.ion_android_settings, this);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.settings:
-                startActivity(new Intent(this, SettingsActivity.class));
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+    private void showToast(@StringRes int stringId) {
+        Toast.makeText(this, stringId, Toast.LENGTH_LONG).show();
     }
 }

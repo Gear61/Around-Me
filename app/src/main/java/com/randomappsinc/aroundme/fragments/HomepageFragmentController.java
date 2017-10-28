@@ -11,6 +11,7 @@ public class HomepageFragmentController {
     private FragmentManager mFragmentManager;
     private int mContainerId;
     private PlaceTypesFragment mPlaceTypesFragment;
+    private SettingsFragment mSettingsFragment;
 
     @IdRes private int mCurrentViewId;
 
@@ -18,6 +19,7 @@ public class HomepageFragmentController {
         mFragmentManager = fragmentManager;
         mContainerId = containerId;
         mPlaceTypesFragment = PlaceTypesFragment.newInstance();
+        mSettingsFragment = SettingsFragment.newInstance();
     }
 
     public void onNavItemSelected(@IdRes int viewId) {
@@ -29,6 +31,9 @@ public class HomepageFragmentController {
         switch (viewId) {
             case R.id.home:
                 swapInFragment(mPlaceTypesFragment);
+                break;
+            case R.id.settings:
+                swapInFragment(mSettingsFragment);
                 break;
         }
     }

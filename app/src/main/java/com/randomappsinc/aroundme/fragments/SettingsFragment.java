@@ -1,9 +1,13 @@
-package com.randomappsinc.aroundme.activities;
+package com.randomappsinc.aroundme.fragments;
 
+import android.app.Fragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.randomappsinc.aroundme.R;
@@ -13,8 +17,9 @@ import com.randomappsinc.aroundme.utils.SimpleDividerItemDecoration;
 import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
-public class SettingsActivity extends StandardActivity implements SettingsAdapter.ItemSelectionListener {
+public class SettingsFragment extends Fragment implements SettingsAdapter.ItemSelectionListener {
 
     public static final String SUPPORT_EMAIL = "chessnone@gmail.com";
     public static final String OTHER_APPS_URL = "https://play.google.com/store/apps/dev?id=9093438553713389916";
@@ -24,20 +29,24 @@ public class SettingsActivity extends StandardActivity implements SettingsAdapte
     @BindString(R.string.feedback_subject) String feedbackSubject;
     @BindString(R.string.send_email) String sendEmail;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.settings);
-        ButterKnife.bind(this);
+    private Unbinder mUnbinder;
 
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-
-        settingsOptions.addItemDecoration(new SimpleDividerItemDecoration(this));
-        settingsOptions.setAdapter(new SettingsAdapter(this, this));
+    public static SettingsFragment newInstance() {
+        SettingsFragment fragment = new SettingsFragment();
+        fragment.setRetainInstance(true);
+        return fragment;
     }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.settings, container, false);
+        mUnbinder = ButterKnife.bind(this, rootView);
+        settingsOptions.addItemDecoration(new SimpleDividerItemDecoration(getActivity()));
+        settingsOptions.setAdapter(new SettingsAdapter(getActivity(), this));
+        return rootView;
+    }
+
+    @Override
     public void onItemClick(int position) {
         Intent intent = null;
         switch (position) {
@@ -45,17 +54,16 @@ public class SettingsActivity extends StandardActivity implements SettingsAdapte
                 String uriText = "mailto:" + SUPPORT_EMAIL + "?subject=" + Uri.encode(feedbackSubject);
                 Uri mailUri = Uri.parse(uriText);
                 Intent sendIntent = new Intent(Intent.ACTION_SENDTO, mailUri);
-                sendIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(Intent.createChooser(sendIntent, sendEmail));
                 return;
             case 1:
                 intent = new Intent(Intent.ACTION_VIEW, Uri.parse(OTHER_APPS_URL));
                 break;
             case 2:
-                Uri uri =  Uri.parse("market://details?id=" + getApplicationContext().getPackageName());
+                Uri uri =  Uri.parse("market://details?id=" + getActivity().getPackageName());
                 intent = new Intent(Intent.ACTION_VIEW, uri);
-                if (!(getPackageManager().queryIntentActivities(intent, 0).size() > 0)) {
-                    Toast.makeText(this, R.string.play_store_error, Toast.LENGTH_LONG).show();
+                if (!(getActivity().getPackageManager().queryIntentActivities(intent, 0).size() > 0)) {
+                    Toast.makeText(getActivity(), R.string.play_store_error, Toast.LENGTH_LONG).show();
                     return;
                 }
                 break;
@@ -63,12 +71,12 @@ public class SettingsActivity extends StandardActivity implements SettingsAdapte
                 intent = new Intent(Intent.ACTION_VIEW, Uri.parse(REPO_URL));
                 break;
         }
-
-        if (intent == null) {
-            return;
-        }
-
-        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(intent);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mUnbinder.unbind();
     }
 }

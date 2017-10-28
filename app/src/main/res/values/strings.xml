@@ -57,4 +57,12 @@
     <string name="microphone_icon">{ion-android-microphone}</string>
     <string name="favorites_icon">{ion-ios-heart}</string>
     <string name="settings_icon">{ion-android-settings}</string>
+
+    <string name="speech_message">Tell us what kind of place you\'re looking for.</string>
+    <string name="speech_not_supported">
+        Sorry, but your Android device doesn\'t support speech recognition.
+    </string>
+    <string name="speech_unrecognized">
+        We couldn\'t recognize what you said. Please try again.
+    </string>
 </resources>

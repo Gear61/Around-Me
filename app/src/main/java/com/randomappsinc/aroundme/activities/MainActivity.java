@@ -1,8 +1,10 @@
 package com.randomappsinc.aroundme.activities;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
@@ -14,12 +16,18 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.randomappsinc.aroundme.R;
 import com.randomappsinc.aroundme.fragments.HomepageFragmentController;
 import com.randomappsinc.aroundme.persistence.PreferencesManager;
+import com.randomappsinc.aroundme.utils.StringUtils;
 import com.randomappsinc.aroundme.views.BottomNavigationView;
+
+import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends StandardActivity {
+
+    private static final int SPEECH_REQUEST_CODE = 1;
 
     @BindView(R.id.bottom_navigation) View mBottomNavigation;
 
@@ -31,7 +39,7 @@ public class MainActivity extends StandardActivity {
 
         @Override
         public void doVoiceSearch() {
-            // TODO: Voice search
+            showGoogleSpeechDialog();
         }
     };
 
@@ -59,6 +67,39 @@ public class MainActivity extends StandardActivity {
 
         if (PreferencesManager.get().shouldAskForRating()) {
             showRatingPrompt();
+        }
+    }
+
+    private void showGoogleSpeechDialog() {
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, getString(R.string.speech_message));
+        try {
+            startActivityForResult(intent, SPEECH_REQUEST_CODE);
+        } catch (ActivityNotFoundException exception) {
+            Toast.makeText(this, R.string.speech_not_supported, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case SPEECH_REQUEST_CODE: {
+                if (resultCode == RESULT_OK && data != null) {
+                    List<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                    if (result == null || result.isEmpty()) {
+                        Toast.makeText(this, R.string.speech_unrecognized, Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                    String searchInput = StringUtils.capitalizeWords(result.get(0));
+                    Intent intent = new Intent(this, SearchActivity.class);
+                    intent.putExtra(SearchActivity.SEARCH_TERM_KEY, searchInput);
+                    startActivity(intent);
+                }
+                break;
+            }
         }
     }
 

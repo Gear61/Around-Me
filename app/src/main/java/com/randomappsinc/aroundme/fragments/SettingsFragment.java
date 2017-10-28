@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.ShareCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,12 +55,21 @@ public class SettingsFragment extends Fragment implements SettingsAdapter.ItemSe
                 String uriText = "mailto:" + SUPPORT_EMAIL + "?subject=" + Uri.encode(feedbackSubject);
                 Uri mailUri = Uri.parse(uriText);
                 Intent sendIntent = new Intent(Intent.ACTION_SENDTO, mailUri);
-                startActivity(Intent.createChooser(sendIntent, sendEmail));
+                getActivity().startActivity(Intent.createChooser(sendIntent, sendEmail));
                 return;
             case 1:
+                Intent shareIntent = ShareCompat.IntentBuilder.from(getActivity())
+                        .setType("text/plain")
+                        .setText(getString(R.string.share_app_message))
+                        .getIntent();
+                if (shareIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+                    getActivity().startActivity(shareIntent);
+                }
+                return;
+            case 2:
                 intent = new Intent(Intent.ACTION_VIEW, Uri.parse(OTHER_APPS_URL));
                 break;
-            case 2:
+            case 3:
                 Uri uri =  Uri.parse("market://details?id=" + getActivity().getPackageName());
                 intent = new Intent(Intent.ACTION_VIEW, uri);
                 if (!(getActivity().getPackageManager().queryIntentActivities(intent, 0).size() > 0)) {
@@ -67,11 +77,11 @@ public class SettingsFragment extends Fragment implements SettingsAdapter.ItemSe
                     return;
                 }
                 break;
-            case 3:
+            case 4:
                 intent = new Intent(Intent.ACTION_VIEW, Uri.parse(REPO_URL));
                 break;
         }
-        startActivity(intent);
+        getActivity().startActivity(intent);
     }
 
     @Override

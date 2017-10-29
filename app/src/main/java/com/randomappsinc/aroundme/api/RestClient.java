@@ -9,8 +9,8 @@ import com.randomappsinc.aroundme.api.callbacks.FetchReviewsCallback;
 import com.randomappsinc.aroundme.api.callbacks.FetchTokenCallback;
 import com.randomappsinc.aroundme.api.callbacks.FindPlacesCallback;
 import com.randomappsinc.aroundme.api.models.PlacePhotos;
+import com.randomappsinc.aroundme.api.models.PlaceResults;
 import com.randomappsinc.aroundme.api.models.PlaceReviews;
-import com.randomappsinc.aroundme.api.models.SearchResults;
 import com.randomappsinc.aroundme.models.Place;
 import com.randomappsinc.aroundme.models.Review;
 
@@ -57,7 +57,7 @@ public class RestClient {
 
     // Places
     @NonNull private PlacesListener mPlacesListener = DUMMY_PLACES_LISTENER;
-    private Call<SearchResults> mCurrentFetchPlacesCall;
+    private Call<PlaceResults> mCurrentFetchPlacesCall;
 
     // Photos
     @NonNull private PhotosListener mPhotosListener = DUMMY_PHOTOS_LISTENER;

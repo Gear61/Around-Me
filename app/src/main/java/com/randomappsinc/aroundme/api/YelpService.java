@@ -1,8 +1,8 @@
 package com.randomappsinc.aroundme.api;
 
 import com.randomappsinc.aroundme.api.models.PlacePhotos;
+import com.randomappsinc.aroundme.api.models.PlaceResults;
 import com.randomappsinc.aroundme.api.models.PlaceReviews;
-import com.randomappsinc.aroundme.api.models.SearchResults;
 import com.randomappsinc.aroundme.api.models.TokenResponse;
 
 import retrofit2.Call;
@@ -22,14 +22,17 @@ public interface YelpService {
                                    @Field("grant_type") String last);
 
     @GET("v3/businesses/search")
-    Call<SearchResults> findPlaces(@Query("term") String term,
-                                   @Query("location") String location,
-                                   @Query("limit") int limit,
-                                   @Query("sort_by") String sortBy);
+    Call<PlaceResults> findPlaces(@Query("term") String term,
+                                  @Query("location") String location,
+                                  @Query("limit") int limit,
+                                  @Query("sort_by") String sortBy);
 
     @GET("v3/businesses/{id}")
     Call<PlacePhotos> fetchPlacePhotos(@Path("id") String placeId);
 
     @GET("v3/businesses/{id}/reviews")
     Call<PlaceReviews> fetchPlaceReviews(@Path("id") String placeId);
+
+    @GET("/v3/events")
+    Call<PlaceReviews> findEvents(@Query("location") String location);
 }

@@ -4,16 +4,16 @@ import android.support.annotation.NonNull;
 
 import com.randomappsinc.aroundme.api.ApiConstants;
 import com.randomappsinc.aroundme.api.RestClient;
-import com.randomappsinc.aroundme.api.models.SearchResults;
+import com.randomappsinc.aroundme.api.models.PlaceResults;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class FindPlacesCallback implements Callback<SearchResults> {
+public class FindPlacesCallback implements Callback<PlaceResults> {
 
     @Override
-    public void onResponse(@NonNull Call<SearchResults> call, @NonNull Response<SearchResults> response) {
+    public void onResponse(@NonNull Call<PlaceResults> call, @NonNull Response<PlaceResults> response) {
         if (response.code() == ApiConstants.HTTP_STATUS_OK) {
             RestClient.getInstance().processPlaces(response.body().getPlaces());
         } else if (response.code() == ApiConstants.HTTP_STATUS_UNAUTHORIZED) {
@@ -23,7 +23,7 @@ public class FindPlacesCallback implements Callback<SearchResults> {
     }
 
     @Override
-    public void onFailure(@NonNull Call<SearchResults> call, @NonNull Throwable t) {
+    public void onFailure(@NonNull Call<PlaceResults> call, @NonNull Throwable t) {
         // TODO: Deal with the search failing case
     }
 }

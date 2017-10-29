@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
-import android.support.annotation.StringRes;
 import android.view.View;
 import android.widget.Toast;
 
@@ -17,6 +16,7 @@ import com.randomappsinc.aroundme.R;
 import com.randomappsinc.aroundme.fragments.HomepageFragmentController;
 import com.randomappsinc.aroundme.persistence.PreferencesManager;
 import com.randomappsinc.aroundme.utils.StringUtils;
+import com.randomappsinc.aroundme.utils.UIUtils;
 import com.randomappsinc.aroundme.views.BottomNavigationView;
 
 import java.util.List;
@@ -87,17 +87,19 @@ public class MainActivity extends StandardActivity {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case SPEECH_REQUEST_CODE: {
-                if (resultCode == RESULT_OK && data != null) {
-                    List<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-                    if (result == null || result.isEmpty()) {
-                        Toast.makeText(this, R.string.speech_unrecognized, Toast.LENGTH_LONG).show();
-                        return;
-                    }
-                    String searchInput = StringUtils.capitalizeWords(result.get(0));
-                    Intent intent = new Intent(this, PlaceSearchActivity.class);
-                    intent.putExtra(PlaceSearchActivity.SEARCH_TERM_KEY, searchInput);
-                    startActivity(intent);
+                if (resultCode != RESULT_OK || data == null) {
+                    return;
                 }
+
+                List<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                if (result == null || result.isEmpty()) {
+                    UIUtils.showToast(R.string.speech_unrecognized);
+                    return;
+                }
+                String searchInput = StringUtils.capitalizeWords(result.get(0));
+                Intent intent = new Intent(this, PlaceSearchActivity.class);
+                intent.putExtra(PlaceSearchActivity.SEARCH_TERM_KEY, searchInput);
+                startActivity(intent);
                 break;
             }
         }
@@ -114,16 +116,12 @@ public class MainActivity extends StandardActivity {
                         Uri uri =  Uri.parse("market://details?id=" + getApplicationContext().getPackageName());
                         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                         if (!(getPackageManager().queryIntentActivities(intent, 0).size() > 0)) {
-                            showToast(R.string.play_store_error);
+                            UIUtils.showToast(R.string.play_store_error);
                             return;
                         }
                         startActivity(intent);
                     }
                 })
                 .show();
-    }
-
-    private void showToast(@StringRes int stringId) {
-        Toast.makeText(this, stringId, Toast.LENGTH_LONG).show();
     }
 }

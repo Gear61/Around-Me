@@ -1,4 +1,4 @@
-package com.randomappsinc.aroundme.dialogs;
+package com.randomappsinc.aroundme.location;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -17,7 +17,7 @@ public class LocationForm {
     @NonNull private Listener mListener;
     private MaterialDialog mLocationDialog;
 
-    public LocationForm(Context context, @NonNull Listener listener) {
+    LocationForm(Context context, @NonNull Listener listener) {
         mListener = listener;
 
         String location = context.getString(R.string.location);

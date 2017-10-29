@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.joanzapata.iconify.Icon;
 import com.joanzapata.iconify.IconDrawable;
@@ -78,5 +79,9 @@ public class UIUtils {
             return R.drawable.stars_4_and_a_half;
         }
         return R.drawable.stars_5;
+    }
+
+    public static void showToast(@StringRes int messageId) {
+        Toast.makeText(MyApplication.getAppContext(), messageId, Toast.LENGTH_SHORT).show();
     }
 }

@@ -1,4 +1,4 @@
-package com.randomappsinc.aroundme.utils;
+package com.randomappsinc.aroundme.location;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -19,12 +19,12 @@ import com.google.android.gms.tasks.Task;
 import com.randomappsinc.aroundme.R;
 
 /** Utility class to ask for location services */
-public class LocationServicesManager {
+class LocationServicesManager {
 
     private Activity mActivity;
     private LocationSettingsRequest.Builder mLocationBuilder;
 
-    public LocationServicesManager(Activity activity) {
+    LocationServicesManager(Activity activity) {
         mActivity = activity;
         LocationRequest locationRequest = LocationRequest.create();
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
@@ -35,7 +35,7 @@ public class LocationServicesManager {
         mLocationBuilder.setAlwaysShow(true);
     }
 
-    public void askForLocationServices(final int requestCode) {
+    void askForLocationServices(final int requestCode) {
         Task<LocationSettingsResponse> result =
                 LocationServices
                         .getSettingsClient(mActivity)

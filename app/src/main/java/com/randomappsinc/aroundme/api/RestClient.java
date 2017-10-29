@@ -7,10 +7,13 @@ import android.support.annotation.NonNull;
 import com.randomappsinc.aroundme.api.callbacks.FetchPhotosCallback;
 import com.randomappsinc.aroundme.api.callbacks.FetchReviewsCallback;
 import com.randomappsinc.aroundme.api.callbacks.FetchTokenCallback;
+import com.randomappsinc.aroundme.api.callbacks.FindEventsCallback;
 import com.randomappsinc.aroundme.api.callbacks.FindPlacesCallback;
+import com.randomappsinc.aroundme.api.models.EventResults;
 import com.randomappsinc.aroundme.api.models.PlacePhotos;
 import com.randomappsinc.aroundme.api.models.PlaceResults;
 import com.randomappsinc.aroundme.api.models.PlaceReviews;
+import com.randomappsinc.aroundme.models.Event;
 import com.randomappsinc.aroundme.models.Place;
 import com.randomappsinc.aroundme.models.Review;
 
@@ -35,6 +38,10 @@ public class RestClient {
         void onReviewsFetched(List<Review> photos);
     }
 
+    public interface EventsListener {
+        void onEventsFetched(List<Event> events);
+    }
+
     private static final PlacesListener DUMMY_PLACES_LISTENER = new PlacesListener() {
         @Override
         public void onPlacesFetched(List<Place> places) {}
@@ -50,6 +57,11 @@ public class RestClient {
         public void onReviewsFetched(List<Review> reviews) {}
     };
 
+    private static final EventsListener DUMMY_EVENTS_LISTENER = new EventsListener() {
+        @Override
+        public void onEventsFetched(List<Event> events) {}
+    };
+
     private static RestClient mInstance;
 
     private YelpService mYelpService;
@@ -57,7 +69,7 @@ public class RestClient {
 
     // Places
     @NonNull private PlacesListener mPlacesListener = DUMMY_PLACES_LISTENER;
-    private Call<PlaceResults> mCurrentFetchPlacesCall;
+    private Call<PlaceResults> mCurrentFindPlacesCall;
 
     // Photos
     @NonNull private PhotosListener mPhotosListener = DUMMY_PHOTOS_LISTENER;
@@ -66,6 +78,10 @@ public class RestClient {
     // Reviews
     @NonNull private ReviewsListener mReviewsListener = DUMMY_REVIEWS_LISTENER;
     private Call<PlaceReviews> mCurrentFetchReviewsCall;
+
+    // Events
+    @NonNull private EventsListener mEventsListener = DUMMY_EVENTS_LISTENER;
+    private Call<EventResults> mCurrentFindEventsCall;
 
     public static RestClient getInstance() {
         if (mInstance == null) {
@@ -97,19 +113,19 @@ public class RestClient {
                 .enqueue(new FetchTokenCallback());
     }
 
-    public void fetchPlaces(final String searchTerm, final String location) {
+    public void findPlaces(final String searchTerm, final String location) {
         mHandler.post(new Runnable() {
             @Override
             public void run() {
-                if (mCurrentFetchPlacesCall != null) {
-                    mCurrentFetchPlacesCall.cancel();
+                if (mCurrentFindPlacesCall != null) {
+                    mCurrentFindPlacesCall.cancel();
                 }
-                mCurrentFetchPlacesCall = mYelpService.findPlaces(
+                mCurrentFindPlacesCall = mYelpService.findPlaces(
                         searchTerm,
                         location,
                         ApiConstants.DEFAULT_NUM_PLACES,
                         ApiConstants.DISTANCE_SORT);
-                mCurrentFetchPlacesCall.enqueue(new FindPlacesCallback());
+                mCurrentFindPlacesCall.enqueue(new FindPlacesCallback());
             }
         });
     }
@@ -130,8 +146,8 @@ public class RestClient {
         mHandler.post(new Runnable() {
             @Override
             public void run() {
-                if (mCurrentFetchPlacesCall != null) {
-                    mCurrentFetchPlacesCall.cancel();
+                if (mCurrentFindPlacesCall != null) {
+                    mCurrentFindPlacesCall.cancel();
                 }
             }
         });
@@ -204,6 +220,44 @@ public class RestClient {
             public void run() {
                 if (mCurrentFetchReviewsCall != null) {
                     mCurrentFetchReviewsCall.cancel();
+                }
+            }
+        });
+    }
+
+    public void findEvents(final String location) {
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                if (mCurrentFindEventsCall != null) {
+                    mCurrentFindEventsCall.cancel();
+                }
+
+                long currentUnixTime = System.currentTimeMillis() / 1000L;
+                mCurrentFindEventsCall = mYelpService.findEvents(location, currentUnixTime);
+                mCurrentFindEventsCall.enqueue(new FindEventsCallback());
+            }
+        });
+    }
+
+    public void registerEventsListener(EventsListener eventsListener) {
+        mEventsListener = eventsListener;
+    }
+
+    public void unregisterEventsListener() {
+        mEventsListener = DUMMY_EVENTS_LISTENER;
+    }
+
+    public void processEvents(List<Event> events) {
+        mEventsListener.onEventsFetched(events);
+    }
+
+    public void cancelEventsFetch() {
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                if (mCurrentFindEventsCall != null) {
+                    mCurrentFindEventsCall.cancel();
                 }
             }
         });

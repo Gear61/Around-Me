@@ -24,6 +24,6 @@ public class FindPlacesCallback implements Callback<PlaceResults> {
 
     @Override
     public void onFailure(@NonNull Call<PlaceResults> call, @NonNull Throwable t) {
-        // TODO: Deal with the search failing case
+        // TODO: Deal with the place search failing case
     }
 }

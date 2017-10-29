@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/search_results"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
+
+    <com.joanzapata.iconify.widget.IconTextView
+        android:id="@+id/no_places"
+        android:layout_marginTop="76dp"
+        android:layout_width="260dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/no_places"
+        android:textColor="@color/dark_gray"
+        android:textSize="21sp"
+        android:visibility="gone"/>
+</android.support.design.widget.CoordinatorLayout>

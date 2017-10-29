@@ -35,5 +35,6 @@ public interface YelpService {
     Call<PlaceReviews> fetchPlaceReviews(@Path("id") String placeId);
 
     @GET("/v3/events")
-    Call<EventResults> findEvents(@Query("location") String location);
+    Call<EventResults> findEvents(@Query("location") String location,
+                                  @Query("start_date") long startTime);
 }

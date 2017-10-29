@@ -21,7 +21,7 @@ public class Place implements Parcelable {
     private double mLatitude;
     private double mLongitude;
 
-    // Distance from the search location in miles
+    // Distance from the place location in miles
     private double mDistance;
 
     public Place() {}

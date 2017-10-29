@@ -123,7 +123,7 @@ public class PlaceResults {
             }
         }
 
-        // Distance in meters from the search location
+        // Distance in meters from the place location
         @SerializedName("distance")
         @Expose
         private double distance;

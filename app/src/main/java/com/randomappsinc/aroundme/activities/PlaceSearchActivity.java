@@ -62,7 +62,7 @@ public class PlaceSearchActivity extends StandardActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.search);
+        setContentView(R.layout.place_search);
         ButterKnife.bind(this);
 
         if (getSupportActionBar() != null) {
@@ -197,7 +197,7 @@ public class PlaceSearchActivity extends StandardActivity
                         mCurrentLocation = String.valueOf(location.getLatitude())
                                 + ", "
                                 + String.valueOf(location.getLongitude());
-                        mRestClient.fetchPlaces(mSearchTerm, mCurrentLocation);
+                        mRestClient.findPlaces(mSearchTerm, mCurrentLocation);
                     }
                 });
         mLocationChecker.postDelayed(mLocationCheckTask, 10000L);
@@ -238,7 +238,7 @@ public class PlaceSearchActivity extends StandardActivity
         stopFetchingCurrentLocation();
 
         mCurrentLocation = location;
-        mRestClient.fetchPlaces(mSearchTerm, mCurrentLocation);
+        mRestClient.findPlaces(mSearchTerm, mCurrentLocation);
     }
 
     @Override

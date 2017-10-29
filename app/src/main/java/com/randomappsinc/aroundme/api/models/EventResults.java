@@ -2,6 +2,7 @@ package com.randomappsinc.aroundme.api.models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.randomappsinc.aroundme.models.Event;
 
 import java.util.List;
 
@@ -28,6 +29,10 @@ public class EventResults {
         @Expose
         private int numAttending;
 
+        @SerializedName("interested_count")
+        @Expose
+        private int numInterested;
+
         @SerializedName("cost")
         @Expose
         private double cost;
@@ -43,10 +48,6 @@ public class EventResults {
         @SerializedName("event_site_url")
         @Expose
         private String url;
-
-        @SerializedName("interested_count")
-        @Expose
-        private int numInterested;
 
         @SerializedName("is_canceled")
         @Expose
@@ -119,6 +120,30 @@ public class EventResults {
                 }
                 return address.toString();
             }
+        }
+
+        Event toEvent() {
+            Event event = new Event();
+            event.setId(id);
+            event.setImageUrl(imageUrl);
+            event.setName(name);
+            event.setNumAttending(numAttending);
+            event.setNumInterested(numInterested);
+            event.setCost(cost);
+            event.setCost(costMax);
+            event.setDescription(description);
+            event.setUrl(url);
+            event.setCanceled(isCanceled);
+            event.setFree(isFree);
+            event.setTicketsUrl(ticketsUrl);
+            event.setTimeStart(timeStart);
+            event.setTimeEnd(timeEnd);
+            event.setCity(location.getCity());
+            event.setZipCode(location.getZipCode());
+            event.setCountry(location.getCountry());
+            event.setState(location.getState());
+            event.setAddress(location.getAddress());
+            return event;
         }
     }
 }

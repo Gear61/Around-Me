@@ -33,7 +33,7 @@ import butterknife.ButterKnife;
 import io.nlopez.smartlocation.OnLocationUpdatedListener;
 import io.nlopez.smartlocation.SmartLocation;
 
-public class SearchActivity extends StandardActivity
+public class PlaceSearchActivity extends StandardActivity
         implements LocationForm.Listener, RestClient.PlacesListener, PlacesAdapter.ItemSelectionListener {
 
     public static final String SEARCH_TERM_KEY = "searchTerm";

@@ -11,6 +11,7 @@ public class HomepageFragmentController {
     private FragmentManager mFragmentManager;
     private int mContainerId;
     private PlaceTypesFragment mPlaceTypesFragment;
+    private EventSearchFragment mEventSearchFragment;
     private SettingsFragment mSettingsFragment;
 
     @IdRes private int mCurrentViewId;
@@ -19,6 +20,7 @@ public class HomepageFragmentController {
         mFragmentManager = fragmentManager;
         mContainerId = containerId;
         mPlaceTypesFragment = PlaceTypesFragment.newInstance();
+        mEventSearchFragment = EventSearchFragment.newInstance();
         mSettingsFragment = SettingsFragment.newInstance();
     }
 
@@ -31,6 +33,9 @@ public class HomepageFragmentController {
         switch (viewId) {
             case R.id.home:
                 swapInFragment(mPlaceTypesFragment);
+                break;
+            case R.id.events:
+                swapInFragment(mEventSearchFragment);
                 break;
             case R.id.settings:
                 swapInFragment(mSettingsFragment);

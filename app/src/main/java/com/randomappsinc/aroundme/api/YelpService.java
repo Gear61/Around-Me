@@ -1,5 +1,6 @@
 package com.randomappsinc.aroundme.api;
 
+import com.randomappsinc.aroundme.api.models.EventResults;
 import com.randomappsinc.aroundme.api.models.PlacePhotos;
 import com.randomappsinc.aroundme.api.models.PlaceResults;
 import com.randomappsinc.aroundme.api.models.PlaceReviews;
@@ -34,5 +35,5 @@ public interface YelpService {
     Call<PlaceReviews> fetchPlaceReviews(@Path("id") String placeId);
 
     @GET("/v3/events")
-    Call<PlaceReviews> findEvents(@Query("location") String location);
+    Call<EventResults> findEvents(@Query("location") String location);
 }

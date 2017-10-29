@@ -94,8 +94,8 @@ public class MainActivity extends StandardActivity {
                         return;
                     }
                     String searchInput = StringUtils.capitalizeWords(result.get(0));
-                    Intent intent = new Intent(this, SearchActivity.class);
-                    intent.putExtra(SearchActivity.SEARCH_TERM_KEY, searchInput);
+                    Intent intent = new Intent(this, PlaceSearchActivity.class);
+                    intent.putExtra(PlaceSearchActivity.SEARCH_TERM_KEY, searchInput);
                     startActivity(intent);
                 }
                 break;

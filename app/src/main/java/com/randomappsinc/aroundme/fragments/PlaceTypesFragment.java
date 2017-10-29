@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import com.joanzapata.iconify.IconDrawable;
 import com.joanzapata.iconify.fonts.IoniconsIcons;
 import com.randomappsinc.aroundme.R;
-import com.randomappsinc.aroundme.activities.SearchActivity;
+import com.randomappsinc.aroundme.activities.PlaceSearchActivity;
 import com.randomappsinc.aroundme.adapters.PlaceTypesAdapter;
 import com.randomappsinc.aroundme.dialogs.PlaceTypeAdder;
 import com.randomappsinc.aroundme.models.PlaceType;
@@ -36,8 +36,6 @@ public class PlaceTypesFragment extends Fragment implements PlaceTypesAdapter.Li
 
     public static PlaceTypesFragment newInstance() {
         PlaceTypesFragment fragment = new PlaceTypesFragment();
-        Bundle bundle = new Bundle();
-        fragment.setArguments(bundle);
         fragment.setRetainInstance(true);
         return fragment;
     }
@@ -74,8 +72,8 @@ public class PlaceTypesFragment extends Fragment implements PlaceTypesAdapter.Li
 
     @Override
     public void onItemClick(PlaceType placeType) {
-        Intent intent = new Intent(getActivity(), SearchActivity.class);
-        intent.putExtra(SearchActivity.SEARCH_TERM_KEY, placeType.getText());
+        Intent intent = new Intent(getActivity(), PlaceSearchActivity.class);
+        intent.putExtra(PlaceSearchActivity.SEARCH_TERM_KEY, placeType.getText());
         getActivity().startActivity(intent);
     }
 

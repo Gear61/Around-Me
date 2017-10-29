@@ -33,7 +33,7 @@
         </activity>
 
         <activity
-            android:name=".activities.SearchActivity"
+            android:name=".activities.PlaceSearchActivity"
             android:configChanges="orientation|screenSize">
         </activity>
 

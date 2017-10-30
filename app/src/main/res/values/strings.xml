@@ -51,6 +51,7 @@
     <string name="user_icon">{ion-android-person}</string>
     <string name="close_icon">{ion-android-close}</string>
     <string name="calendar_icon">{fa-calendar-plus-o}</string>
+    <string name="ticket_icon">{fa-ticket}</string>
 
     <!-- Bottom navigation icons -->
     <string name="home_icon">{ion-android-home}</string>

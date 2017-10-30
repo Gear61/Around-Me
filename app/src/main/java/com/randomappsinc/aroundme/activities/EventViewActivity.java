@@ -28,6 +28,7 @@ public class EventViewActivity extends StandardActivity {
     @BindView(R.id.description_text) TextView mDescriptionText;
     @BindView(R.id.num_attending) TextView mNumAttending;
     @BindView(R.id.num_interested) TextView mNumInterested;
+    @BindView(R.id.buy_tickets) View mBuyTicketsButton;
 
     private Event mEvent;
     private EventInfoView mEventInfoView;
@@ -54,6 +55,10 @@ public class EventViewActivity extends StandardActivity {
         mDescriptionText.setText(mEvent.getDescription());
         mNumAttending.setText(String.valueOf(mEvent.getNumAttending()));
         mNumInterested.setText(String.valueOf(mEvent.getNumInterested()));
+
+        if (mEvent.getTicketsUrl() == null || mEvent.getTicketsUrl().isEmpty()) {
+            mBuyTicketsButton.setVisibility(View.GONE);
+        }
     }
 
     @OnClick(R.id.event_thumbnail)
@@ -107,5 +112,11 @@ public class EventViewActivity extends StandardActivity {
         if (shareIntent.resolveActivity(getPackageManager()) != null) {
             startActivity(shareIntent);
         }
+    }
+
+    @OnClick(R.id.buy_tickets)
+    public void buyTickets() {
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(mEvent.getTicketsUrl()));
+        startActivity(intent);
     }
 }

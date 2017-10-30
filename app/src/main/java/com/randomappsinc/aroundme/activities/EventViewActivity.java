@@ -3,6 +3,8 @@ package com.randomappsinc.aroundme.activities;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.CalendarContract;
+import android.support.v4.app.ShareCompat;
 import android.view.View;
 import android.widget.TextView;
 
@@ -68,5 +70,42 @@ public class EventViewActivity extends StandardActivity {
     public void openEventPage() {
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(mEvent.getUrl()));
         startActivity(intent);
+    }
+
+    @OnClick(R.id.navigate_button)
+    public void headToEvent() {
+        String mapUri = "google.navigation:q=" + mEvent.getAddress() + " " + mEvent.getName();
+        startActivity(Intent.createChooser(
+                new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(mapUri)),
+                getString(R.string.navigate_with)));
+    }
+
+    @OnClick(R.id.add_to_calendar_button)
+    public void addEventToCalendar() {
+        Intent intent = new Intent(Intent.ACTION_EDIT);
+        intent.setType("vnd.android.cursor.item/event");
+        intent.putExtra(CalendarContract.Events.TITLE, mEvent.getName());
+
+        if (mEvent.getStartTimeMillis() > 0L) {
+            intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, mEvent.getStartTimeMillis());
+        }
+        if (mEvent.getEndTimeMillis() > 0L) {
+            intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, mEvent.getEndTimeMillis());
+        }
+
+        intent.putExtra(CalendarContract.Events.ALL_DAY, false);
+        intent.putExtra(CalendarContract.Events.DESCRIPTION, mEvent.getDescription());
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.share_button)
+    public void shareEvent() {
+        Intent shareIntent = ShareCompat.IntentBuilder.from(this)
+                .setType("text/plain")
+                .setText(mEvent.getUrl())
+                .getIntent();
+        if (shareIntent.resolveActivity(getPackageManager()) != null) {
+            startActivity(shareIntent);
+        }
     }
 }

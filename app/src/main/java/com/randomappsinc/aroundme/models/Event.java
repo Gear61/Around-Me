@@ -8,8 +8,14 @@ import com.randomappsinc.aroundme.R;
 import com.randomappsinc.aroundme.utils.MyApplication;
 import com.randomappsinc.aroundme.utils.StringUtils;
 
+import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 
 public class Event implements Parcelable {
 
@@ -213,6 +219,30 @@ public class Event implements Parcelable {
         return mTimeEnd.isEmpty()
                 ? ""
                 : "<b>" + MyApplication.getAppContext().getString(R.string.end) + "</b> " + mTimeEnd;
+    }
+
+    public long getStartTimeMillis() {
+        DateFormat targetFormat = new SimpleDateFormat("EEE, MM/dd/yy - h:mm a", Locale.US);
+        targetFormat.setTimeZone(TimeZone.getDefault());
+        Date date;
+        try {
+            date = targetFormat.parse(mTimeStart);
+        } catch (ParseException exception) {
+            return 0L;
+        }
+        return date.getTime();
+    }
+
+    public long getEndTimeMillis() {
+        DateFormat targetFormat = new SimpleDateFormat("EEE, MM/dd/yy - h:mm a", Locale.US);
+        targetFormat.setTimeZone(TimeZone.getDefault());
+        Date date;
+        try {
+            date = targetFormat.parse(mTimeEnd);
+        } catch (ParseException exception) {
+            return 0L;
+        }
+        return date.getTime();
     }
 
     protected Event(Parcel in) {

@@ -5,4 +5,11 @@
     <string name="to">to</string>
     <string name="start">Start:</string>
     <string name="end">End:</string>
+
+    <string name="description">Description</string>
+    <string name="attending">Attending</string>
+    <string name="interested">Interested</string>
+    <string name="navigate_to_event">Start heading here</string>
+    <string name="add_to_calendar">Add to calendar</string>
+    <string name="buy_tickets">Buy tickets</string>
 </resources>

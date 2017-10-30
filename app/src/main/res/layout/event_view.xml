@@ -2,6 +2,7 @@
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:ignore="SpUsage, RtlHardcoded">
@@ -13,5 +14,90 @@
         android:paddingBottom="8dp">
 
         <include layout="@layout/event_cell"/>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:foreground="?android:attr/selectableItemBackground"
+            card_view:cardUseCompatPadding="true"
+            card_view:cardCornerRadius="3dp"
+            card_view:cardElevation="2dp">
+
+            <LinearLayout style="@style/action_container">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/description"
+                    android:textColor="@color/black"
+                    android:textSize="21dp"/>
+
+                <TextView
+                    android:id="@+id/description_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textSize="17dp"
+                    android:textColor="@color/dark_gray"/>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp">
+
+            <android.support.v7.widget.CardView
+                android:layout_marginRight="4dp"
+                style="@style/action_card">
+
+                <LinearLayout style="@style/action_container">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/attending"
+                        android:textColor="@color/black"
+                        android:textSize="21dp"/>
+
+                    <TextView
+                        android:id="@+id/num_attending"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:textSize="35dp"
+                        android:textColor="@color/dark_gray"
+                        android:singleLine="true"
+                        android:ellipsize="end"/>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_marginLeft="4dp"
+                style="@style/action_card">
+
+                <LinearLayout style="@style/action_container">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/interested"
+                        android:textColor="@color/black"
+                        android:textSize="21dp"/>
+
+                    <TextView
+                        android:id="@+id/num_interested"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:textSize="35dp"
+                        android:textColor="@color/dark_gray"
+                        android:singleLine="true"
+                        android:ellipsize="end"/>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>

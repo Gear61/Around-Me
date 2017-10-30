@@ -24,9 +24,9 @@
             <android.support.v7.widget.CardView
                 android:id="@+id/navigate_button"
                 android:layout_marginRight="4dp"
-                style="@style/place_action_card">
+                style="@style/action_card">
 
-                <LinearLayout style="@style/place_action_container">
+                <LinearLayout style="@style/action_container">
                     <com.joanzapata.iconify.widget.IconTextView
                         android:layout_width="40dp"
                         android:layout_height="40dp"
@@ -48,9 +48,9 @@
             <android.support.v7.widget.CardView
                 android:id="@+id/call_button"
                 android:layout_marginLeft="4dp"
-                style="@style/place_action_card">
+                style="@style/action_card">
 
-                <LinearLayout style="@style/place_action_container">
+                <LinearLayout style="@style/action_container">
                     <com.joanzapata.iconify.widget.IconTextView
                         android:layout_width="40dp"
                         android:layout_height="40dp"
@@ -72,9 +72,9 @@
             <android.support.v7.widget.CardView
                 android:id="@+id/share_button"
                 android:layout_marginLeft="4dp"
-                style="@style/place_action_card">
+                style="@style/action_card">
 
-                <LinearLayout style="@style/place_action_container">
+                <LinearLayout style="@style/action_container">
                     <com.joanzapata.iconify.widget.IconTextView
                         android:layout_width="40dp"
                         android:layout_height="40dp"

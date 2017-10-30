@@ -1,6 +1,7 @@
 package com.randomappsinc.aroundme.fragments;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.randomappsinc.aroundme.R;
+import com.randomappsinc.aroundme.activities.EventViewActivity;
 import com.randomappsinc.aroundme.adapters.EventsAdapter;
 import com.randomappsinc.aroundme.api.RestClient;
 import com.randomappsinc.aroundme.location.LocationManager;
@@ -85,7 +87,9 @@ public class EventSearchFragment extends Fragment
 
     @Override
     public void onEventClicked(Event event) {
-        // TODO: Open event into full view
+        Intent intent = new Intent(getActivity(), EventViewActivity.class);
+        intent.putExtra(EventViewActivity.EVENT_KEY, event);
+        getActivity().startActivity(intent);
     }
 
     @Override

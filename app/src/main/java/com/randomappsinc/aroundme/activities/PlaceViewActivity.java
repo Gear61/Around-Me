@@ -29,7 +29,7 @@ public class PlaceViewActivity extends StandardActivity implements RestClient.Ph
 
     public static final String PLACE_KEY = "place";
 
-    @BindView(R.id.parent) View mPlaceInfo;
+    @BindView(R.id.place_info_parent) View mPlaceInfo;
     @BindView(R.id.photos_stub) View mPhotosStub;
     @BindView(R.id.place_photos) RecyclerView mPhotos;
     @BindView(R.id.reviews_stub) View mReviewsStub;

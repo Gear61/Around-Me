@@ -65,7 +65,7 @@ public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.PlaceViewH
     }
 
     class PlaceViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.parent) View placeInfo;
+        @BindView(R.id.place_info_parent) View placeInfo;
 
         private PlaceInfoView mPlaceInfoView;
 
@@ -79,7 +79,7 @@ public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.PlaceViewH
             mPlaceInfoView.loadPlace(getItem(position));
         }
 
-        @OnClick(R.id.parent)
+        @OnClick(R.id.place_info_parent)
         void onPlaceClicked() {
             Place place = getItem(getAdapterPosition());
             mItemSelectionListener.onPlaceClicked(place);

@@ -67,7 +67,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.EventViewH
     }
 
     class EventViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.parent) View eventInfo;
+        @BindView(R.id.event_info_parent) View eventInfo;
 
         private EventInfoView mEventInfoView;
 
@@ -81,7 +81,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.EventViewH
             mEventInfoView.loadEvent(getItem(position));
         }
 
-        @OnClick(R.id.parent)
+        @OnClick(R.id.event_info_parent)
         void onEventClicked() {
             Event event = getItem(getAdapterPosition());
             mItemSelectionListener.onEventClicked(event);

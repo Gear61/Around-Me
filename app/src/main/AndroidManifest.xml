@@ -47,5 +47,10 @@
             android:theme="@style/AppTheme.PictureFullView"
             android:configChanges="orientation|screenSize">
         </activity>
+
+        <activity
+            android:name=".activities.EventViewActivity"
+            android:configChanges="orientation|screenSize">
+        </activity>
     </application>
 </manifest>

@@ -5,14 +5,17 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.randomappsinc.aroundme.R;
+import com.randomappsinc.aroundme.adapters.EventsAdapter;
 import com.randomappsinc.aroundme.api.RestClient;
 import com.randomappsinc.aroundme.location.LocationManager;
 import com.randomappsinc.aroundme.models.Event;
+import com.randomappsinc.aroundme.utils.SimpleDividerItemDecoration;
 import com.randomappsinc.aroundme.utils.UIUtils;
 
 import java.util.List;
@@ -22,7 +25,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 public class EventSearchFragment extends Fragment
-        implements RestClient.EventsListener, LocationManager.Listener {
+        implements RestClient.EventsListener, LocationManager.Listener, EventsAdapter.ItemSelectionListener {
 
     public static EventSearchFragment newInstance() {
         EventSearchFragment fragment = new EventSearchFragment();
@@ -31,10 +34,12 @@ public class EventSearchFragment extends Fragment
     }
 
     @BindView(R.id.parent) View mParent;
+    @BindView(R.id.events_list) RecyclerView mEventsList;
 
     private Unbinder mUnbinder;
     @Nullable private String mCurrentLocation;
     private RestClient mRestClient;
+    private EventsAdapter mEventsAdapter;
     private LocationManager mLocationManager;
     private boolean mDenialLock;
 
@@ -42,6 +47,10 @@ public class EventSearchFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.event_search, container, false);
         mUnbinder = ButterKnife.bind(this, rootView);
+
+        mEventsList.addItemDecoration(new SimpleDividerItemDecoration(getActivity()));
+        mEventsAdapter = new EventsAdapter(getActivity(), this);
+        mEventsList.setAdapter(mEventsAdapter);
 
         mRestClient = RestClient.getInstance();
         mRestClient.registerEventsListener(this);
@@ -54,6 +63,17 @@ public class EventSearchFragment extends Fragment
     @Override
     public void onEventsFetched(List<Event> events) {
         // TODO: Process events results
+        if (events.isEmpty()) {
+
+        } else {
+            mEventsAdapter.setEvents(events);
+            mEventsList.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    public void onEventClicked(Event event) {
+        // TODO: Open event into full view
     }
 
     @Override

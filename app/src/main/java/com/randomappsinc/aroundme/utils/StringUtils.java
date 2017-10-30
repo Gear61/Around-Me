@@ -1,5 +1,8 @@
 package com.randomappsinc.aroundme.utils;
 
+import java.util.Currency;
+import java.util.Locale;
+
 public class StringUtils {
 
     /**
@@ -26,5 +29,12 @@ public class StringUtils {
                     .append(" ");
         }
         return capitalizedWords.toString().trim();
+    }
+
+    public static
+    String getCurrencySymbol() {
+        Locale userLocale = Locale.getDefault();
+        Currency currency = Currency.getInstance(userLocale);
+        return currency.getSymbol();
     }
 }

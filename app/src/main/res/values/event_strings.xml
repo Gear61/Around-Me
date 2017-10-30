@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="free">Free!</string>
+    <string name="cost_template">Cost: %s</string>
+    <string name="no_events">There are no events near you. {ion-sad-outline}</string>
+</resources>

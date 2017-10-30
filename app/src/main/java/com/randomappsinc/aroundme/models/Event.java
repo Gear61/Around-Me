@@ -4,6 +4,13 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 
+import com.randomappsinc.aroundme.R;
+import com.randomappsinc.aroundme.utils.MyApplication;
+import com.randomappsinc.aroundme.utils.StringUtils;
+
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+
 public class Event implements Parcelable {
 
     private String mId;
@@ -82,6 +89,29 @@ public class Event implements Parcelable {
 
     public void setCostMax(double costMax) {
         mCostMax = costMax;
+    }
+
+    public String getCostText() {
+        StringBuilder costText = new StringBuilder();
+        if (mCost > 0) {
+            NumberFormat formatter = new DecimalFormat("#0.00");
+            String costFormatted = formatter.format(mCost);
+
+            costText.append(StringUtils.getCurrencySymbol()).append(costFormatted);
+
+            if (mCostMax > 0) {
+                String costMaxFormatted = formatter.format(mCostMax);
+                costText.append(" - ").append(StringUtils.getCurrencySymbol()).append(costMaxFormatted);
+            }
+        }
+
+        if (costText.length() == 0) {
+            return "";
+        } else {
+            String costTemplate = MyApplication.getAppContext().getString(R.string.cost_template);
+            String costInfo = costText.toString();
+            return String.format(costTemplate, costInfo);
+        }
     }
 
     public String getDescription() {

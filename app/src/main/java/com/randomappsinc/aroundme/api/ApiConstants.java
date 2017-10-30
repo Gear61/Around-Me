@@ -14,4 +14,6 @@ public class ApiConstants {
 
     static final int DEFAULT_NUM_PLACES = 20;
     static final String DISTANCE_SORT = "distance";
+
+    static final int DEFAULT_NUM_EVENTS = 20;
 }

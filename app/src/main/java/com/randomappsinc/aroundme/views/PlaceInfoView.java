@@ -44,7 +44,7 @@ public class PlaceInfoView {
         if (placeImageUrl != null && !placeImageUrl.isEmpty()) {
             thumbnail.setBackground(null);
             Picasso.with(mContext)
-                    .load(place.getImageUrl())
+                    .load(placeImageUrl)
                     .error(mDefaultThumbnail)
                     .fit().centerCrop()
                     .into(thumbnail);

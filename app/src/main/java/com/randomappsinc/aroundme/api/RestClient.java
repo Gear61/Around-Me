@@ -234,7 +234,10 @@ public class RestClient {
                 }
 
                 long currentUnixTime = System.currentTimeMillis() / 1000L;
-                mCurrentFindEventsCall = mYelpService.findEvents(location, currentUnixTime);
+                mCurrentFindEventsCall = mYelpService.findEvents(
+                        location,
+                        currentUnixTime,
+                        ApiConstants.DEFAULT_NUM_EVENTS);
                 mCurrentFindEventsCall.enqueue(new FindEventsCallback());
             }
         });

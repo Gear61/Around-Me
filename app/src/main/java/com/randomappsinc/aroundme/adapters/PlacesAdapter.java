@@ -17,7 +17,6 @@ import com.randomappsinc.aroundme.views.PlaceInfoView;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindDrawable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -67,8 +66,6 @@ public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.PlaceViewH
 
     class PlaceViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.parent) View placeInfo;
-
-        @BindDrawable(R.drawable.gray_border) Drawable grayBorder;
 
         private PlaceInfoView mPlaceInfoView;
 

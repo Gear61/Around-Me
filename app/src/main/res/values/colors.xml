@@ -9,6 +9,7 @@
     <color name="shadow_black">#3D000000</color>
     <color name="theater_black">#212121</color>
     <color name="dark_gray">#616161</color>
+    <color name="gray_800">#424242</color>
     <color name="gray">#9E9E9E</color>
     <color name="gray_300">#E0E0E0</color>
     <color name="gray_100">#F5F5F5</color>

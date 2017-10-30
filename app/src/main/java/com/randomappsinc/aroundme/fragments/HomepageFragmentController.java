@@ -12,6 +12,7 @@ public class HomepageFragmentController {
     private int mContainerId;
     private PlaceTypesFragment mPlaceTypesFragment;
     private EventSearchFragment mEventSearchFragment;
+    private FavoritesFragment mFavoritesFragment;
     private SettingsFragment mSettingsFragment;
 
     @IdRes private int mCurrentViewId;
@@ -21,6 +22,7 @@ public class HomepageFragmentController {
         mContainerId = containerId;
         mPlaceTypesFragment = PlaceTypesFragment.newInstance();
         mEventSearchFragment = EventSearchFragment.newInstance();
+        mFavoritesFragment = FavoritesFragment.newInstance();
         mSettingsFragment = SettingsFragment.newInstance();
     }
 
@@ -36,6 +38,9 @@ public class HomepageFragmentController {
                 break;
             case R.id.events:
                 swapInFragment(mEventSearchFragment);
+                break;
+            case R.id.favorites:
+                swapInFragment(mFavoritesFragment);
                 break;
             case R.id.settings:
                 swapInFragment(mSettingsFragment);

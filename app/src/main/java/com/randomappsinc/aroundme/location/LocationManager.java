@@ -2,6 +2,7 @@ package com.randomappsinc.aroundme.location;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.Fragment;
 import android.location.Location;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -28,7 +29,8 @@ public class LocationManager implements LocationForm.Listener{
     }
 
     @NonNull private Listener mListener;
-    private Activity mActivity;
+    @NonNull private Activity mActivity;
+    private Fragment mFragment;
 
     private boolean mLocationFetched;
     private Handler mLocationChecker;
@@ -38,16 +40,26 @@ public class LocationManager implements LocationForm.Listener{
     private MaterialDialog mLocationPermissionDialog;
     private LocationForm mLocationForm;
 
-    public LocationManager(@NonNull Listener listener, final Activity activity) {
+    public LocationManager(@NonNull Listener listener, @NonNull Activity activity) {
         mListener = listener;
         mActivity = activity;
+        initNonContext();
+    }
 
+    public LocationManager(@NonNull Listener listener, Fragment fragment) {
+        mListener = listener;
+        mActivity = fragment.getActivity();
+        mFragment = fragment;
+        initNonContext();
+    }
+
+    private void initNonContext() {
         mLocationServicesManager = new LocationServicesManager(mActivity);
         mLocationChecker = new Handler();
         mLocationCheckTask = new Runnable() {
             @Override
             public void run() {
-                SmartLocation.with(activity).location().stop();
+                SmartLocation.with(mActivity).location().stop();
                 if (!mLocationFetched) {
                     UIUtils.showToast(R.string.auto_location_fail);
                 }
@@ -119,10 +131,17 @@ public class LocationManager implements LocationForm.Listener{
     }
 
     private void requestLocationPermission() {
-        PermissionUtils.requestPermission(
-                mActivity,
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                LOCATION_PERMISSION_REQUEST_CODE);
+        if (mFragment != null) {
+            PermissionUtils.requestPermission(
+                    mFragment,
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    LOCATION_PERMISSION_REQUEST_CODE);
+        } else {
+            PermissionUtils.requestPermission(
+                    mActivity,
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    LOCATION_PERMISSION_REQUEST_CODE);
+        }
     }
 
     public void fetchAutomaticLocation() {

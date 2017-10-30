@@ -52,4 +52,16 @@ public class HomepageFragmentController {
     private void swapInFragment(Fragment fragment) {
         mFragmentManager.beginTransaction().replace(mContainerId, fragment).commit();
     }
+
+    public void alertEventsOfLocationServicesGrant() {
+        if (mEventSearchFragment != null) {
+            mEventSearchFragment.onLocationServicesGranted();
+        }
+    }
+
+    public void alertEventsOfLocationServicesDenial() {
+        if (mEventSearchFragment != null) {
+            mEventSearchFragment.onLocationServicesDenied();
+        }
+    }
 }

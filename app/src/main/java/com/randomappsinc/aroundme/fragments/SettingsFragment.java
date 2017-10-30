@@ -26,17 +26,17 @@ public class SettingsFragment extends Fragment implements SettingsAdapter.ItemSe
     public static final String OTHER_APPS_URL = "https://play.google.com/store/apps/dev?id=9093438553713389916";
     public static final String REPO_URL = "https://github.com/Gear61/Around-Me";
 
-    @BindView(R.id.settings_options) RecyclerView settingsOptions;
-    @BindString(R.string.feedback_subject) String feedbackSubject;
-    @BindString(R.string.send_email) String sendEmail;
-
-    private Unbinder mUnbinder;
-
     public static SettingsFragment newInstance() {
         SettingsFragment fragment = new SettingsFragment();
         fragment.setRetainInstance(true);
         return fragment;
     }
+
+    @BindView(R.id.settings_options) RecyclerView settingsOptions;
+    @BindString(R.string.feedback_subject) String feedbackSubject;
+    @BindString(R.string.send_email) String sendEmail;
+
+    private Unbinder mUnbinder;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

@@ -26,6 +26,12 @@ import butterknife.Unbinder;
 
 public class PlaceTypesFragment extends Fragment implements PlaceTypesAdapter.Listener {
 
+    public static PlaceTypesFragment newInstance() {
+        PlaceTypesFragment fragment = new PlaceTypesFragment();
+        fragment.setRetainInstance(true);
+        return fragment;
+    }
+
     @BindView(R.id.parent) View mParent;
     @BindView(R.id.place_types) RecyclerView mPlaceTypes;
     @BindView(R.id.add_place_type) FloatingActionButton mAddPlaceType;
@@ -33,12 +39,6 @@ public class PlaceTypesFragment extends Fragment implements PlaceTypesAdapter.Li
     private PlaceTypeAdder mPlaceTypeAdder;
     private PlaceTypesAdapter mPlaceTypesAdapter;
     private Unbinder mUnbinder;
-
-    public static PlaceTypesFragment newInstance() {
-        PlaceTypesFragment fragment = new PlaceTypesFragment();
-        fragment.setRetainInstance(true);
-        return fragment;
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

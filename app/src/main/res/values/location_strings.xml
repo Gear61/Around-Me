@@ -16,14 +16,14 @@
 
     <string name="location_services_needed">Location Services Needed</string>
     <string name="location_services_denial">
-        Around Me needs location services to find places near you.
+        Around Me needs location services to find places and events near you.
     </string>
     <string name="location_services_confirm">Turn on location services</string>
     <string name="enter_location_manually">Enter in location manually</string>
 
     <string name="location_permission_needed">Location Permission Needed</string>
     <string name="location_permission_denial">
-        Around Me needs permission to access your current location to find restaurants near you.
+        Around Me needs permission to access your current location to find places and events near you.
     </string>
     <string name="give_location_permission">Give us location permission</string>
 

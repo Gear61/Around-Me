@@ -1,5 +1,6 @@
 package com.randomappsinc.aroundme.activities;
 
+import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
@@ -14,6 +15,7 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.randomappsinc.aroundme.R;
 import com.randomappsinc.aroundme.fragments.HomepageFragmentController;
+import com.randomappsinc.aroundme.location.LocationManager;
 import com.randomappsinc.aroundme.persistence.PreferencesManager;
 import com.randomappsinc.aroundme.utils.StringUtils;
 import com.randomappsinc.aroundme.utils.UIUtils;
@@ -86,7 +88,7 @@ public class MainActivity extends StandardActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
-            case SPEECH_REQUEST_CODE: {
+            case SPEECH_REQUEST_CODE:
                 if (resultCode != RESULT_OK || data == null) {
                     return;
                 }
@@ -101,7 +103,13 @@ public class MainActivity extends StandardActivity {
                 intent.putExtra(PlaceSearchActivity.SEARCH_TERM_KEY, searchInput);
                 startActivity(intent);
                 break;
-            }
+            case LocationManager.LOCATION_SERVICES_CODE:
+                if (resultCode == Activity.RESULT_OK) {
+                    mNavigationController.alertEventsOfLocationServicesGrant();
+                } else {
+                    mNavigationController.alertEventsOfLocationServicesDenial();
+                }
+                break;
         }
     }
 

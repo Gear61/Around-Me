@@ -24,8 +24,6 @@ import butterknife.Unbinder;
 public class EventSearchFragment extends Fragment
         implements RestClient.EventsListener, LocationManager.Listener {
 
-    private Unbinder mUnbinder;
-
     public static EventSearchFragment newInstance() {
         EventSearchFragment fragment = new EventSearchFragment();
         fragment.setRetainInstance(true);
@@ -34,6 +32,7 @@ public class EventSearchFragment extends Fragment
 
     @BindView(R.id.parent) View mParent;
 
+    private Unbinder mUnbinder;
     @Nullable private String mCurrentLocation;
     private RestClient mRestClient;
     private LocationManager mLocationManager;
@@ -102,19 +101,14 @@ public class EventSearchFragment extends Fragment
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-
-        mLocationManager.stopFetchingCurrentLocation();
-
-        // Stop listening for place search results
-        mRestClient.cancelPlacesFetch();
-        mRestClient.unregisterPlacesListener();
-    }
-
-    @Override
     public void onDestroyView() {
         super.onDestroyView();
         mUnbinder.unbind();
+
+        mLocationManager.stopFetchingCurrentLocation();
+
+        // Stop listening for photo fetch results
+        mRestClient.cancelEventsFetch();
+        mRestClient.unregisterEventsListener();
     }
 }

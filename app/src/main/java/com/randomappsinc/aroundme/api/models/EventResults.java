@@ -4,13 +4,14 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.randomappsinc.aroundme.models.Event;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class EventResults {
 
     @SerializedName("events")
     @Expose
-    private List<EventResult> businesses;
+    private List<EventResult> eventResults;
 
     public class EventResult {
         @SerializedName("id")
@@ -145,5 +146,13 @@ public class EventResults {
             event.setAddress(location.getAddress());
             return event;
         }
+    }
+
+    public List<Event> getEvents() {
+        List<Event> events = new ArrayList<>();
+        for (EventResult eventResult : eventResults) {
+            events.add(eventResult.toEvent());
+        }
+        return events;
     }
 }

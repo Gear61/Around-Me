@@ -6,6 +6,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <LinearLayout
+        android:id="@+id/skeleton_results"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/skeleton_event_cell"/>
+
+        <include layout="@layout/skeleton_event_cell"/>
+
+        <include layout="@layout/skeleton_event_cell"/>
+
+        <include layout="@layout/skeleton_event_cell"/>
+
+        <include layout="@layout/skeleton_event_cell"/>
+    </LinearLayout>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/events_list"
         android:layout_width="match_parent"

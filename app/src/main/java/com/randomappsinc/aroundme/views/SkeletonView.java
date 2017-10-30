@@ -26,9 +26,10 @@ public class SkeletonView extends View {
         colorAnimator.setRepeatCount(ValueAnimator.INFINITE);
         colorAnimator.setRepeatMode(ValueAnimator.REVERSE);
 
-        final float[] hsv  = new float[3];                  // transition color
-        colorAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener(){
-            @Override public void onAnimationUpdate(ValueAnimator animation) {
+        final float[] hsv  = new float[3];
+        colorAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
                 // Transition along each axis of HSV (hue, saturation, value)
                 hsv[0] = from[0] + (to[0] - from[0]) * animation.getAnimatedFraction();
                 hsv[1] = from[1] + (to[1] - from[1]) * animation.getAnimatedFraction();

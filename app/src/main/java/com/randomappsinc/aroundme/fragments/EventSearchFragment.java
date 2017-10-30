@@ -34,7 +34,9 @@ public class EventSearchFragment extends Fragment
     }
 
     @BindView(R.id.parent) View mParent;
+    @BindView(R.id.skeleton_results) View mSkeletonResults;
     @BindView(R.id.events_list) RecyclerView mEventsList;
+    @BindView(R.id.no_events) View mNoEvents;
 
     private List<Event> mEvents;
 
@@ -69,11 +71,13 @@ public class EventSearchFragment extends Fragment
     @Override
     public void onEventsFetched(List<Event> events) {
         mEvents = events;
+        mSkeletonResults.setVisibility(View.GONE);
 
-        // TODO: Process events results
         if (events.isEmpty()) {
-
+            mEventsList.setVisibility(View.GONE);
+            mNoEvents.setVisibility(View.VISIBLE);
         } else {
+            mNoEvents.setVisibility(View.GONE);
             mEventsAdapter.setEvents(events);
             mEventsList.setVisibility(View.VISIBLE);
         }

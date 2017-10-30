@@ -4,8 +4,14 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.randomappsinc.aroundme.models.Event;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 public class EventResults {
 
@@ -137,14 +143,34 @@ public class EventResults {
             event.setCanceled(isCanceled);
             event.setFree(isFree);
             event.setTicketsUrl(ticketsUrl);
-            event.setTimeStart(timeStart);
-            event.setTimeEnd(timeEnd);
+            event.setTimeStart(convertToOurTime(timeStart));
+            event.setTimeEnd(convertToOurTime(timeEnd));
             event.setCity(location.getCity());
             event.setZipCode(location.getZipCode());
             event.setCountry(location.getCountry());
             event.setState(location.getState());
             event.setAddress(location.getAddress());
             return event;
+        }
+
+        private String convertToOurTime(String originalTime) {
+            if (originalTime == null) {
+                return "";
+            }
+
+            DateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.US);
+            originalFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
+
+            DateFormat targetFormat = new SimpleDateFormat("EEE, MM/dd/yy - h:mm a", Locale.US);
+            targetFormat.setTimeZone(TimeZone.getDefault());
+
+            Date date;
+            try {
+                date = originalFormat.parse(originalTime);
+            } catch (ParseException exception) {
+                throw new RuntimeException("Incorrect time format: " + originalTime);
+            }
+            return targetFormat.format(date);
         }
     }
 

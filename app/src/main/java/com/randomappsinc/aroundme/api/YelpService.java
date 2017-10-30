@@ -37,5 +37,7 @@ public interface YelpService {
     @GET("/v3/events")
     Call<EventResults> findEvents(@Query("location") String location,
                                   @Query("start_date") long startDate,
-                                  @Query("limit") int limit);
+                                  @Query("limit") int limit,
+                                  @Query("sort_on") String sortOn,
+                                  @Query("sort_by") String sortBy);
 }

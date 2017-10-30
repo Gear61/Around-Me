@@ -2,6 +2,7 @@ package com.randomappsinc.aroundme.views;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.text.Html;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -18,9 +19,11 @@ import butterknife.ButterKnife;
 public class EventInfoView {
 
     @BindView(R.id.event_thumbnail) ImageView thumbnail;
+    @BindView(R.id.event_cost) TextView cost;
     @BindView(R.id.event_name) TextView name;
     @BindView(R.id.event_address) TextView address;
-    @BindView(R.id.cost) TextView cost;
+    @BindView(R.id.event_start) TextView eventStart;
+    @BindView(R.id.event_end) TextView eventEnd;
 
     @BindColor(R.color.green) int green;
     @BindColor(R.color.gray_800) int darkGray;
@@ -48,8 +51,6 @@ public class EventInfoView {
             thumbnail.setBackground(grayBorder);
             thumbnail.setImageDrawable(mDefaultThumbnail);
         }
-        name.setText(event.getName());
-        address.setText(event.getAddress());
 
         if (event.isFree()) {
             cost.setTextColor(green);
@@ -63,6 +64,25 @@ public class EventInfoView {
                 cost.setText(costInfo);
                 cost.setVisibility(View.VISIBLE);
             }
+        }
+
+        name.setText(event.getName());
+        address.setText(event.getAddress());
+
+        String startTime = event.getStartText();
+        if (startTime.isEmpty()) {
+            eventStart.setVisibility(View.GONE);
+        } else {
+            eventStart.setText(Html.fromHtml(startTime));
+            eventStart.setVisibility(View.VISIBLE);
+        }
+
+        String endTime = event.getEndText();
+        if (endTime.isEmpty()) {
+            eventEnd.setVisibility(View.GONE);
+        } else {
+            eventEnd.setText(Html.fromHtml(endTime));
+            eventEnd.setVisibility(View.VISIBLE);
         }
     }
 }

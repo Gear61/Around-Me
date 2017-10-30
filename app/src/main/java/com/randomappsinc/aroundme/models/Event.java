@@ -26,7 +26,7 @@ public class Event implements Parcelable {
     private boolean mIsFree;
     @Nullable private String mTicketsUrl;
     private String mTimeStart;
-    @Nullable private String mTimeEnd;
+    private String mTimeEnd;
     private String mCity;
     private String mZipCode;
     private String mCountry;
@@ -91,29 +91,6 @@ public class Event implements Parcelable {
         mCostMax = costMax;
     }
 
-    public String getCostText() {
-        StringBuilder costText = new StringBuilder();
-        if (mCost > 0) {
-            NumberFormat formatter = new DecimalFormat("#0.00");
-            String costFormatted = formatter.format(mCost);
-
-            costText.append(StringUtils.getCurrencySymbol()).append(costFormatted);
-
-            if (mCostMax > 0) {
-                String costMaxFormatted = formatter.format(mCostMax);
-                costText.append(" - ").append(StringUtils.getCurrencySymbol()).append(costMaxFormatted);
-            }
-        }
-
-        if (costText.length() == 0) {
-            return "";
-        } else {
-            String costTemplate = MyApplication.getAppContext().getString(R.string.cost_template);
-            String costInfo = costText.toString();
-            return String.format(costTemplate, costInfo);
-        }
-    }
-
     public String getDescription() {
         return mDescription;
     }
@@ -146,7 +123,6 @@ public class Event implements Parcelable {
         mIsFree = free;
     }
 
-    @Nullable
     public String getTicketsUrl() {
         return mTicketsUrl;
     }
@@ -163,12 +139,11 @@ public class Event implements Parcelable {
         mTimeStart = timeStart;
     }
 
-    @Nullable
     public String getTimeEnd() {
         return mTimeEnd;
     }
 
-    public void setTimeEnd(@Nullable String timeEnd) {
+    public void setTimeEnd(String timeEnd) {
         mTimeEnd = timeEnd;
     }
 
@@ -210,6 +185,34 @@ public class Event implements Parcelable {
 
     public void setAddress(String address) {
         mAddress = address;
+    }
+
+    public String getCostText() {
+        StringBuilder costText = new StringBuilder();
+        if (mCost > 0) {
+            NumberFormat formatter = new DecimalFormat("#0.00");
+            String costFormatted = formatter.format(mCost);
+
+            costText.append(StringUtils.getCurrencySymbol()).append(costFormatted);
+
+            if (mCostMax > 0) {
+                String costMaxFormatted = formatter.format(mCostMax);
+                costText.append(" - ").append(StringUtils.getCurrencySymbol()).append(costMaxFormatted);
+            }
+        }
+        return costText.length() == 0 ? "" : costText.toString();
+    }
+
+    public String getStartText() {
+        return mTimeStart.isEmpty()
+                ? ""
+                : "<b>" + MyApplication.getAppContext().getString(R.string.start) + "</b> " + mTimeStart;
+    }
+
+    public String getEndText() {
+        return mTimeEnd.isEmpty()
+                ? ""
+                : "<b>" + MyApplication.getAppContext().getString(R.string.end) + "</b> " + mTimeEnd;
     }
 
     protected Event(Parcel in) {

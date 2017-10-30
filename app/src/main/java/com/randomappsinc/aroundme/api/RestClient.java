@@ -237,7 +237,9 @@ public class RestClient {
                 mCurrentFindEventsCall = mYelpService.findEvents(
                         location,
                         currentUnixTime,
-                        ApiConstants.DEFAULT_NUM_EVENTS);
+                        ApiConstants.DEFAULT_NUM_EVENTS,
+                        ApiConstants.TIME_START_SORT,
+                        ApiConstants.ASC_SORT);
                 mCurrentFindEventsCall.enqueue(new FindEventsCallback());
             }
         });

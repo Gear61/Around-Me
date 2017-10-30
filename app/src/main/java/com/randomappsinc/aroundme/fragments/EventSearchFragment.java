@@ -36,6 +36,8 @@ public class EventSearchFragment extends Fragment
     @BindView(R.id.parent) View mParent;
     @BindView(R.id.events_list) RecyclerView mEventsList;
 
+    private List<Event> mEvents;
+
     private Unbinder mUnbinder;
     @Nullable private String mCurrentLocation;
     private RestClient mRestClient;
@@ -57,11 +59,17 @@ public class EventSearchFragment extends Fragment
 
         mLocationManager = new LocationManager(this, this);
 
+        if (mEvents != null) {
+            onEventsFetched(mEvents);
+        }
+
         return rootView;
     }
 
     @Override
     public void onEventsFetched(List<Event> events) {
+        mEvents = events;
+
         // TODO: Process events results
         if (events.isEmpty()) {
 

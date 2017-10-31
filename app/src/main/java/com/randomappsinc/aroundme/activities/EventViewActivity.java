@@ -52,7 +52,7 @@ public class EventViewActivity extends StandardActivity {
                 new IconDrawable(this, IoniconsIcons.ion_android_calendar).colorRes(R.color.dark_gray));
         mEventInfoView.loadEvent(mEvent);
 
-        mDescriptionText.setText(mEvent.getDescription());
+        mDescriptionText.setText(mEvent.getDescriptionText());
         mNumAttending.setText(String.valueOf(mEvent.getNumAttending()));
         mNumInterested.setText(String.valueOf(mEvent.getNumInterested()));
 

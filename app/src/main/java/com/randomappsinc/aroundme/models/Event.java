@@ -3,6 +3,9 @@ package com.randomappsinc.aroundme.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 
 import com.randomappsinc.aroundme.R;
 import com.randomappsinc.aroundme.utils.MyApplication;
@@ -243,6 +246,24 @@ public class Event implements Parcelable {
             return 0L;
         }
         return date.getTime();
+    }
+
+    public Spannable getDescriptionText() {
+        if (mDescription.endsWith("...")) {
+            String readMore = MyApplication.getAppContext().getString(R.string.read_more);
+            Spannable descriptionText = new SpannableString(mDescription + " " + readMore);
+            int colorAccent = MyApplication.getAppContext().getResources().getColor(R.color.colorAccent);
+            int start = mDescription.length() + 1;
+            int end = start + readMore.length();
+            descriptionText.setSpan(
+                    new ForegroundColorSpan(colorAccent),
+                    start,
+                    end,
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            return descriptionText;
+        } else {
+            return new SpannableString(mDescription);
+        }
     }
 
     protected Event(Parcel in) {

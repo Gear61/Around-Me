@@ -8,6 +8,7 @@ import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 
 import com.randomappsinc.aroundme.R;
+import com.randomappsinc.aroundme.persistence.models.EventDO;
 import com.randomappsinc.aroundme.utils.MyApplication;
 import com.randomappsinc.aroundme.utils.StringUtils;
 
@@ -283,6 +284,33 @@ public class Event implements Parcelable {
         } else {
             return new SpannableString(mDescription);
         }
+    }
+
+    public EventDO toEventDO() {
+        EventDO eventDO = new EventDO();
+        eventDO.setId(mId);
+        eventDO.setImageUrl(mImageUrl);
+        eventDO.setName(mName);
+        eventDO.setNumAttending(mNumAttending);
+        eventDO.setNumInterested(mNumInterested);
+        eventDO.setCost(mCost);
+        eventDO.setCostMax(mCostMax);
+        eventDO.setDescription(mDescription);
+        eventDO.setUrl(mUrl);
+        eventDO.setIsCanceled(mIsCanceled);
+        eventDO.setIsFree(mIsFree);
+        eventDO.setTicketsUrl(mTicketsUrl);
+        eventDO.setTimeStart(mTimeStart);
+        eventDO.setTimeEnd(mTimeEnd);
+        eventDO.setCity(mCity);
+        eventDO.setZipCode(mZipCode);
+        eventDO.setCountry(mCountry);
+        eventDO.setState(mState);
+        eventDO.setAddress(mAddress);
+        eventDO.setLatitude(mLatitude);
+        eventDO.setLongitude(mLongitude);
+        eventDO.setIsFavorited(mIsFavorited);
+        return eventDO;
     }
 
     protected Event(Parcel in) {

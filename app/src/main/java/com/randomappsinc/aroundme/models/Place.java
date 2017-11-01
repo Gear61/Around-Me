@@ -143,7 +143,22 @@ public class Place implements Parcelable {
 
     public PlaceDO toPlaceDO() {
         PlaceDO placeDO = new PlaceDO();
-
+        placeDO.setId(mId);
+        placeDO.setName(mName);
+        placeDO.setImageUrl(mImageUrl);
+        placeDO.setUrl(mUrl);
+        placeDO.setRating(mRating);
+        placeDO.setReviewCount(mReviewCount);
+        placeDO.setPhoneNumber(mPhoneNumber);
+        placeDO.setPrice(mPrice);
+        placeDO.setCity(mCity);
+        placeDO.setZipCode(mZipCode);
+        placeDO.setCountry(mCountry);
+        placeDO.setState(mState);
+        placeDO.setAddress(mAddress);
+        placeDO.setLatitude(mLatitude);
+        placeDO.setLongitude(mLongitude);
+        placeDO.setIsFavorited(mIsFavorited);
         return placeDO;
     }
 

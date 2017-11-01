@@ -198,7 +198,7 @@ public class EventDO extends RealmObject {
         mLongitude = longitude;
     }
 
-    public boolean iFavorited() {
+    public boolean isFavorited() {
         return mIsFavorited;
     }
 

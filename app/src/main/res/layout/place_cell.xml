@@ -26,6 +26,7 @@
         android:orientation="vertical">
 
         <com.joanzapata.iconify.widget.IconTextView
+            android:id="@+id/distance_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/navigate_icon"
@@ -35,6 +36,7 @@
         <TextView
             android:id="@+id/distance"
             android:layout_marginTop="2dp"
+            android:layout_marginBottom="8dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/gray"
@@ -42,7 +44,6 @@
 
         <TextView
             android:id="@+id/price"
-            android:layout_marginTop="8dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="15dp"/>

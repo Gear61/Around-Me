@@ -3,6 +3,8 @@ package com.randomappsinc.aroundme.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.randomappsinc.aroundme.persistence.models.PlaceDO;
+
 public class Place implements Parcelable {
 
     private String mId;
@@ -20,8 +22,9 @@ public class Place implements Parcelable {
     private String mAddress;
     private double mLatitude;
     private double mLongitude;
+    private boolean mIsFavorited;
 
-    // Distance from the place location in miles
+    // Distance between the place location and the user's current location in miles
     private double mDistance;
 
     public Place() {}
@@ -122,12 +125,26 @@ public class Place implements Parcelable {
         mLongitude = longitude;
     }
 
+    public boolean isFavorited() {
+        return mIsFavorited;
+    }
+
+    public void setIsFavorited(boolean isFavorited) {
+        mIsFavorited = isFavorited;
+    }
+
     public double getDistance() {
         return mDistance;
     }
 
     public void setDistance(double distance) {
         mDistance = distance;
+    }
+
+    public PlaceDO toPlaceDO() {
+        PlaceDO placeDO = new PlaceDO();
+
+        return placeDO;
     }
 
     protected Place(Parcel in) {
@@ -146,6 +163,7 @@ public class Place implements Parcelable {
         mAddress = in.readString();
         mLatitude = in.readDouble();
         mLongitude = in.readDouble();
+        mIsFavorited = in.readByte() != 0x00;
         mDistance = in.readDouble();
     }
 
@@ -171,6 +189,7 @@ public class Place implements Parcelable {
         dest.writeString(mAddress);
         dest.writeDouble(mLatitude);
         dest.writeDouble(mLongitude);
+        dest.writeByte((byte) (mIsFavorited ? 0x01 : 0x00));
         dest.writeDouble(mDistance);
     }
 

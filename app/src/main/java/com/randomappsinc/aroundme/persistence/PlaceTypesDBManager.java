@@ -3,6 +3,7 @@ package com.randomappsinc.aroundme.persistence;
 import android.support.annotation.NonNull;
 
 import com.randomappsinc.aroundme.models.PlaceType;
+import com.randomappsinc.aroundme.persistence.models.PlaceTypeDO;
 
 import java.util.ArrayList;
 import java.util.List;

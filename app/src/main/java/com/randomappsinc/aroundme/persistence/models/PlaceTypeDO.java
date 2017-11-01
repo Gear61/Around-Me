@@ -1,4 +1,4 @@
-package com.randomappsinc.aroundme.persistence;
+package com.randomappsinc.aroundme.persistence.models;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
@@ -11,7 +11,7 @@ public class PlaceTypeDO extends RealmObject {
     private String text;
     private long timeLastUpdated;
 
-    int getPlaceTypeId() {
+    public int getPlaceTypeId() {
         return placeTypeId;
     }
 

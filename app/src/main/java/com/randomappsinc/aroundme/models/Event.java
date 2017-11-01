@@ -41,6 +41,9 @@ public class Event implements Parcelable {
     private String mCountry;
     private String mState;
     private String mAddress;
+    private double mLatitude;
+    private double mLongitude;
+    private boolean mIsFavorited;
 
     public Event() {}
 
@@ -196,6 +199,22 @@ public class Event implements Parcelable {
         mAddress = address;
     }
 
+    public void setLatitude(double latitude) {
+        mLatitude = latitude;
+    }
+
+    public void setLongitude(double longitude) {
+        mLongitude = longitude;
+    }
+
+    public boolean isFavorited() {
+        return mIsFavorited;
+    }
+
+    public void setIsFavorited(boolean isFavorited) {
+        mIsFavorited = isFavorited;
+    }
+
     public String getCostText() {
         StringBuilder costText = new StringBuilder();
         if (mCost > 0) {
@@ -286,6 +305,9 @@ public class Event implements Parcelable {
         mCountry = in.readString();
         mState = in.readString();
         mAddress = in.readString();
+        mLatitude = in.readDouble();
+        mLongitude = in.readDouble();
+        mIsFavorited = in.readByte() != 0x00;
     }
 
     @Override
@@ -314,6 +336,9 @@ public class Event implements Parcelable {
         dest.writeString(mCountry);
         dest.writeString(mState);
         dest.writeString(mAddress);
+        dest.writeDouble(mLatitude);
+        dest.writeDouble(mLongitude);
+        dest.writeByte((byte) (mIsFavorited ? 0x01 : 0x00));
     }
 
     @SuppressWarnings("unused")

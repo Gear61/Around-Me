@@ -1,6 +1,6 @@
 package com.randomappsinc.aroundme.models;
 
-import com.randomappsinc.aroundme.persistence.PlaceTypeDO;
+import com.randomappsinc.aroundme.persistence.models.PlaceTypeDO;
 
 public class PlaceType {
 

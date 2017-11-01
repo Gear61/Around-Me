@@ -76,6 +76,14 @@ public class EventResults {
         @Expose
         private String timeEnd;
 
+        @SerializedName("latitude")
+        @Expose
+        private double latitude;
+
+        @SerializedName("longitude")
+        @Expose
+        private double longitude;
+
         @SerializedName("location")
         @Expose
         private Location location;
@@ -150,6 +158,8 @@ public class EventResults {
             event.setCountry(location.getCountry());
             event.setState(location.getState());
             event.setAddress(location.getAddress());
+            event.setLatitude(latitude);
+            event.setLongitude(longitude);
             return event;
         }
 

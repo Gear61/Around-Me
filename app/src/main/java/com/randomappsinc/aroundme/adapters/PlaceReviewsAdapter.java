@@ -116,6 +116,10 @@ public class PlaceReviewsAdapter extends RecyclerView.Adapter<PlaceReviewsAdapte
 
         @OnClick(R.id.parent)
         public void onReviewClicked() {
+            if (mReviews.isEmpty()) {
+                return;
+            }
+
             Review review = mReviews.get(getAdapterPosition());
             mListener.onReviewClicked(review);
         }

@@ -28,7 +28,7 @@
 
             <android.support.v7.widget.CardView
                 android:id="@+id/call_button"
-                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
                 style="@style/action_card">
 
                 <LinearLayout style="@style/action_container">

@@ -5,7 +5,9 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="8dp"
+    android:layout_marginTop="16dp"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp"
     android:gravity="center_vertical"
     tools:ignore="RtlHardcoded">
 

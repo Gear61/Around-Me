@@ -117,8 +117,16 @@ public class Place implements Parcelable {
         mAddress = address;
     }
 
+    public double getLatitude() {
+        return mLatitude;
+    }
+
     public void setLatitude(double latitude) {
         mLatitude = latitude;
+    }
+
+    public double getLongitude() {
+        return mLongitude;
     }
 
     public void setLongitude(double longitude) {

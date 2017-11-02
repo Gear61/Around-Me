@@ -7,6 +7,13 @@ import android.support.v4.app.ShareCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.joanzapata.iconify.IconDrawable;
 import com.joanzapata.iconify.fonts.IoniconsIcons;
 import com.randomappsinc.aroundme.R;
@@ -25,10 +32,11 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class PlaceViewActivity extends StandardActivity implements RestClient.PhotosListener,
-        RestClient.ReviewsListener, PlaceReviewsAdapter.Listener, PlacePhotosAdapter.Listener {
+        RestClient.ReviewsListener, PlaceReviewsAdapter.Listener, PlacePhotosAdapter.Listener, OnMapReadyCallback {
 
     public static final String PLACE_KEY = "place";
 
+    @BindView(R.id.place_map) MapView mPlaceMap;
     @BindView(R.id.place_info_parent) View mPlaceInfo;
     @BindView(R.id.photos_stub) View mPhotosStub;
     @BindView(R.id.place_photos) RecyclerView mPhotos;
@@ -70,15 +78,56 @@ public class PlaceViewActivity extends StandardActivity implements RestClient.Ph
                 mPlaceInfo,
                 new IconDrawable(this, IoniconsIcons.ion_location).colorRes(R.color.dark_gray));
         mPlaceInfoView.loadPlace(mPlace);
+
+        mPlaceMap.onCreate(savedInstanceState);
+        mPlaceMap.getMapAsync(this);
     }
 
-    @OnClick(R.id.navigate_button)
-    public void navigateToPlace() {
-        String mapUri = "google.navigation:q=" + mPlace.getAddress() + " " + mPlace.getName();
-        startActivity(Intent.createChooser(
-                new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(mapUri)),
-                getString(R.string.navigate_with)));
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        mPlaceMap.onSaveInstanceState(outState);
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mPlaceMap.onResume();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mPlaceMap.onStart();
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        googleMap.getUiSettings().setAllGesturesEnabled(false);
+        googleMap.setOnMapClickListener(mMapClickListener);
+
+        LatLng place = new LatLng(mPlace.getLatitude(), mPlace.getLongitude());
+        googleMap.addMarker(new MarkerOptions()
+                .position(place)
+                .title(mPlace.getName()));
+        CameraPosition cameraPosition = new CameraPosition.Builder()
+                .target(place)
+                .zoom(16)
+                .bearing(0)
+                .tilt(0)
+                .build();
+        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+    }
+
+    private final GoogleMap.OnMapClickListener mMapClickListener = new GoogleMap.OnMapClickListener() {
+        @Override
+        public void onMapClick(LatLng latLng) {
+            String mapUri = "google.navigation:q=" + mPlace.getAddress() + " " + mPlace.getName();
+            startActivity(Intent.createChooser(
+                    new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(mapUri)),
+                    getString(R.string.navigate_with)));
+        }
+    };
 
     @OnClick(R.id.call_button)
     public void callPlace() {
@@ -101,15 +150,13 @@ public class PlaceViewActivity extends StandardActivity implements RestClient.Ph
 
     @Override
     public void onPhotosFetched(List<String> photos) {
-        mPhotosStub.setVisibility(View.GONE);
-        mPhotos.setVisibility(View.VISIBLE);
+        mPhotosStub.setVisibility(View.INVISIBLE);
         mPhotosAdapter.setPhotoUrls(photos);
     }
 
     @Override
     public void onReviewsFetched(List<Review> reviews) {
-        mReviewsStub.setVisibility(View.GONE);
-        mReviews.setVisibility(View.VISIBLE);
+        mReviewsStub.setVisibility(View.INVISIBLE);
         mReviewsAdapter.setReviews(reviews);
     }
 
@@ -129,8 +176,27 @@ public class PlaceViewActivity extends StandardActivity implements RestClient.Ph
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        mPlaceMap.onPause();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mPlaceMap.onStop();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mPlaceMap.onLowMemory();
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
+        mPlaceMap.onDestroy();
 
         // Stop listening for photo fetch results
         mRestClient.cancelPhotosFetch();

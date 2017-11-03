@@ -62,6 +62,9 @@ public class PlaceViewActivity extends StandardActivity implements RestClient.Ph
         mPlace = getIntent().getParcelableExtra(PLACE_KEY);
         setTitle(mPlace.getName());
 
+        mPlaceMap.onCreate(savedInstanceState);
+        mPlaceMap.getMapAsync(this);
+
         mPhotosAdapter = new PlacePhotosAdapter(this, this);
         mPhotos.setAdapter(mPhotosAdapter);
         mReviewsAdapter = new PlaceReviewsAdapter(this, this);
@@ -78,9 +81,6 @@ public class PlaceViewActivity extends StandardActivity implements RestClient.Ph
                 mPlaceInfo,
                 new IconDrawable(this, IoniconsIcons.ion_location).colorRes(R.color.dark_gray));
         mPlaceInfoView.loadPlace(mPlace);
-
-        mPlaceMap.onCreate(savedInstanceState);
-        mPlaceMap.getMapAsync(this);
     }
 
     @Override

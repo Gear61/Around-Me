@@ -8,6 +8,13 @@ import android.support.v4.app.ShareCompat;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.joanzapata.iconify.IconDrawable;
 import com.joanzapata.iconify.fonts.IoniconsIcons;
 import com.randomappsinc.aroundme.R;
@@ -20,10 +27,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class EventViewActivity extends StandardActivity {
+public class EventViewActivity extends StandardActivity implements OnMapReadyCallback {
 
     public static final String EVENT_KEY = "event";
 
+    @BindView(R.id.event_map) MapView mEventMap;
     @BindView(R.id.event_info_parent) View mEventInfo;
     @BindView(R.id.description_text) TextView mDescriptionText;
     @BindView(R.id.num_attending) TextView mNumAttending;
@@ -46,6 +54,9 @@ public class EventViewActivity extends StandardActivity {
         mEvent = getIntent().getParcelableExtra(EVENT_KEY);
         setTitle(mEvent.getName());
 
+        mEventMap.onCreate(savedInstanceState);
+        mEventMap.getMapAsync(this);
+
         mEventInfoView = new EventInfoView(
                 this,
                 mEventInfo,
@@ -61,6 +72,52 @@ public class EventViewActivity extends StandardActivity {
         }
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        mEventMap.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mEventMap.onResume();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mEventMap.onStart();
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        googleMap.getUiSettings().setAllGesturesEnabled(false);
+        googleMap.setOnMapClickListener(mMapClickListener);
+
+        LatLng place = new LatLng(mEvent.getLatitude(), mEvent.getLongitude());
+        googleMap.addMarker(new MarkerOptions()
+                .position(place)
+                .title(mEvent.getName()));
+        CameraPosition cameraPosition = new CameraPosition.Builder()
+                .target(place)
+                .zoom(16)
+                .bearing(0)
+                .tilt(0)
+                .build();
+        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+    }
+
+    private final GoogleMap.OnMapClickListener mMapClickListener = new GoogleMap.OnMapClickListener() {
+        @Override
+        public void onMapClick(LatLng latLng) {
+            String mapUri = "google.navigation:q=" + mEvent.getAddress() + " " + mEvent.getName();
+            startActivity(Intent.createChooser(
+                    new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(mapUri)),
+                    getString(R.string.navigate_with)));
+        }
+    };
+
     @OnClick(R.id.event_thumbnail)
     public void onThumbnailClicked() {
         Intent intent = new Intent(this, PictureFullViewActivity.class);
@@ -75,14 +132,6 @@ public class EventViewActivity extends StandardActivity {
     public void openEventPage() {
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(mEvent.getUrl()));
         startActivity(intent);
-    }
-
-    @OnClick(R.id.navigate_button)
-    public void headToEvent() {
-        String mapUri = "google.navigation:q=" + mEvent.getAddress() + " " + mEvent.getName();
-        startActivity(Intent.createChooser(
-                new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(mapUri)),
-                getString(R.string.navigate_with)));
     }
 
     @OnClick(R.id.add_to_calendar_button)
@@ -118,5 +167,29 @@ public class EventViewActivity extends StandardActivity {
     public void buyTickets() {
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(mEvent.getTicketsUrl()));
         startActivity(intent);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mEventMap.onPause();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mEventMap.onStop();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mEventMap.onLowMemory();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mEventMap.onDestroy();
     }
 }

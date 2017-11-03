@@ -67,4 +67,7 @@
     <string name="speech_unrecognized">
         We couldn\'t recognize what you said. Please try again.
     </string>
+
+    <string name="call">Call</string>
+    <string name="share">Share</string>
 </resources>

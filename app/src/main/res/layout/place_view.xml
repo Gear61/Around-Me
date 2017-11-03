@@ -44,7 +44,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:text="@string/call_place"
+                        android:text="@string/call"
                         android:textSize="17dp"
                         android:textColor="@color/dark_gray"/>
                 </LinearLayout>
@@ -68,7 +68,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:text="@string/share_place"
+                        android:text="@string/share"
                         android:textSize="17dp"
                         android:textColor="@color/dark_gray"/>
                 </LinearLayout>

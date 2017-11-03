@@ -13,6 +13,11 @@
         android:layout_height="wrap_content"
         android:paddingBottom="8dp">
 
+        <com.google.android.gms.maps.MapView
+            android:id="@+id/event_map"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"/>
+
         <include layout="@layout/event_cell"/>
 
         <android.support.v7.widget.CardView
@@ -53,34 +58,8 @@
             android:paddingRight="8dp">
 
             <android.support.v7.widget.CardView
-                android:id="@+id/navigate_button"
-                android:layout_marginRight="4dp"
-                style="@style/action_card">
-
-                <LinearLayout style="@style/action_container">
-                    <com.joanzapata.iconify.widget.IconTextView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:gravity="center"
-                        android:text="@string/navigate_icon"
-                        android:textSize="32dp"
-                        android:textColor="@color/blue"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:text="@string/navigate_here"
-                        android:textSize="13dp"
-                        android:textColor="@color/dark_gray"
-                        android:singleLine="true"
-                        android:ellipsize="end"/>
-                </LinearLayout>
-            </android.support.v7.widget.CardView>
-
-            <android.support.v7.widget.CardView
                 android:id="@+id/add_to_calendar_button"
-                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
                 style="@style/action_card">
 
                 <LinearLayout style="@style/action_container">
@@ -97,7 +76,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
                         android:text="@string/add_to_calendar"
-                        android:textSize="13dp"
+                        android:textSize="17dp"
                         android:textColor="@color/dark_gray"
                         android:singleLine="true"
                         android:ellipsize="end"/>
@@ -122,8 +101,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:text="@string/share_place"
-                        android:textSize="13dp"
+                        android:text="@string/share"
+                        android:textSize="17dp"
                         android:textColor="@color/dark_gray"
                         android:singleLine="true"
                         android:ellipsize="end"/>

@@ -1,9 +1,9 @@
 package com.randomappsinc.aroundme.api;
 
-import com.randomappsinc.aroundme.api.models.EventResults;
+import com.randomappsinc.aroundme.api.models.EventSearchResults;
 import com.randomappsinc.aroundme.api.models.PlacePhotos;
-import com.randomappsinc.aroundme.api.models.PlaceResults;
 import com.randomappsinc.aroundme.api.models.PlaceReviews;
+import com.randomappsinc.aroundme.api.models.PlaceSearchResults;
 import com.randomappsinc.aroundme.api.models.TokenResponse;
 
 import retrofit2.Call;
@@ -23,10 +23,10 @@ public interface YelpService {
                                    @Field("grant_type") String last);
 
     @GET("v3/businesses/search")
-    Call<PlaceResults> findPlaces(@Query("term") String term,
-                                  @Query("location") String location,
-                                  @Query("limit") int limit,
-                                  @Query("sort_by") String sortBy);
+    Call<PlaceSearchResults> findPlaces(@Query("term") String term,
+                                        @Query("location") String location,
+                                        @Query("limit") int limit,
+                                        @Query("sort_by") String sortBy);
 
     @GET("v3/businesses/{id}")
     Call<PlacePhotos> fetchPlacePhotos(@Path("id") String placeId);
@@ -35,9 +35,9 @@ public interface YelpService {
     Call<PlaceReviews> fetchPlaceReviews(@Path("id") String placeId);
 
     @GET("/v3/events")
-    Call<EventResults> findEvents(@Query("location") String location,
-                                  @Query("start_date") long startDate,
-                                  @Query("limit") int limit,
-                                  @Query("sort_on") String sortOn,
-                                  @Query("sort_by") String sortBy);
+    Call<EventSearchResults> findEvents(@Query("location") String location,
+                                        @Query("start_date") long startDate,
+                                        @Query("limit") int limit,
+                                        @Query("sort_on") String sortOn,
+                                        @Query("sort_by") String sortBy);
 }

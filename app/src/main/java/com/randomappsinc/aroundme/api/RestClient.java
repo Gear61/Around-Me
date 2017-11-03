@@ -9,10 +9,10 @@ import com.randomappsinc.aroundme.api.callbacks.FetchReviewsCallback;
 import com.randomappsinc.aroundme.api.callbacks.FetchTokenCallback;
 import com.randomappsinc.aroundme.api.callbacks.FindEventsCallback;
 import com.randomappsinc.aroundme.api.callbacks.FindPlacesCallback;
-import com.randomappsinc.aroundme.api.models.EventResults;
+import com.randomappsinc.aroundme.api.models.EventSearchResults;
 import com.randomappsinc.aroundme.api.models.PlacePhotos;
-import com.randomappsinc.aroundme.api.models.PlaceResults;
 import com.randomappsinc.aroundme.api.models.PlaceReviews;
+import com.randomappsinc.aroundme.api.models.PlaceSearchResults;
 import com.randomappsinc.aroundme.models.Event;
 import com.randomappsinc.aroundme.models.Place;
 import com.randomappsinc.aroundme.models.Review;
@@ -69,7 +69,7 @@ public class RestClient {
 
     // Places
     @NonNull private PlacesListener mPlacesListener = DUMMY_PLACES_LISTENER;
-    private Call<PlaceResults> mCurrentFindPlacesCall;
+    private Call<PlaceSearchResults> mCurrentFindPlacesCall;
 
     // Photos
     @NonNull private PhotosListener mPhotosListener = DUMMY_PHOTOS_LISTENER;
@@ -81,7 +81,7 @@ public class RestClient {
 
     // Events
     @NonNull private EventsListener mEventsListener = DUMMY_EVENTS_LISTENER;
-    private Call<EventResults> mCurrentFindEventsCall;
+    private Call<EventSearchResults> mCurrentFindEventsCall;
 
     public static RestClient getInstance() {
         if (mInstance == null) {

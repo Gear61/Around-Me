@@ -11,15 +11,10 @@ import com.randomappsinc.aroundme.R;
 import com.randomappsinc.aroundme.persistence.models.EventDO;
 import com.randomappsinc.aroundme.utils.MyApplication;
 import com.randomappsinc.aroundme.utils.StringUtils;
+import com.randomappsinc.aroundme.utils.TimeUtils;
 
-import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-import java.util.TimeZone;
 
 public class Event implements Parcelable {
 
@@ -35,8 +30,8 @@ public class Event implements Parcelable {
     private boolean mIsCanceled;
     private boolean mIsFree;
     @Nullable private String mTicketsUrl;
-    private String mTimeStart;
-    private String mTimeEnd;
+    private long mTimeStart;
+    private long mTimeEnd;
     private String mCity;
     private String mZipCode;
     private String mCountry;
@@ -144,19 +139,19 @@ public class Event implements Parcelable {
         mTicketsUrl = ticketsUrl;
     }
 
-    public String getTimeStart() {
+    public long getTimeStart() {
         return mTimeStart;
     }
 
-    public void setTimeStart(String timeStart) {
+    public void setTimeStart(long timeStart) {
         mTimeStart = timeStart;
     }
 
-    public String getTimeEnd() {
+    public long getTimeEnd() {
         return mTimeEnd;
     }
 
-    public void setTimeEnd(String timeEnd) {
+    public void setTimeEnd(long timeEnd) {
         mTimeEnd = timeEnd;
     }
 
@@ -241,39 +236,23 @@ public class Event implements Parcelable {
     }
 
     public String getStartText() {
-        return mTimeStart.isEmpty()
+        return mTimeStart == 0L
                 ? ""
-                : "<b>" + MyApplication.getAppContext().getString(R.string.start) + "</b> " + mTimeStart;
+                : "<b>" + MyApplication.getAppContext().getString(R.string.start) + "</b> " + getStartTime();
     }
 
     public String getEndText() {
-        return mTimeEnd.isEmpty()
+        return mTimeEnd == 0L
                 ? ""
-                : "<b>" + MyApplication.getAppContext().getString(R.string.end) + "</b> " + mTimeEnd;
+                : "<b>" + MyApplication.getAppContext().getString(R.string.end) + "</b> " + getEndTime();
     }
 
-    public long getStartTimeMillis() {
-        DateFormat targetFormat = new SimpleDateFormat("EEE, MM/dd/yy - h:mm a", Locale.US);
-        targetFormat.setTimeZone(TimeZone.getDefault());
-        Date date;
-        try {
-            date = targetFormat.parse(mTimeStart);
-        } catch (ParseException exception) {
-            return 0L;
-        }
-        return date.getTime();
+    public String getStartTime() {
+        return TimeUtils.getEventTime(mTimeStart);
     }
 
-    public long getEndTimeMillis() {
-        DateFormat targetFormat = new SimpleDateFormat("EEE, MM/dd/yy - h:mm a", Locale.US);
-        targetFormat.setTimeZone(TimeZone.getDefault());
-        Date date;
-        try {
-            date = targetFormat.parse(mTimeEnd);
-        } catch (ParseException exception) {
-            return 0L;
-        }
-        return date.getTime();
+    public String getEndTime() {
+        return TimeUtils.getEventTime(mTimeEnd);
     }
 
     public Spannable getDescriptionText() {
@@ -338,8 +317,8 @@ public class Event implements Parcelable {
         mIsCanceled = in.readByte() != 0x00;
         mIsFree = in.readByte() != 0x00;
         mTicketsUrl = in.readString();
-        mTimeStart = in.readString();
-        mTimeEnd = in.readString();
+        mTimeStart = in.readLong();
+        mTimeEnd = in.readLong();
         mCity = in.readString();
         mZipCode = in.readString();
         mCountry = in.readString();
@@ -369,8 +348,8 @@ public class Event implements Parcelable {
         dest.writeByte((byte) (mIsCanceled ? 0x01 : 0x00));
         dest.writeByte((byte) (mIsFree ? 0x01 : 0x00));
         dest.writeString(mTicketsUrl);
-        dest.writeString(mTimeStart);
-        dest.writeString(mTimeEnd);
+        dest.writeLong(mTimeStart);
+        dest.writeLong(mTimeEnd);
         dest.writeString(mCity);
         dest.writeString(mZipCode);
         dest.writeString(mCountry);

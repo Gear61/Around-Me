@@ -138,11 +138,11 @@ public class EventViewActivity extends StandardActivity implements OnMapReadyCal
         intent.setType("vnd.android.cursor.item/event");
         intent.putExtra(CalendarContract.Events.TITLE, mEvent.getName());
 
-        if (mEvent.getStartTimeMillis() > 0L) {
-            intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, mEvent.getStartTimeMillis());
+        if (mEvent.getTimeStart() > 0L) {
+            intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, mEvent.getTimeStart());
         }
-        if (mEvent.getEndTimeMillis() > 0L) {
-            intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, mEvent.getEndTimeMillis());
+        if (mEvent.getTimeEnd() > 0L) {
+            intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, mEvent.getTimeEnd());
         }
 
         intent.putExtra(CalendarContract.Events.ALL_DAY, false);

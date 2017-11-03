@@ -7,7 +7,7 @@ import com.randomappsinc.aroundme.models.Place;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlaceResults {
+public class PlaceSearchResults {
 
     private static final double METER_TO_MILES = 0.000621371;
 

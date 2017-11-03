@@ -19,8 +19,8 @@ public class EventDO extends RealmObject {
     private boolean mIsCanceled;
     private boolean mIsFree;
     private String mTicketsUrl;
-    private String mTimeStart;
-    private String mTimeEnd;
+    private long mTimeStart;
+    private long mTimeEnd;
     private String mCity;
     private String mZipCode;
     private String mCountry;
@@ -126,19 +126,19 @@ public class EventDO extends RealmObject {
         mTicketsUrl = ticketsUrl;
     }
 
-    public String getTimeStart() {
+    public long getTimeStart() {
         return mTimeStart;
     }
 
-    public void setTimeStart(String timeStart) {
+    public void setTimeStart(long timeStart) {
         mTimeStart = timeStart;
     }
 
-    public String getTimeEnd() {
+    public long getTimeEnd() {
         return mTimeEnd;
     }
 
-    public void setTimeEnd(String timeEnd) {
+    public void setTimeEnd(long timeEnd) {
         mTimeEnd = timeEnd;
     }
 

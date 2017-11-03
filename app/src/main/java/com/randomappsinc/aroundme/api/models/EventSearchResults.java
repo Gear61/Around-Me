@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
-public class EventResults {
+public class EventSearchResults {
 
     @SerializedName("events")
     @Expose
@@ -151,8 +151,8 @@ public class EventResults {
             event.setCanceled(isCanceled);
             event.setFree(isFree);
             event.setTicketsUrl(ticketsUrl);
-            event.setTimeStart(convertToOurTime(timeStart));
-            event.setTimeEnd(convertToOurTime(timeEnd));
+            event.setTimeStart(convertToUnixTime(timeStart));
+            event.setTimeEnd(convertToUnixTime(timeEnd));
             event.setCity(location.getCity());
             event.setZipCode(location.getZipCode());
             event.setCountry(location.getCountry());
@@ -163,16 +163,13 @@ public class EventResults {
             return event;
         }
 
-        private String convertToOurTime(String originalTime) {
+        private long convertToUnixTime(String originalTime) {
             if (originalTime == null) {
-                return "";
+                return 0L;
             }
 
             DateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.US);
             originalFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
-
-            DateFormat targetFormat = new SimpleDateFormat("EEE, MM/dd/yy - h:mm a", Locale.US);
-            targetFormat.setTimeZone(TimeZone.getDefault());
 
             Date date;
             try {
@@ -180,7 +177,7 @@ public class EventResults {
             } catch (ParseException exception) {
                 throw new RuntimeException("Incorrect time format: " + originalTime);
             }
-            return targetFormat.format(date);
+            return date.getTime();
         }
     }
 

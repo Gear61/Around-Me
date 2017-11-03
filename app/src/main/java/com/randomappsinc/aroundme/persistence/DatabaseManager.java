@@ -1,6 +1,7 @@
 package com.randomappsinc.aroundme.persistence;
 
 import com.randomappsinc.aroundme.R;
+import com.randomappsinc.aroundme.persistence.managers.EventsDBManager;
 import com.randomappsinc.aroundme.persistence.managers.PlaceTypesDBManager;
 import com.randomappsinc.aroundme.persistence.managers.PlacesDBManager;
 import com.randomappsinc.aroundme.utils.MyApplication;
@@ -27,11 +28,13 @@ public class DatabaseManager {
 
     private PlaceTypesDBManager mPlaceTypesDBManager;
     private PlacesDBManager mPlacesDBManager;
+    private EventsDBManager mEventsDBManager;
 
     private DatabaseManager() {
         Realm.init(MyApplication.getAppContext());
         mPlaceTypesDBManager = PlaceTypesDBManager.get();
         mPlacesDBManager = PlacesDBManager.get();
+        mEventsDBManager = EventsDBManager.get();
     }
 
     public void seedPlaceTypes() {
@@ -51,5 +54,9 @@ public class DatabaseManager {
 
     public PlacesDBManager getPlacesDBManager() {
         return mPlacesDBManager;
+    }
+
+    public EventsDBManager getEventsDBManager() {
+        return mEventsDBManager;
     }
 }

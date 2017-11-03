@@ -19,6 +19,7 @@ import com.joanzapata.iconify.IconDrawable;
 import com.joanzapata.iconify.fonts.IoniconsIcons;
 import com.randomappsinc.aroundme.R;
 import com.randomappsinc.aroundme.models.Event;
+import com.randomappsinc.aroundme.persistence.DatabaseManager;
 import com.randomappsinc.aroundme.utils.UIUtils;
 import com.randomappsinc.aroundme.views.EventInfoView;
 
@@ -63,6 +64,9 @@ public class EventViewActivity extends StandardActivity implements OnMapReadyCal
         mEventMap.onCreate(savedInstanceState);
         mEventMap.getMapAsync(this);
 
+        // They could be opening up a favorited event from search
+        mEvent.setIsFavorited(DatabaseManager.get().getEventsDBManager().isEventFavorited(mEvent));
+
         mFavoriteToggle.setText(mEvent.isFavorited() ? R.string.heart_filled_icon : R.string.heart_icon);
         mFavoriteToggle.setTextColor(mEvent.isFavorited() ? heartRed : darkGray);
 
@@ -85,7 +89,11 @@ public class EventViewActivity extends StandardActivity implements OnMapReadyCal
     public void onFavoriteClick() {
         mEvent.toggleFavorite();
         UIUtils.animateFavoriteToggle(mFavoriteToggle, mEvent.isFavorited());
-        // TODO: Update DB here
+        if (mEvent.isFavorited()) {
+            DatabaseManager.get().getEventsDBManager().addFavorite(mEvent);
+        } else {
+            DatabaseManager.get().getEventsDBManager().removeFavorite(mEvent);
+        }
     }
 
     @Override

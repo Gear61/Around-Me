@@ -74,7 +74,7 @@ public class PlacesDBManager {
     }
 
     public boolean isPlaceFavorited(Place place) {
-        final PlaceDO placeDO = getRealm()
+        PlaceDO placeDO = getRealm()
                 .where(PlaceDO.class)
                 .equalTo("mId", place.getId())
                 .findFirst();

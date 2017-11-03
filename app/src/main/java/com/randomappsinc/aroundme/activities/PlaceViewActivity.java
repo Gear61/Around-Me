@@ -23,6 +23,7 @@ import com.randomappsinc.aroundme.adapters.PlaceReviewsAdapter;
 import com.randomappsinc.aroundme.api.RestClient;
 import com.randomappsinc.aroundme.models.Place;
 import com.randomappsinc.aroundme.models.Review;
+import com.randomappsinc.aroundme.persistence.DatabaseManager;
 import com.randomappsinc.aroundme.utils.UIUtils;
 import com.randomappsinc.aroundme.views.PlaceInfoView;
 
@@ -72,6 +73,9 @@ public class PlaceViewActivity extends StandardActivity implements RestClient.Ph
         mPlaceMap.onCreate(savedInstanceState);
         mPlaceMap.getMapAsync(this);
 
+        // It's possible you're finding something in search that you've already favorited
+        mPlace.setIsFavorited(DatabaseManager.get().getPlacesDBManager().isPlaceFavorited(mPlace));
+
         mFavoriteToggle.setText(mPlace.isFavorited() ? R.string.heart_filled_icon : R.string.heart_icon);
         mFavoriteToggle.setTextColor(mPlace.isFavorited() ? heartRed : darkGray);
 
@@ -97,7 +101,11 @@ public class PlaceViewActivity extends StandardActivity implements RestClient.Ph
     public void onFavoriteClick() {
         mPlace.toggleFavorite();
         UIUtils.animateFavoriteToggle(mFavoriteToggle, mPlace.isFavorited());
-        // TODO: Update DB here
+        if (mPlace.isFavorited()) {
+            DatabaseManager.get().getPlacesDBManager().addFavorite(mPlace);
+        } else {
+            DatabaseManager.get().getPlacesDBManager().removeFavorite(mPlace);
+        }
     }
 
     @Override

@@ -7,9 +7,9 @@ import com.randomappsinc.aroundme.persistence.models.EventDO;
 import com.randomappsinc.aroundme.persistence.models.PlaceDO;
 import com.randomappsinc.aroundme.persistence.models.PlaceTypeDO;
 
-class DBConverter {
+public class DBConverter {
 
-    static PlaceType getPlaceTypeFromDO(PlaceTypeDO placeTypeDO) {
+    public static PlaceType getPlaceTypeFromDO(PlaceTypeDO placeTypeDO) {
         PlaceType placeType = new PlaceType();
         placeType.setPlaceTypeId(placeTypeDO.getPlaceTypeId());
         placeType.setText(placeTypeDO.getText());
@@ -17,7 +17,7 @@ class DBConverter {
         return placeType;
     }
 
-    static Place getPlaceFromDO(PlaceDO placeDO) {
+    public static Place getPlaceFromDO(PlaceDO placeDO) {
         Place place = new Place();
         place.setName(placeDO.getName());
         place.setImageUrl(placeDO.getImageUrl());
@@ -37,7 +37,7 @@ class DBConverter {
         return place;
     }
 
-    static Event getEventFromDO(EventDO eventDO) {
+    public static Event getEventFromDO(EventDO eventDO) {
         Event event = new Event();
         event.setId(eventDO.getId());
         event.setImageUrl(eventDO.getImageUrl());

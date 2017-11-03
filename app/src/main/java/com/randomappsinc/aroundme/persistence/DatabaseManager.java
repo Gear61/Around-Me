@@ -3,6 +3,8 @@ package com.randomappsinc.aroundme.persistence;
 import android.support.annotation.NonNull;
 
 import com.randomappsinc.aroundme.R;
+import com.randomappsinc.aroundme.persistence.managers.PlaceTypesDBManager;
+import com.randomappsinc.aroundme.persistence.managers.PlacesDBManager;
 import com.randomappsinc.aroundme.utils.MyApplication;
 
 import io.realm.DynamicRealm;
@@ -32,6 +34,7 @@ public class DatabaseManager {
     }
 
     private PlaceTypesDBManager mPlaceTypesDBManager;
+    private PlacesDBManager mPlacesDBManager;
 
     private DatabaseManager() {
         Realm.init(MyApplication.getAppContext());
@@ -41,6 +44,7 @@ public class DatabaseManager {
                 .build();
         Realm.setDefaultConfiguration(realmConfig);
         mPlaceTypesDBManager = PlaceTypesDBManager.get();
+        mPlacesDBManager = PlacesDBManager.get();
     }
 
     private final RealmMigration migration = new RealmMigration() {
@@ -110,5 +114,9 @@ public class DatabaseManager {
 
     public PlaceTypesDBManager getPlaceTypesDBManager() {
         return mPlaceTypesDBManager;
+    }
+
+    public PlacesDBManager getPlacesDBManager() {
+        return mPlacesDBManager;
     }
 }

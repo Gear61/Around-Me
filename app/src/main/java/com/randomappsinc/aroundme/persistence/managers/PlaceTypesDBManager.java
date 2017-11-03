@@ -1,8 +1,9 @@
-package com.randomappsinc.aroundme.persistence;
+package com.randomappsinc.aroundme.persistence.managers;
 
 import android.support.annotation.NonNull;
 
 import com.randomappsinc.aroundme.models.PlaceType;
+import com.randomappsinc.aroundme.persistence.DBConverter;
 import com.randomappsinc.aroundme.persistence.models.PlaceTypeDO;
 
 import java.util.ArrayList;

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.ShareCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -22,11 +23,13 @@ import com.randomappsinc.aroundme.adapters.PlaceReviewsAdapter;
 import com.randomappsinc.aroundme.api.RestClient;
 import com.randomappsinc.aroundme.models.Place;
 import com.randomappsinc.aroundme.models.Review;
+import com.randomappsinc.aroundme.utils.UIUtils;
 import com.randomappsinc.aroundme.views.PlaceInfoView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindColor;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -36,12 +39,16 @@ public class PlaceViewActivity extends StandardActivity implements RestClient.Ph
 
     public static final String PLACE_KEY = "place";
 
+    @BindView(R.id.favorite_toggle) TextView mFavoriteToggle;
     @BindView(R.id.place_map) MapView mPlaceMap;
     @BindView(R.id.place_info_parent) View mPlaceInfo;
     @BindView(R.id.photos_stub) View mPhotosStub;
     @BindView(R.id.place_photos) RecyclerView mPhotos;
     @BindView(R.id.reviews_stub) View mReviewsStub;
     @BindView(R.id.place_reviews) RecyclerView mReviews;
+
+    @BindColor(R.color.light_red) int heartRed;
+    @BindColor(R.color.dark_gray) int darkGray;
 
     private Place mPlace;
     private PlaceInfoView mPlaceInfoView;
@@ -65,6 +72,9 @@ public class PlaceViewActivity extends StandardActivity implements RestClient.Ph
         mPlaceMap.onCreate(savedInstanceState);
         mPlaceMap.getMapAsync(this);
 
+        mFavoriteToggle.setText(mPlace.isFavorited() ? R.string.heart_filled_icon : R.string.heart_icon);
+        mFavoriteToggle.setTextColor(mPlace.isFavorited() ? heartRed : darkGray);
+
         mPhotosAdapter = new PlacePhotosAdapter(this, this);
         mPhotos.setAdapter(mPhotosAdapter);
         mReviewsAdapter = new PlaceReviewsAdapter(this, this);
@@ -83,22 +93,11 @@ public class PlaceViewActivity extends StandardActivity implements RestClient.Ph
         mPlaceInfoView.loadPlace(mPlace);
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        mPlaceMap.onSaveInstanceState(outState);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mPlaceMap.onResume();
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        mPlaceMap.onStart();
+    @OnClick(R.id.favorite_toggle)
+    public void onFavoriteClick() {
+        mPlace.toggleFavorite();
+        UIUtils.animateFavoriteToggle(mFavoriteToggle, mPlace.isFavorited());
+        // TODO: Update DB here
     }
 
     @Override
@@ -173,6 +172,24 @@ public class PlaceViewActivity extends StandardActivity implements RestClient.Ph
         intent.putExtra(PictureFullViewActivity.POSITION_KEY, position);
         startActivity(intent);
         overridePendingTransition(0, 0);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        mPlaceMap.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mPlaceMap.onResume();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mPlaceMap.onStart();
     }
 
     @Override

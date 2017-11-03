@@ -149,6 +149,10 @@ public class Place implements Parcelable {
         mDistance = distance;
     }
 
+    public void toggleFavorite() {
+        mIsFavorited = !mIsFavorited;
+    }
+
     public PlaceDO toPlaceDO() {
         PlaceDO placeDO = new PlaceDO();
         placeDO.setId(mId);

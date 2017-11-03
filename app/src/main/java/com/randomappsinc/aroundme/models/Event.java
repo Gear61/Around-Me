@@ -294,6 +294,10 @@ public class Event implements Parcelable {
         }
     }
 
+    public void toggleFavorite() {
+        mIsFavorited = !mIsFavorited;
+    }
+
     public EventDO toEventDO() {
         EventDO eventDO = new EventDO();
         eventDO.setId(mId);

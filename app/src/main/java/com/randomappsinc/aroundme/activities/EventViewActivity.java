@@ -19,10 +19,12 @@ import com.joanzapata.iconify.IconDrawable;
 import com.joanzapata.iconify.fonts.IoniconsIcons;
 import com.randomappsinc.aroundme.R;
 import com.randomappsinc.aroundme.models.Event;
+import com.randomappsinc.aroundme.utils.UIUtils;
 import com.randomappsinc.aroundme.views.EventInfoView;
 
 import java.util.ArrayList;
 
+import butterknife.BindColor;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -31,12 +33,16 @@ public class EventViewActivity extends StandardActivity implements OnMapReadyCal
 
     public static final String EVENT_KEY = "event";
 
+    @BindView(R.id.favorite_toggle) TextView mFavoriteToggle;
     @BindView(R.id.event_map) MapView mEventMap;
     @BindView(R.id.event_info_parent) View mEventInfo;
     @BindView(R.id.description_text) TextView mDescriptionText;
     @BindView(R.id.num_attending) TextView mNumAttending;
     @BindView(R.id.num_interested) TextView mNumInterested;
     @BindView(R.id.buy_tickets) View mBuyTicketsButton;
+
+    @BindColor(R.color.light_red) int heartRed;
+    @BindColor(R.color.dark_gray) int darkGray;
 
     private Event mEvent;
     private EventInfoView mEventInfoView;
@@ -57,6 +63,9 @@ public class EventViewActivity extends StandardActivity implements OnMapReadyCal
         mEventMap.onCreate(savedInstanceState);
         mEventMap.getMapAsync(this);
 
+        mFavoriteToggle.setText(mEvent.isFavorited() ? R.string.heart_filled_icon : R.string.heart_icon);
+        mFavoriteToggle.setTextColor(mEvent.isFavorited() ? heartRed : darkGray);
+
         mEventInfoView = new EventInfoView(
                 this,
                 mEventInfo,
@@ -72,22 +81,11 @@ public class EventViewActivity extends StandardActivity implements OnMapReadyCal
         }
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        mEventMap.onSaveInstanceState(outState);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mEventMap.onResume();
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        mEventMap.onStart();
+    @OnClick(R.id.favorite_toggle)
+    public void onFavoriteClick() {
+        mEvent.toggleFavorite();
+        UIUtils.animateFavoriteToggle(mFavoriteToggle, mEvent.isFavorited());
+        // TODO: Update DB here
     }
 
     @Override
@@ -167,6 +165,24 @@ public class EventViewActivity extends StandardActivity implements OnMapReadyCal
     public void buyTickets() {
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(mEvent.getTicketsUrl()));
         startActivity(intent);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        mEventMap.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mEventMap.onResume();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mEventMap.onStart();
     }
 
     @Override

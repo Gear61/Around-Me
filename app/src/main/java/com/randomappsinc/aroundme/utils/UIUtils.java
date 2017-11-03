@@ -1,11 +1,16 @@
 package com.randomappsinc.aroundme.utils;
 
+import android.animation.Animator;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
 import android.view.Menu;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AnticipateOvershootInterpolator;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -83,5 +88,46 @@ public class UIUtils {
 
     public static void showToast(@StringRes int messageId) {
         Toast.makeText(MyApplication.getAppContext(), messageId, Toast.LENGTH_SHORT).show();
+    }
+
+    public static void animateFavoriteToggle(final TextView favoriteToggle, final boolean isFavorited) {
+        Context context = MyApplication.getAppContext();
+        final int animLength = context.getResources().getInteger(R.integer.shorter_anim_length);
+        final int lightRed = context.getResources().getColor(R.color.light_red);
+        final int darkGray = context.getResources().getColor(R.color.dark_gray);
+
+        if (favoriteToggle.getAnimation() == null || favoriteToggle.getAnimation().hasEnded()) {
+            ObjectAnimator animX = ObjectAnimator.ofFloat(favoriteToggle, "scaleX", 0.75f);
+            ObjectAnimator animY = ObjectAnimator.ofFloat(favoriteToggle, "scaleY", 0.75f);
+            AnimatorSet shrink = new AnimatorSet();
+            shrink.playTogether(animX, animY);
+            shrink.setDuration(animLength);
+            shrink.setInterpolator(new AccelerateInterpolator());
+            shrink.addListener(new Animator.AnimatorListener() {
+                @Override
+                public void onAnimationStart(Animator animation) {}
+
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    favoriteToggle.setText(isFavorited ? R.string.heart_filled_icon : R.string.heart_icon);
+                    favoriteToggle.setTextColor(isFavorited ? lightRed : darkGray);
+
+                    ObjectAnimator animX = ObjectAnimator.ofFloat(favoriteToggle, "scaleX", 1.0f);
+                    ObjectAnimator animY = ObjectAnimator.ofFloat(favoriteToggle, "scaleY", 1.0f);
+                    AnimatorSet grow = new AnimatorSet();
+                    grow.playTogether(animX, animY);
+                    grow.setDuration(animLength);
+                    grow.setInterpolator(new AnticipateOvershootInterpolator());
+                    grow.start();
+                }
+
+                @Override
+                public void onAnimationCancel(Animator animation) {}
+
+                @Override
+                public void onAnimationRepeat(Animator animation) {}
+            });
+            shrink.start();
+        }
     }
 }

@@ -7,4 +7,12 @@
         <item>@string/places</item>
         <item>@string/events</item>
     </string-array>
+
+    <string name="no_favorite_places">
+        You have no favorited places. Use the {ion-ios-heart-outline} button to add them!
+    </string>
+
+    <string name="no_favorite_events">
+        You have no favorited events. Use the {ion-ios-heart-outline} button to add them!
+    </string>
 </resources>

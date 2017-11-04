@@ -19,6 +19,7 @@ public class DBConverter {
 
     public static Place getPlaceFromDO(PlaceDO placeDO) {
         Place place = new Place();
+        place.setId(placeDO.getId());
         place.setName(placeDO.getName());
         place.setImageUrl(placeDO.getImageUrl());
         place.setUrl(placeDO.getUrl());

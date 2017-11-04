@@ -5,8 +5,8 @@ import android.app.FragmentManager;
 import android.support.v13.app.FragmentStatePagerAdapter;
 
 import com.randomappsinc.aroundme.R;
-import com.randomappsinc.aroundme.fragments.EventFavoritesFragment;
-import com.randomappsinc.aroundme.fragments.PlaceFavoritesFragment;
+import com.randomappsinc.aroundme.fragments.FavoriteEventsFragment;
+import com.randomappsinc.aroundme.fragments.FavoritePlacesFragment;
 import com.randomappsinc.aroundme.utils.MyApplication;
 
 public class FavoriteTabsAdapter extends FragmentStatePagerAdapter {
@@ -22,9 +22,9 @@ public class FavoriteTabsAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return PlaceFavoritesFragment.newInstance();
+                return FavoritePlacesFragment.newInstance();
             case 1:
-                return EventFavoritesFragment.newInstance();
+                return FavoriteEventsFragment.newInstance();
             default:
                 return null;
         }

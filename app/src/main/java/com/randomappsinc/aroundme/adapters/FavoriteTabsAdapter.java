@@ -1,19 +1,19 @@
 package com.randomappsinc.aroundme.adapters;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.support.v13.app.FragmentStatePagerAdapter;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 
 import com.randomappsinc.aroundme.R;
 import com.randomappsinc.aroundme.fragments.FavoriteEventsFragment;
 import com.randomappsinc.aroundme.fragments.FavoritePlacesFragment;
 import com.randomappsinc.aroundme.utils.MyApplication;
 
-public class FavoriteTabsAdapter extends FragmentStatePagerAdapter {
+public class FavoriteTabsAdapter extends FragmentPagerAdapter {
 
     private String[] mFavoriteTabs;
 
-    public FavoriteTabsAdapter (FragmentManager fragmentManager) {
+    public FavoriteTabsAdapter(FragmentManager fragmentManager) {
         super(fragmentManager);
         mFavoriteTabs = MyApplication.getAppContext().getResources().getStringArray(R.array.favorite_tabs);
     }

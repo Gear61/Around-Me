@@ -2,10 +2,10 @@ package com.randomappsinc.aroundme.location;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.Fragment;
 import android.location.Location;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;

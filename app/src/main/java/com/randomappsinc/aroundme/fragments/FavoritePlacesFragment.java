@@ -1,8 +1,8 @@
 package com.randomappsinc.aroundme.fragments;
 
-import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,9 +21,7 @@ import butterknife.Unbinder;
 public class FavoritePlacesFragment extends Fragment implements FavoritePlacesAdapter.ItemSelectionListener {
 
     public static FavoritePlacesFragment newInstance() {
-        FavoritePlacesFragment fragment = new FavoritePlacesFragment();
-        fragment.setRetainInstance(true);
-        return fragment;
+        return new FavoritePlacesFragment();
     }
 
     @BindView(R.id.favorite_places) RecyclerView mPlaces;

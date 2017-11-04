@@ -1,8 +1,8 @@
 package com.randomappsinc.aroundme.fragments;
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -19,9 +19,7 @@ import butterknife.Unbinder;
 public class FavoritesFragment extends Fragment {
 
     public static FavoritesFragment newInstance() {
-        FavoritesFragment fragment = new FavoritesFragment();
-        fragment.setRetainInstance(true);
-        return fragment;
+        return new FavoritesFragment();
     }
 
     @BindView(R.id.toolbar) Toolbar mToolbar;
@@ -37,7 +35,7 @@ public class FavoritesFragment extends Fragment {
 
         mToolbar.setTitle(R.string.favorites);
 
-        mFavoritesPager.setAdapter(new FavoriteTabsAdapter(getFragmentManager()));
+        mFavoritesPager.setAdapter(new FavoriteTabsAdapter(getChildFragmentManager()));
         mFavoriteTypes.setupWithViewPager(mFavoritesPager);
         return rootView;
     }

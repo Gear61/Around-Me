@@ -1,12 +1,10 @@
 package com.randomappsinc.aroundme.fragments;
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 
 public class FavoriteEventsFragment extends Fragment {
 
     public static FavoriteEventsFragment newInstance() {
-        FavoriteEventsFragment fragment = new FavoriteEventsFragment();
-        fragment.setRetainInstance(true);
-        return fragment;
+        return new FavoriteEventsFragment();
     }
 }

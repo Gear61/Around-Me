@@ -6,39 +6,61 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/skeleton_results"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="-8dp"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <include layout="@layout/skeleton_event_cell"/>
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
-        <include layout="@layout/skeleton_event_cell"/>
+        <LinearLayout
+            android:id="@+id/skeleton_results"
+            android:layout_below="@id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="-8dp"
+            android:orientation="vertical">
 
-        <include layout="@layout/skeleton_event_cell"/>
+            <include layout="@layout/skeleton_event_cell"/>
 
-        <include layout="@layout/skeleton_event_cell"/>
+            <include layout="@layout/skeleton_event_cell"/>
 
-        <include layout="@layout/skeleton_event_cell"/>
-    </LinearLayout>
+            <include layout="@layout/skeleton_event_cell"/>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/events_list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
+            <include layout="@layout/skeleton_event_cell"/>
 
-    <com.joanzapata.iconify.widget.IconTextView
-        android:id="@+id/no_events"
-        android:layout_marginTop="76dp"
-        android:layout_width="260dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="@string/no_events"
-        android:textColor="@color/dark_gray"
-        android:textSize="21sp"
-        android:visibility="gone"/>
+            <include layout="@layout/skeleton_event_cell"/>
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/events_list"
+            android:layout_below="@id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
+
+        <com.joanzapata.iconify.widget.IconTextView
+            android:id="@+id/no_events"
+            android:layout_below="@id/toolbar"
+            android:layout_marginTop="76dp"
+            android:layout_width="260dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/no_events"
+            android:textColor="@color/dark_gray"
+            android:textSize="21sp"
+            android:visibility="gone"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_below="@id/toolbar"
+            android:background="@drawable/toolbar_shadow"/>
+    </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>

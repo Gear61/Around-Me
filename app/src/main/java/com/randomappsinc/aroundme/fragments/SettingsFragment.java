@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ShareCompat;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +33,7 @@ public class SettingsFragment extends Fragment implements SettingsAdapter.ItemSe
         return fragment;
     }
 
+    @BindView(R.id.toolbar) Toolbar mToolbar;
     @BindView(R.id.settings_options) RecyclerView settingsOptions;
     @BindString(R.string.feedback_subject) String feedbackSubject;
     @BindString(R.string.send_email) String sendEmail;
@@ -42,6 +44,7 @@ public class SettingsFragment extends Fragment implements SettingsAdapter.ItemSe
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.settings, container, false);
         mUnbinder = ButterKnife.bind(this, rootView);
+        mToolbar.setTitle(R.string.settings);
         settingsOptions.addItemDecoration(new SimpleDividerItemDecoration(getActivity()));
         settingsOptions.setAdapter(new SettingsAdapter(getActivity(), this));
         return rootView;

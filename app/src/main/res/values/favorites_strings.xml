@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="coming_soon">Coming soon!</string>
+    <string name="favorites">Favorites</string>
+    <string name="places">Places</string>
+    <string name="events">Events</string>
+    <string-array name="favorite_tabs">
+        <item>@string/places</item>
+        <item>@string/events</item>
+    </string-array>
 </resources>

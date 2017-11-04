@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +33,7 @@ public class PlaceTypesFragment extends Fragment implements PlaceTypesAdapter.Li
         return fragment;
     }
 
+    @BindView(R.id.toolbar) Toolbar mToolbar;
     @BindView(R.id.parent) View mParent;
     @BindView(R.id.place_types) RecyclerView mPlaceTypes;
     @BindView(R.id.add_place_type) FloatingActionButton mAddPlaceType;
@@ -44,6 +46,8 @@ public class PlaceTypesFragment extends Fragment implements PlaceTypesAdapter.Li
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.place_types, container, false);
         mUnbinder = ButterKnife.bind(this, rootView);
+
+        mToolbar.setTitle(R.string.app_name);
 
         mAddPlaceType.setImageDrawable(
                 new IconDrawable(getActivity(), IoniconsIcons.ion_android_add).colorRes(R.color.white));

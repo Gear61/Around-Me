@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +36,7 @@ public class EventSearchFragment extends Fragment
         return fragment;
     }
 
+    @BindView(R.id.toolbar) Toolbar mToolbar;
     @BindView(R.id.parent) View mParent;
     @BindView(R.id.skeleton_results) View mSkeletonResults;
     @BindView(R.id.events_list) RecyclerView mEventsList;
@@ -53,6 +55,8 @@ public class EventSearchFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.event_search, container, false);
         mUnbinder = ButterKnife.bind(this, rootView);
+
+        mToolbar.setTitle(R.string.events);
 
         mEventsList.addItemDecoration(new SimpleDividerItemDecoration(getActivity()));
         mEventsAdapter = new EventsAdapter(getActivity(), this);

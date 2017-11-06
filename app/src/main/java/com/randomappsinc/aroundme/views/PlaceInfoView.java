@@ -23,6 +23,7 @@ public class PlaceInfoView {
     @BindView(R.id.rating) ImageView rating;
     @BindView(R.id.num_reviews) TextView numReviews;
     @BindView(R.id.place_address) TextView address;
+    @BindView(R.id.distance_icon) View distanceIcon;
     @BindView(R.id.distance) TextView distance;
     @BindView(R.id.price) TextView price;
 
@@ -39,7 +40,7 @@ public class PlaceInfoView {
         ButterKnife.bind(this, view);
     }
 
-    public void loadPlace(Place place) {
+    public void loadPlace(Place place, boolean fromFavorites) {
         String placeImageUrl = place.getImageUrl();
         if (placeImageUrl != null && !placeImageUrl.isEmpty()) {
             thumbnail.setBackground(null);
@@ -63,8 +64,13 @@ public class PlaceInfoView {
                 : String.format(mContext.getString(R.string.num_reviews), place.getReviewCount());
         numReviews.setText(numReviewsText);
 
-        String distanceText = String.format(mContext.getString(R.string.miles_away), place.getDistance());
-        distance.setText(distanceText);
+        if (fromFavorites) {
+            distanceIcon.setVisibility(View.GONE);
+            distance.setVisibility(View.GONE);
+        } else {
+            String distanceText = String.format(mContext.getString(R.string.miles_away), place.getDistance());
+            distance.setText(distanceText);
+        }
 
         String placePrice = place.getPrice();
         if (placePrice == null || placePrice.isEmpty()) {

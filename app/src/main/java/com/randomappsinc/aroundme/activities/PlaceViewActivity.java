@@ -39,6 +39,7 @@ public class PlaceViewActivity extends StandardActivity implements RestClient.Ph
         RestClient.ReviewsListener, PlaceReviewsAdapter.Listener, PlacePhotosAdapter.Listener, OnMapReadyCallback {
 
     public static final String PLACE_KEY = "place";
+    public static final String FROM_FAVORITES = "fromFavorites";
 
     @BindView(R.id.favorite_toggle) TextView mFavoriteToggle;
     @BindView(R.id.place_map) MapView mPlaceMap;
@@ -94,7 +95,8 @@ public class PlaceViewActivity extends StandardActivity implements RestClient.Ph
                 this,
                 mPlaceInfo,
                 new IconDrawable(this, IoniconsIcons.ion_location).colorRes(R.color.dark_gray));
-        mPlaceInfoView.loadPlace(mPlace);
+        boolean fromFavorites = getIntent().getBooleanExtra(FROM_FAVORITES, false);
+        mPlaceInfoView.loadPlace(mPlace, fromFavorites);
     }
 
     @OnClick(R.id.favorite_toggle)

@@ -64,6 +64,7 @@ public class FavoritePlacesFragment extends Fragment implements FavoritePlacesAd
     public void onPlaceClicked(Place place) {
         Intent intent = new Intent(getActivity(), PlaceViewActivity.class);
         intent.putExtra(PlaceViewActivity.PLACE_KEY, place);
+        intent.putExtra(PlaceViewActivity.FROM_FAVORITES, true);
         getActivity().startActivity(intent);
     }
 

@@ -76,7 +76,7 @@ public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.PlaceViewH
         }
 
         void loadPlace(int position) {
-            mPlaceInfoView.loadPlace(getItem(position));
+            mPlaceInfoView.loadPlace(getItem(position), false);
         }
 
         @OnClick(R.id.place_info_parent)

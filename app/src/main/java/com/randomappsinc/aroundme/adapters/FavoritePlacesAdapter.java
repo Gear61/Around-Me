@@ -68,8 +68,6 @@ public class FavoritePlacesAdapter extends RecyclerView.Adapter<FavoritePlacesAd
 
     class PlaceViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.place_info_parent) View placeInfo;
-        @BindView(R.id.distance_icon) View distanceIcon;
-        @BindView(R.id.distance) View distance;
 
         private PlaceInfoView mPlaceInfoView;
 
@@ -77,12 +75,10 @@ public class FavoritePlacesAdapter extends RecyclerView.Adapter<FavoritePlacesAd
             super(view);
             ButterKnife.bind(this, view);
             mPlaceInfoView = new PlaceInfoView(mContext, placeInfo, mDefaultThumbnail);
-            distanceIcon.setVisibility(View.GONE);
-            distance.setVisibility(View.GONE);
         }
 
         void loadPlace(int position) {
-            mPlaceInfoView.loadPlace(getItem(position));
+            mPlaceInfoView.loadPlace(getItem(position), true);
         }
 
         @OnClick(R.id.place_info_parent)

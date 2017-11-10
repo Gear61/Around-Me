@@ -125,6 +125,10 @@ public class PlaceSearchActivity extends StandardActivity
 
     @Override
     public void onLocationFetched(String location) {
+        if (mCurrentLocation != null && mCurrentLocation.equals(location)) {
+            return;
+        }
+
         mCurrentLocation = location;
         mRestClient.findPlaces(mSearchTerm, mCurrentLocation);
     }

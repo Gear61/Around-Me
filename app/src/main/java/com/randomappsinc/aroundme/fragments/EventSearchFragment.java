@@ -6,12 +6,17 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.joanzapata.iconify.fonts.IoniconsIcons;
 import com.randomappsinc.aroundme.R;
 import com.randomappsinc.aroundme.activities.EventViewActivity;
 import com.randomappsinc.aroundme.adapters.EventsAdapter;
@@ -57,6 +62,8 @@ public class EventSearchFragment extends Fragment
         mUnbinder = ButterKnife.bind(this, rootView);
 
         mToolbar.setTitle(R.string.events);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
+        setHasOptionsMenu(true);
 
         mEventsList.addItemDecoration(new SimpleDividerItemDecoration(getActivity()));
         mEventsAdapter = new EventsAdapter(getActivity(), this);
@@ -131,6 +138,11 @@ public class EventSearchFragment extends Fragment
 
     @Override
     public void onLocationFetched(String location) {
+        // No need to do a search on the same location
+        if (mCurrentLocation != null && mCurrentLocation.equals(location)) {
+            return;
+        }
+
         mCurrentLocation = location;
         mRestClient.findEvents(mCurrentLocation);
     }
@@ -147,8 +159,26 @@ public class EventSearchFragment extends Fragment
 
         mLocationManager.stopFetchingCurrentLocation();
 
-        // Stop listening for photo fetch results
+        // Stop listening for event search results
         mRestClient.cancelEventsFetch();
         mRestClient.unregisterEventsListener();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_search, menu);
+        UIUtils.loadMenuIcon(menu, R.id.set_location, IoniconsIcons.ion_android_map, getActivity());
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.set_location:
+                mLocationManager.showLocationForm();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

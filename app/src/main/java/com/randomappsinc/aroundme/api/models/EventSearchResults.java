@@ -184,7 +184,9 @@ public class EventSearchResults {
     public List<Event> getEvents() {
         List<Event> events = new ArrayList<>();
         for (EventResult eventResult : eventResults) {
-            events.add(eventResult.toEvent());
+            if (!eventResult.isCanceled) {
+                events.add(eventResult.toEvent());
+            }
         }
         return events;
     }

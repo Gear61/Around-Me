@@ -3,7 +3,13 @@ package com.randomappsinc.aroundme.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.randomappsinc.aroundme.persistence.models.PlaceCategoryDO;
 import com.randomappsinc.aroundme.persistence.models.PlaceDO;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import io.realm.RealmList;
 
 public class Place implements Parcelable {
 
@@ -23,6 +29,7 @@ public class Place implements Parcelable {
     private double mLatitude;
     private double mLongitude;
     private boolean mIsFavorited;
+    private List<PlaceCategory> mCategories;
 
     // Distance between the place location and the user's current location in miles
     private double mDistance;
@@ -149,6 +156,14 @@ public class Place implements Parcelable {
         mDistance = distance;
     }
 
+    public List<PlaceCategory> getCategories() {
+        return mCategories;
+    }
+
+    public void setCategories(List<PlaceCategory> categories) {
+        mCategories = categories;
+    }
+
     public void toggleFavorite() {
         mIsFavorited = !mIsFavorited;
     }
@@ -171,6 +186,11 @@ public class Place implements Parcelable {
         placeDO.setLatitude(mLatitude);
         placeDO.setLongitude(mLongitude);
         placeDO.setIsFavorited(mIsFavorited);
+        RealmList<PlaceCategoryDO> categoryDOs = new RealmList<>();
+        for (PlaceCategory placeCategory : mCategories) {
+            categoryDOs.add(placeCategory.toPlaceCategoryDO());
+        }
+        placeDO.setCategories(categoryDOs);
         return placeDO;
     }
 
@@ -191,6 +211,12 @@ public class Place implements Parcelable {
         mLatitude = in.readDouble();
         mLongitude = in.readDouble();
         mIsFavorited = in.readByte() != 0x00;
+        if (in.readByte() == 0x01) {
+            mCategories = new ArrayList<>();
+            in.readList(mCategories, PlaceCategory.class.getClassLoader());
+        } else {
+            mCategories = null;
+        }
         mDistance = in.readDouble();
     }
 
@@ -217,6 +243,12 @@ public class Place implements Parcelable {
         dest.writeDouble(mLatitude);
         dest.writeDouble(mLongitude);
         dest.writeByte((byte) (mIsFavorited ? 0x01 : 0x00));
+        if (mCategories == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeList(mCategories);
+        }
         dest.writeDouble(mDistance);
     }
 

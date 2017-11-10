@@ -1,5 +1,6 @@
 package com.randomappsinc.aroundme.persistence.models;
 
+import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
@@ -23,6 +24,7 @@ public class PlaceDO extends RealmObject {
     private double mLatitude;
     private double mLongitude;
     private boolean mIsFavorited;
+    private RealmList<PlaceCategoryDO> mCategories;
 
     public String getId() {
         return mId;
@@ -150,5 +152,13 @@ public class PlaceDO extends RealmObject {
 
     public void setIsFavorited(boolean isFavorited) {
         mIsFavorited = isFavorited;
+    }
+
+    public RealmList<PlaceCategoryDO> getCategories() {
+        return mCategories;
+    }
+
+    public void setCategories(RealmList<PlaceCategoryDO> categories) {
+        mCategories = categories;
     }
 }

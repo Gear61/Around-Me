@@ -2,10 +2,15 @@ package com.randomappsinc.aroundme.persistence;
 
 import com.randomappsinc.aroundme.models.Event;
 import com.randomappsinc.aroundme.models.Place;
+import com.randomappsinc.aroundme.models.PlaceCategory;
 import com.randomappsinc.aroundme.models.PlaceType;
 import com.randomappsinc.aroundme.persistence.models.EventDO;
+import com.randomappsinc.aroundme.persistence.models.PlaceCategoryDO;
 import com.randomappsinc.aroundme.persistence.models.PlaceDO;
 import com.randomappsinc.aroundme.persistence.models.PlaceTypeDO;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DBConverter {
 
@@ -35,7 +40,19 @@ public class DBConverter {
         place.setLatitude(placeDO.getLatitude());
         place.setLongitude(placeDO.getLongitude());
         place.setIsFavorited(placeDO.isFavorited());
+        List<PlaceCategory> categoryList = new ArrayList<>();
+        for (PlaceCategoryDO placeCategoryDO : placeDO.getCategories()) {
+            categoryList.add(getPlaceCategoryFromDO(placeCategoryDO));
+        }
+        place.setCategories(categoryList);
         return place;
+    }
+
+    private static PlaceCategory getPlaceCategoryFromDO(PlaceCategoryDO categoryDO) {
+        PlaceCategory placeCategory = new PlaceCategory();
+        placeCategory.setAlias(categoryDO.getAlias());
+        placeCategory.setTitle(categoryDO.getTitle());
+        return placeCategory;
     }
 
     public static Event getEventFromDO(EventDO eventDO) {

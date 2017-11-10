@@ -156,12 +156,19 @@ public class Place implements Parcelable {
         mDistance = distance;
     }
 
-    public List<PlaceCategory> getCategories() {
-        return mCategories;
-    }
-
     public void setCategories(List<PlaceCategory> categories) {
         mCategories = categories;
+    }
+
+    public String getCategoriesListText() {
+        StringBuilder categoriesList = new StringBuilder();
+        for (PlaceCategory placeCategory : mCategories) {
+            if (categoriesList.length() > 0) {
+                categoriesList.append(", ");
+            }
+            categoriesList.append(placeCategory.getTitle());
+        }
+        return categoriesList.toString();
     }
 
     public void toggleFavorite() {

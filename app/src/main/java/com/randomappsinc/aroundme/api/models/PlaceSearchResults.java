@@ -3,6 +3,7 @@ package com.randomappsinc.aroundme.api.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.randomappsinc.aroundme.models.Place;
+import com.randomappsinc.aroundme.models.PlaceCategory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,6 +76,10 @@ public class PlaceSearchResults {
         private Location location;
 
         class Location {
+            @SerializedName("address1")
+            @Expose
+            private String address1;
+
             @SerializedName("city")
             @Expose
             private String city;
@@ -112,14 +117,7 @@ public class PlaceSearchResults {
             }
 
             String getAddress() {
-                StringBuilder address = new StringBuilder();
-                for (int i = 0; i < displayAddress.size(); i++) {
-                    if (i > 0) {
-                        address.append(", ");
-                    }
-                    address.append(displayAddress.get(i));
-                }
-                return address.toString();
+                return address1 + ", " + city;
             }
         }
 
@@ -127,6 +125,28 @@ public class PlaceSearchResults {
         @SerializedName("distance")
         @Expose
         private double distance;
+
+        @SerializedName("categories")
+        @Expose
+        private List<Category> categories;
+
+        class Category {
+            @SerializedName("alias")
+            @Expose
+            private String alias;
+
+            @SerializedName("title")
+            @Expose
+            private String title;
+
+            String getAlias() {
+                return alias;
+            }
+
+            String getTitle() {
+                return title;
+            }
+        }
 
         Place toPlace() {
             Place place = new Place();
@@ -146,6 +166,14 @@ public class PlaceSearchResults {
             place.setLatitude(coordinates.getLatitude());
             place.setLongitude(coordinates.getLongitude());
             place.setDistance(distance * METER_TO_MILES);
+            List<PlaceCategory> placeCategories = new ArrayList<>();
+            for (Category category : categories) {
+                PlaceCategory placeCategory = new PlaceCategory();
+                placeCategory.setAlias(category.getAlias());
+                placeCategory.setTitle(category.getTitle());
+                placeCategories.add(placeCategory);
+            }
+            place.setCategories(placeCategories);
             return place;
         }
     }

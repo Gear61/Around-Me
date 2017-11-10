@@ -11,7 +11,6 @@ import com.randomappsinc.aroundme.models.Place;
 import com.randomappsinc.aroundme.utils.UIUtils;
 import com.squareup.picasso.Picasso;
 
-import butterknife.BindColor;
 import butterknife.BindDrawable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,12 +22,11 @@ public class PlaceInfoView {
     @BindView(R.id.rating) ImageView rating;
     @BindView(R.id.num_reviews) TextView numReviews;
     @BindView(R.id.place_address) TextView address;
+    @BindView(R.id.categories) TextView categories;
     @BindView(R.id.distance_icon) View distanceIcon;
     @BindView(R.id.distance) TextView distance;
     @BindView(R.id.price) TextView price;
 
-    @BindColor(R.color.green) int green;
-    @BindColor(R.color.red) int red;
     @BindDrawable(R.drawable.gray_border) Drawable grayBorder;
 
     private Context mContext;
@@ -54,7 +52,6 @@ public class PlaceInfoView {
             thumbnail.setImageDrawable(mDefaultThumbnail);
         }
         name.setText(place.getName());
-        address.setText(place.getAddress());
         Picasso.with(mContext)
                 .load(UIUtils.getRatingDrawableId(place.getRating()))
                 .into(rating);
@@ -63,6 +60,9 @@ public class PlaceInfoView {
                 ? mContext.getString(R.string.one_review)
                 : String.format(mContext.getString(R.string.num_reviews), place.getReviewCount());
         numReviews.setText(numReviewsText);
+
+        address.setText(place.getAddress());
+        categories.setText(place.getCategoriesListText());
 
         if (fromFavorites) {
             distanceIcon.setVisibility(View.GONE);

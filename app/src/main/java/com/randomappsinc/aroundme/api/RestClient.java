@@ -124,7 +124,7 @@ public class RestClient {
                         searchTerm,
                         location,
                         ApiConstants.DEFAULT_NUM_PLACES,
-                        ApiConstants.DISTANCE_SORT);
+                        ApiConstants.BEST_MATCH_SORT);
                 mCurrentFindPlacesCall.enqueue(new FindPlacesCallback());
             }
         });

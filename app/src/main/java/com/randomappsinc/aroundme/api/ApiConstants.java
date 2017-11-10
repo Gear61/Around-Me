@@ -13,7 +13,7 @@ public class ApiConstants {
     public static final int HTTP_STATUS_UNAUTHORIZED = 401;
 
     static final int DEFAULT_NUM_PLACES = 20;
-    static final String DISTANCE_SORT = "distance";
+    static final String BEST_MATCH_SORT = "best_match";
 
     static final int DEFAULT_NUM_EVENTS = 20;
     static final String TIME_START_SORT = "time_start";

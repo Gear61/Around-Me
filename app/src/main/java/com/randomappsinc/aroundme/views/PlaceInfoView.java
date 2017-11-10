@@ -62,7 +62,14 @@ public class PlaceInfoView {
         numReviews.setText(numReviewsText);
 
         address.setText(place.getAddress());
-        categories.setText(place.getCategoriesListText());
+
+        String categoriesText = place.getCategoriesListText();
+        if (categoriesText.isEmpty()) {
+            categories.setVisibility(View.GONE);
+        } else {
+            categories.setText(categoriesText);
+            categories.setVisibility(View.VISIBLE);
+        }
 
         if (fromFavorites) {
             distanceIcon.setVisibility(View.GONE);

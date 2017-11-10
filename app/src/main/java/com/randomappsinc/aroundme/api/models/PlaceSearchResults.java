@@ -96,10 +96,6 @@ public class PlaceSearchResults {
             @Expose
             private String state;
 
-            @SerializedName("display_address")
-            @Expose
-            private List<String> displayAddress;
-
             String getCity() {
                 return city;
             }

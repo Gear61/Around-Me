@@ -81,4 +81,18 @@ public class PlacesDBManager {
 
         return placeDO != null && placeDO.isFavorited();
     }
+
+    public void updateFavorite(final Place place) {
+        if (!isPlaceFavorited(place)) {
+            return;
+        }
+
+        getRealm().executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(@NonNull Realm realm) {
+                place.setIsFavorited(true);
+                realm.insertOrUpdate(place.toPlaceDO());
+            }
+        });
+    }
 }

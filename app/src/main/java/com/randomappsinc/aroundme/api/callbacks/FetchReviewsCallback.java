@@ -5,8 +5,8 @@ import android.support.annotation.NonNull;
 import com.randomappsinc.aroundme.api.ApiConstants;
 import com.randomappsinc.aroundme.api.RestClient;
 import com.randomappsinc.aroundme.api.models.BusinessInfoFetchError;
-import com.randomappsinc.aroundme.api.models.PlaceReviews;
-import com.randomappsinc.aroundme.models.Review;
+import com.randomappsinc.aroundme.api.models.PlaceReviewResults;
+import com.randomappsinc.aroundme.models.PlaceReview;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;
@@ -18,10 +18,10 @@ import retrofit2.Callback;
 import retrofit2.Converter;
 import retrofit2.Response;
 
-public class FetchReviewsCallback implements Callback<PlaceReviews> {
+public class FetchReviewsCallback implements Callback<PlaceReviewResults> {
 
     @Override
-    public void onResponse(@NonNull Call<PlaceReviews> call, @NonNull Response<PlaceReviews> response) {
+    public void onResponse(@NonNull Call<PlaceReviewResults> call, @NonNull Response<PlaceReviewResults> response) {
         if (response.code() == ApiConstants.HTTP_STATUS_OK) {
             RestClient.getInstance().processReviews(response.body().getReviews());
         } else if (response.code() == ApiConstants.HTTP_STATUS_UNAUTHORIZED) {
@@ -33,14 +33,14 @@ public class FetchReviewsCallback implements Callback<PlaceReviews> {
             try {
                 BusinessInfoFetchError error = errorConverter.convert(response.errorBody());
                 if (error.getCode().equals(ApiConstants.BUSINESS_UNAVAILABLE)) {
-                    RestClient.getInstance().processReviews(new ArrayList<Review>());
+                    RestClient.getInstance().processReviews(new ArrayList<PlaceReview>());
                 }
             } catch (IOException ignored) {}
         }
     }
 
     @Override
-    public void onFailure(@NonNull Call<PlaceReviews> call, @NonNull Throwable t) {
+    public void onFailure(@NonNull Call<PlaceReviewResults> call, @NonNull Throwable t) {
         // TODO: Handle failure here
     }
 }

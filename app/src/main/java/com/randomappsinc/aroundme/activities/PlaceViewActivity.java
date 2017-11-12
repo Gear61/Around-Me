@@ -22,7 +22,7 @@ import com.randomappsinc.aroundme.adapters.PlacePhotosAdapter;
 import com.randomappsinc.aroundme.adapters.PlaceReviewsAdapter;
 import com.randomappsinc.aroundme.api.RestClient;
 import com.randomappsinc.aroundme.models.Place;
-import com.randomappsinc.aroundme.models.Review;
+import com.randomappsinc.aroundme.models.PlaceReview;
 import com.randomappsinc.aroundme.persistence.DatabaseManager;
 import com.randomappsinc.aroundme.utils.UIUtils;
 import com.randomappsinc.aroundme.views.PlaceInfoView;
@@ -138,6 +138,16 @@ public class PlaceViewActivity extends StandardActivity implements RestClient.Ph
         }
     };
 
+    @OnClick(R.id.place_thumbnail)
+    public void onThumbnailClicked() {
+        Intent intent = new Intent(this, PictureFullViewActivity.class);
+        ArrayList<String> imageUrl = new ArrayList<>();
+        imageUrl.add(mPlace.getImageUrl());
+        intent.putStringArrayListExtra(PictureFullViewActivity.IMAGE_URLS_KEY, imageUrl);
+        startActivity(intent);
+        overridePendingTransition(0, 0);
+    }
+
     @OnClick(R.id.call_button)
     public void callPlace() {
         String phoneUri = "tel:" + mPlace.getPhoneNumber();
@@ -164,13 +174,13 @@ public class PlaceViewActivity extends StandardActivity implements RestClient.Ph
     }
 
     @Override
-    public void onReviewsFetched(List<Review> reviews) {
+    public void onReviewsFetched(List<PlaceReview> reviews) {
         mReviewsStub.setVisibility(View.INVISIBLE);
         mReviewsAdapter.setReviews(reviews);
     }
 
     @Override
-    public void onReviewClicked(Review review) {
+    public void onReviewClicked(PlaceReview review) {
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(review.getUrl()));
         startActivity(intent);
     }

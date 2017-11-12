@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.joanzapata.iconify.IconDrawable;
 import com.joanzapata.iconify.fonts.IoniconsIcons;
 import com.randomappsinc.aroundme.R;
-import com.randomappsinc.aroundme.models.Review;
+import com.randomappsinc.aroundme.models.PlaceReview;
 import com.randomappsinc.aroundme.utils.UIUtils;
 import com.squareup.picasso.Picasso;
 
@@ -28,12 +28,12 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class PlaceReviewsAdapter extends RecyclerView.Adapter<PlaceReviewsAdapter.PlaceReviewItemHolder> {
 
     public interface Listener {
-        void onReviewClicked(Review review);
+        void onReviewClicked(PlaceReview review);
     }
 
     @NonNull private Listener mListener;
     private Context mContext;
-    private List<Review> mReviews;
+    private List<PlaceReview> mReviews;
     private Drawable mDefaultThumbnail;
 
     public PlaceReviewsAdapter(Context context, @NonNull Listener listener) {
@@ -43,7 +43,7 @@ public class PlaceReviewsAdapter extends RecyclerView.Adapter<PlaceReviewsAdapte
         mDefaultThumbnail = new IconDrawable(mContext, IoniconsIcons.ion_android_person).colorRes(R.color.dark_gray);
     }
 
-    public void setReviews(List<Review> reviews) {
+    public void setReviews(List<PlaceReview> reviews) {
         mReviews.clear();
         mReviews.addAll(reviews);
         notifyDataSetChanged();
@@ -72,6 +72,7 @@ public class PlaceReviewsAdapter extends RecyclerView.Adapter<PlaceReviewsAdapte
         @BindView(R.id.user_name) TextView mUserName;
         @BindView(R.id.review_text) TextView mReviewText;
         @BindView(R.id.rating) ImageView mRating;
+        @BindView(R.id.review_date) TextView mReviewDate;
         @BindView(R.id.no_reviews) View mNoReviews;
 
         PlaceReviewItemHolder(View view) {
@@ -87,9 +88,9 @@ public class PlaceReviewsAdapter extends RecyclerView.Adapter<PlaceReviewsAdapte
                 mNoReviews.setVisibility(View.GONE);
                 mReviewContent.setVisibility(View.VISIBLE);
 
-                Review review = mReviews.get(position);
+                PlaceReview review = mReviews.get(position);
 
-                String userImageUrl = review.getUser().getImageUrl();
+                String userImageUrl = review.getUserImageUrl();
                 if (userImageUrl == null || userImageUrl.isEmpty()) {
                     mUserImage.setVisibility(View.GONE);
                     mUserIcon.setVisibility(View.VISIBLE);
@@ -97,7 +98,7 @@ public class PlaceReviewsAdapter extends RecyclerView.Adapter<PlaceReviewsAdapte
                     mUserIcon.setVisibility(View.GONE);
                     mUserImage.setVisibility(View.VISIBLE);
                     Picasso.with(mContext)
-                            .load(review.getUser().getImageUrl())
+                            .load(review.getUserImageUrl())
                             .error(mDefaultThumbnail)
                             .fit()
                             .centerCrop()
@@ -105,12 +106,13 @@ public class PlaceReviewsAdapter extends RecyclerView.Adapter<PlaceReviewsAdapte
                             .into(mUserImage);
                 }
 
-                mUserName.setText(review.getUser().getName());
+                mUserName.setText(review.getUsername());
                 mReviewText.setText(review.getText());
 
                 Picasso.with(mContext)
                         .load(UIUtils.getRatingDrawableId(review.getRating()))
                         .into(mRating);
+                mReviewDate.setText(review.getTimeCreatedText());
             }
         }
 
@@ -120,7 +122,7 @@ public class PlaceReviewsAdapter extends RecyclerView.Adapter<PlaceReviewsAdapte
                 return;
             }
 
-            Review review = mReviews.get(getAdapterPosition());
+            PlaceReview review = mReviews.get(getAdapterPosition());
             mListener.onReviewClicked(review);
         }
     }

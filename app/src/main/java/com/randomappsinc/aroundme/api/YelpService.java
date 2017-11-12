@@ -2,7 +2,7 @@ package com.randomappsinc.aroundme.api;
 
 import com.randomappsinc.aroundme.api.models.EventSearchResults;
 import com.randomappsinc.aroundme.api.models.PlacePhotos;
-import com.randomappsinc.aroundme.api.models.PlaceReviews;
+import com.randomappsinc.aroundme.api.models.PlaceReviewResults;
 import com.randomappsinc.aroundme.api.models.PlaceSearchResults;
 import com.randomappsinc.aroundme.api.models.TokenResponse;
 
@@ -33,7 +33,7 @@ public interface YelpService {
     Call<PlacePhotos> fetchPlacePhotos(@Path("id") String placeId);
 
     @GET("v3/businesses/{id}/reviews")
-    Call<PlaceReviews> fetchPlaceReviews(@Path("id") String placeId);
+    Call<PlaceReviewResults> fetchPlaceReviews(@Path("id") String placeId);
 
     @GET("/v3/events")
     Call<EventSearchResults> findEvents(@Query("location") String location,

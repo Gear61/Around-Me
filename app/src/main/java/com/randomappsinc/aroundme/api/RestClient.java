@@ -11,11 +11,11 @@ import com.randomappsinc.aroundme.api.callbacks.FindEventsCallback;
 import com.randomappsinc.aroundme.api.callbacks.FindPlacesCallback;
 import com.randomappsinc.aroundme.api.models.EventSearchResults;
 import com.randomappsinc.aroundme.api.models.PlacePhotos;
-import com.randomappsinc.aroundme.api.models.PlaceReviews;
+import com.randomappsinc.aroundme.api.models.PlaceReviewResults;
 import com.randomappsinc.aroundme.api.models.PlaceSearchResults;
 import com.randomappsinc.aroundme.models.Event;
 import com.randomappsinc.aroundme.models.Place;
-import com.randomappsinc.aroundme.models.Review;
+import com.randomappsinc.aroundme.models.PlaceReview;
 
 import java.util.List;
 
@@ -35,7 +35,7 @@ public class RestClient {
     }
 
     public interface ReviewsListener {
-        void onReviewsFetched(List<Review> photos);
+        void onReviewsFetched(List<PlaceReview> photos);
     }
 
     public interface EventsListener {
@@ -54,7 +54,7 @@ public class RestClient {
 
     private static final ReviewsListener DUMMY_REVIEWS_LISTENER = new ReviewsListener() {
         @Override
-        public void onReviewsFetched(List<Review> reviews) {}
+        public void onReviewsFetched(List<PlaceReview> reviews) {}
     };
 
     private static final EventsListener DUMMY_EVENTS_LISTENER = new EventsListener() {
@@ -78,7 +78,7 @@ public class RestClient {
 
     // Reviews
     @NonNull private ReviewsListener mReviewsListener = DUMMY_REVIEWS_LISTENER;
-    private Call<PlaceReviews> mCurrentFetchReviewsCall;
+    private Call<PlaceReviewResults> mCurrentFetchReviewsCall;
 
     // Events
     @NonNull private EventsListener mEventsListener = DUMMY_EVENTS_LISTENER;
@@ -216,7 +216,7 @@ public class RestClient {
         mReviewsListener = DUMMY_REVIEWS_LISTENER;
     }
 
-    public void processReviews(List<Review> reviews) {
+    public void processReviews(List<PlaceReview> reviews) {
         mReviewsListener.onReviewsFetched(reviews);
     }
 

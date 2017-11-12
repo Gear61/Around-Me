@@ -36,7 +36,7 @@ public class PlaceTypeEditor {
                         dialog.getActionButton(DialogAction.POSITIVE).setEnabled(notEmpty && notDupe);
                     }
                 })
-                .positiveText(R.string.edit)
+                .positiveText(R.string.save)
                 .negativeText(android.R.string.cancel)
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override

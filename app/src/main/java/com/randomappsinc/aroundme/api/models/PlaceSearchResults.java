@@ -1,5 +1,7 @@
 package com.randomappsinc.aroundme.api.models;
 
+import android.text.TextUtils;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.randomappsinc.aroundme.models.Place;
@@ -113,7 +115,12 @@ public class PlaceSearchResults {
             }
 
             String getAddress() {
-                return address1 + ", " + city;
+                StringBuilder address = new StringBuilder();
+                if (!TextUtils.isEmpty(address)) {
+                    address.append(address1).append(", ");
+                }
+                address.append(city);
+                return address.toString();
             }
         }
 

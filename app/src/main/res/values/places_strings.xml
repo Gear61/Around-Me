@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="no_places">
-        There are no places of your chosen type nearby. {ion-sad-outline}
+        There are no open places of your chosen type nearby. {ion-sad-outline}
     </string>
 
     <string name="miles_away">%.1f mi</string>

@@ -64,6 +64,7 @@ public class RestClient {
 
     private static RestClient mInstance;
 
+    private Retrofit mRetrofit;
     private YelpService mYelpService;
     private Handler mHandler;
 
@@ -95,17 +96,21 @@ public class RestClient {
                 .addInterceptor(new AuthInterceptor())
                 .build();
 
-        Retrofit retrofit = new Retrofit.Builder()
+        mRetrofit = new Retrofit.Builder()
                 .baseUrl(ApiConstants.BASE_URL)
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        mYelpService = retrofit.create(YelpService.class);
+        mYelpService = mRetrofit.create(YelpService.class);
 
         HandlerThread backgroundThread = new HandlerThread("");
         backgroundThread.start();
         mHandler = new Handler(backgroundThread.getLooper());
+    }
+
+    public Retrofit getRetrofitInstance() {
+        return mRetrofit;
     }
 
     public void refreshToken() {

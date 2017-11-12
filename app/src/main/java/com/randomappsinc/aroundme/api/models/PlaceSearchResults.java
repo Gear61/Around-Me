@@ -116,7 +116,7 @@ public class PlaceSearchResults {
 
             String getAddress() {
                 StringBuilder address = new StringBuilder();
-                if (!TextUtils.isEmpty(address)) {
+                if (!TextUtils.isEmpty(address1)) {
                     address.append(address1).append(", ");
                 }
                 address.append(city);

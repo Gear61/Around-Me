@@ -129,7 +129,8 @@ public class RestClient {
                         searchTerm,
                         location,
                         ApiConstants.DEFAULT_NUM_PLACES,
-                        ApiConstants.BEST_MATCH_SORT);
+                        ApiConstants.BEST_MATCH_SORT,
+                        true);
                 mCurrentFindPlacesCall.enqueue(new FindPlacesCallback());
             }
         });

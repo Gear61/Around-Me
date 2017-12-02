@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ShareCompat;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -140,6 +141,10 @@ public class PlaceViewActivity extends StandardActivity implements RestClient.Ph
 
     @OnClick(R.id.place_thumbnail)
     public void onThumbnailClicked() {
+        if (TextUtils.isEmpty(mPlace.getImageUrl())) {
+            return;
+        }
+
         Intent intent = new Intent(this, PictureFullViewActivity.class);
         ArrayList<String> imageUrl = new ArrayList<>();
         imageUrl.add(mPlace.getImageUrl());

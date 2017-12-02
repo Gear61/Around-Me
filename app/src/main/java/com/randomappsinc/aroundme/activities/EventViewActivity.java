@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.support.v4.app.ShareCompat;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -126,6 +127,10 @@ public class EventViewActivity extends StandardActivity implements OnMapReadyCal
 
     @OnClick(R.id.event_thumbnail)
     public void onThumbnailClicked() {
+        if (TextUtils.isEmpty(mEvent.getImageUrl())) {
+            return;
+        }
+
         Intent intent = new Intent(this, PictureFullViewActivity.class);
         ArrayList<String> imageUrl = new ArrayList<>();
         imageUrl.add(mEvent.getImageUrl());

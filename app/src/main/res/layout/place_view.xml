@@ -136,35 +136,31 @@
             android:layout_marginTop="12dp"
             android:layout_marginLeft="12dp"
             android:layout_marginRight="12dp"
-            android:layout_marginBottom="4dp"
             android:text="@string/what_others_saying"
             android:textColor="@color/dark_gray"
             android:textSize="21dp"/>
 
-        <FrameLayout
+        <LinearLayout
+            android:id="@+id/reviews_container"
             android:layout_width="match_parent"
-            android:layout_height="184dp">
+            android:layout_height="wrap_content"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:orientation="vertical"/>
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/place_reviews"
-                android:layout_height="match_parent"
-                android:focusable="false"
-                style="@style/horizontal_gallery"/>
+        <LinearLayout
+            android:id="@+id/reviews_stub"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/reviews_stub"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp"
-                android:orientation="horizontal">
+            <include layout="@layout/skeleton_review_cell"/>
 
-                <include layout="@layout/skeleton_review_cell"/>
+            <include layout="@layout/skeleton_review_cell"/>
 
-                <include layout="@layout/skeleton_review_cell"/>
-
-                <include layout="@layout/skeleton_review_cell"/>
-            </LinearLayout>
-        </FrameLayout>
+            <include layout="@layout/skeleton_review_cell"/>
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>

@@ -7,6 +7,7 @@ import android.support.v4.app.ShareCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -48,7 +49,7 @@ public class PlaceViewActivity extends StandardActivity implements RestClient.Ph
     @BindView(R.id.photos_stub) View mPhotosStub;
     @BindView(R.id.place_photos) RecyclerView mPhotos;
     @BindView(R.id.reviews_stub) View mReviewsStub;
-    @BindView(R.id.place_reviews) RecyclerView mReviews;
+    @BindView(R.id.reviews_container) LinearLayout mReviewsContainer;
 
     @BindColor(R.color.light_red) int heartRed;
     @BindColor(R.color.dark_gray) int darkGray;
@@ -83,8 +84,7 @@ public class PlaceViewActivity extends StandardActivity implements RestClient.Ph
 
         mPhotosAdapter = new PlacePhotosAdapter(this, this);
         mPhotos.setAdapter(mPhotosAdapter);
-        mReviewsAdapter = new PlaceReviewsAdapter(this, this);
-        mReviews.setAdapter(mReviewsAdapter);
+        mReviewsAdapter = new PlaceReviewsAdapter(this);
 
         mRestClient = RestClient.getInstance();
         mRestClient.registerPhotosListener(this);
@@ -180,8 +180,8 @@ public class PlaceViewActivity extends StandardActivity implements RestClient.Ph
 
     @Override
     public void onReviewsFetched(List<PlaceReview> reviews) {
-        mReviewsStub.setVisibility(View.INVISIBLE);
-        mReviewsAdapter.setReviews(reviews);
+        mReviewsStub.setVisibility(View.GONE);
+        mReviewsAdapter.setReviews(reviews, mReviewsContainer, this);
     }
 
     @Override

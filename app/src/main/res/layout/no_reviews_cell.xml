@@ -4,12 +4,13 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/parent"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:foreground="?android:attr/selectableItemBackground"
+    android:layout_height="180dp"
+    android:layout_marginTop="4dp"
+    android:layout_marginBottom="4dp"
     card_view:cardUseCompatPadding="true"
     card_view:cardCornerRadius="3dp"
     card_view:cardElevation="2dp"
-    card_view:contentPadding="16dp">
+    card_view:contentPadding="32dp">
 
     <TextView
         android:id="@+id/no_reviews"
@@ -17,6 +18,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="@string/no_reviews"
-        android:textSize="17sp"
+        android:textSize="21sp"
         android:textColor="@color/dark_gray"/>
 </android.support.v7.widget.CardView>

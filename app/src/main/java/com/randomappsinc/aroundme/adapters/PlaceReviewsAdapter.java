@@ -28,7 +28,11 @@ public class PlaceReviewsAdapter implements PlaceReviewCell.Listener {
         LayoutInflater inflater = LayoutInflater.from(context);
 
         if (reviews.isEmpty()) {
-            // Show single cell empty state
+            View noReviewsCell = inflater.inflate(
+                    R.layout.no_reviews_cell,
+                    reviewContainer,
+                    false);
+            reviewContainer.addView(noReviewsCell);
         } else {
             for (PlaceReview review : reviews) {
                 View reviewCellParent = inflater.inflate(

@@ -2,6 +2,7 @@ package com.randomappsinc.aroundme.models;
 
 import com.randomappsinc.aroundme.utils.DistanceUtils;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -9,7 +10,12 @@ public class Filter {
 
     public static final int DEFAULT_RADIUS = 8047;
     public static final String DEFAULT_SORT = SortType.BEST_MATCH;
-    public static final Set<String> DEFAULT_PRICE_RANGES = new HashSet<>();
+    public static final Set<String> DEFAULT_PRICE_RANGES =
+            new HashSet<>(Arrays.asList(
+                    PriceRange.CHEAP,
+                    PriceRange.FAIR,
+                    PriceRange.PRICEY,
+                    PriceRange.VERY_EXPENSIVE));
 
     private static final double MAX_YELP_DISTANCE = 40000;
 
@@ -28,6 +34,17 @@ public class Filter {
 
     public Set<String> getPriceRanges() {
         return priceRanges;
+    }
+
+    public String getPriceRangesString() {
+        StringBuilder rangesString = new StringBuilder();
+        for (String priceRange : priceRanges) {
+            if (rangesString.length() > 0) {
+                rangesString.append(", ");
+            }
+            rangesString.append(priceRange);
+        }
+        return rangesString.toString();
     }
 
     public void setRadius(int radius) {

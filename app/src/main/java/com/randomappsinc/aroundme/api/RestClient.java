@@ -14,8 +14,10 @@ import com.randomappsinc.aroundme.api.models.PlacePhotos;
 import com.randomappsinc.aroundme.api.models.PlaceReviewResults;
 import com.randomappsinc.aroundme.api.models.PlaceSearchResults;
 import com.randomappsinc.aroundme.models.Event;
+import com.randomappsinc.aroundme.models.Filter;
 import com.randomappsinc.aroundme.models.Place;
 import com.randomappsinc.aroundme.models.PlaceReview;
+import com.randomappsinc.aroundme.persistence.PreferencesManager;
 
 import java.util.List;
 
@@ -125,12 +127,15 @@ public class RestClient {
                 if (mCurrentFindPlacesCall != null) {
                     mCurrentFindPlacesCall.cancel();
                 }
+                Filter filter = PreferencesManager.get().getFilter();
                 mCurrentFindPlacesCall = mYelpService.findPlaces(
                         searchTerm,
                         location,
                         ApiConstants.DEFAULT_NUM_PLACES,
-                        ApiConstants.BEST_MATCH_SORT,
-                        true);
+                        filter.getSortType(),
+                        true,
+                        filter.getRadius(),
+                        filter.getPriceRangesString());
                 mCurrentFindPlacesCall.enqueue(new FindPlacesCallback());
             }
         });

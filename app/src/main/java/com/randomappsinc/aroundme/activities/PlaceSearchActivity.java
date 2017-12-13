@@ -151,8 +151,9 @@ public class PlaceSearchActivity extends StandardActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_search, menu);
+        getMenuInflater().inflate(R.menu.menu_place_search, menu);
         UIUtils.loadMenuIcon(menu, R.id.set_location, IoniconsIcons.ion_android_map, this);
+        UIUtils.loadMenuIcon(menu, R.id.filter, IoniconsIcons.ion_funnel, this);
         return true;
     }
 

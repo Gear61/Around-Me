@@ -166,7 +166,7 @@ public class EventSearchFragment extends Fragment
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_search, menu);
+        inflater.inflate(R.menu.menu_place_search, menu);
         UIUtils.loadMenuIcon(menu, R.id.set_location, IoniconsIcons.ion_android_map, getActivity());
         super.onCreateOptionsMenu(menu, inflater);
     }

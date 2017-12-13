@@ -4,7 +4,10 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.randomappsinc.aroundme.models.Filter;
 import com.randomappsinc.aroundme.utils.MyApplication;
+
+import java.util.Set;
 
 public class PreferencesManager {
 
@@ -14,6 +17,11 @@ public class PreferencesManager {
     private static final String BEARER_TOKEN_KEY = "bearerToken";
     private static final String NUM_APP_OPENS = "numAppOpens";
     private static final int OPENS_BEFORE_RATING = 5;
+
+    // Filter
+    private static final String FILTER_RADIUS = "filterRadius";
+    private static final String FILTER_SORT_TYPE = "filterSortType";
+    private static final String FILTER_PRICE_RANGES = "filterPriceRanges";
 
     private static PreferencesManager instance;
 
@@ -55,5 +63,25 @@ public class PreferencesManager {
         currentAppOpens++;
         prefs.edit().putInt(NUM_APP_OPENS, currentAppOpens).apply();
         return currentAppOpens == OPENS_BEFORE_RATING;
+    }
+
+    public Filter getFilter() {
+        int radius = prefs.getInt(FILTER_RADIUS, Filter.DEFAULT_RADIUS);
+        String sortType = prefs.getString(FILTER_SORT_TYPE, Filter.DEFAULT_SORT);
+        Set<String> priceRanges = prefs.getStringSet(FILTER_PRICE_RANGES, Filter.DEFAULT_PRICE_RANGES);
+
+        Filter filter = new Filter();
+        filter.setRadius(radius);
+        filter.setSortType(sortType);
+        filter.setPricesRanges(priceRanges);
+        return filter;
+    }
+
+    public void saveFilter(Filter filter) {
+        prefs.edit()
+                .putInt(FILTER_RADIUS, filter.getRadius())
+                .putString(FILTER_SORT_TYPE, filter.getSortType())
+                .putStringSet(FILTER_PRICE_RANGES, filter.getPriceRanges())
+                .apply();
     }
 }

@@ -6,13 +6,12 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.randomappsinc.aroundme.models.Place;
 import com.randomappsinc.aroundme.models.PlaceCategory;
+import com.randomappsinc.aroundme.utils.DistanceUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class PlaceSearchResults {
-
-    private static final double METER_TO_MILES = 0.000621371;
 
     @SerializedName("businesses")
     @Expose
@@ -168,7 +167,7 @@ public class PlaceSearchResults {
             place.setAddress(location.getAddress());
             place.setLatitude(coordinates.getLatitude());
             place.setLongitude(coordinates.getLongitude());
-            place.setDistance(distance * METER_TO_MILES);
+            place.setDistance(DistanceUtils.getMetersFromMiles(distance));
             List<PlaceCategory> placeCategories = new ArrayList<>();
             for (Category category : categories) {
                 PlaceCategory placeCategory = new PlaceCategory();

@@ -57,5 +57,11 @@
             android:name=".activities.EventViewActivity"
             android:configChanges="orientation|screenSize">
         </activity>
+
+        <activity
+            android:name=".activities.FilterActivity"
+            android:configChanges="orientation|screenSize"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 </manifest>

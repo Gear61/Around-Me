@@ -147,6 +147,8 @@ public class MainActivity extends StandardActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.filter:
+                startActivity(new Intent(this, FilterActivity.class));
+                overridePendingTransition(R.anim.slide_in_bottom, 0);
                 return true;
         }
         return super.onOptionsItemSelected(item);

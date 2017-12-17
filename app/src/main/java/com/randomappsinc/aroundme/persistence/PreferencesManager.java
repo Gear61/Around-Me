@@ -67,7 +67,7 @@ public class PreferencesManager {
 
     public Filter getFilter() {
         int radius = prefs.getInt(FILTER_RADIUS, Filter.DEFAULT_RADIUS);
-        String sortType = prefs.getString(FILTER_SORT_TYPE, Filter.DEFAULT_SORT);
+        String sortType = prefs.getString(FILTER_SORT_TYPE, Filter.DEFAULT_SORT_TYPE);
         Set<String> priceRanges = prefs.getStringSet(FILTER_PRICE_RANGES, Filter.DEFAULT_PRICE_RANGES);
 
         Filter filter = new Filter();

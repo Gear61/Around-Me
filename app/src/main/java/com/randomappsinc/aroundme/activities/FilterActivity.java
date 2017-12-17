@@ -17,7 +17,7 @@ import butterknife.OnClick;
 public class FilterActivity extends AppCompatActivity {
 
     @BindView(R.id.radius_slider) SeekBar mRadiusSlider;
-    @BindView(R.id.distance_text) TextView mDistanceText;
+    @BindView(R.id.radius_text) TextView mDistanceText;
 
     @BindString(R.string.radius_text) String radiusTemplate;
 
@@ -33,7 +33,7 @@ public class FilterActivity extends AppCompatActivity {
         mRadiusSlider.setOnSeekBarChangeListener(mRadiusSliderListener);
 
         mFilter = PreferencesManager.get().getFilter();
-        mRadiusSlider.setProgress((mFilter.getRadiusInMiles() * 10) - 1);
+        loadFilterIntoView();
     }
 
     private final SeekBar.OnSeekBarChangeListener mRadiusSliderListener = new SeekBar.OnSeekBarChangeListener() {
@@ -50,6 +50,10 @@ public class FilterActivity extends AppCompatActivity {
         public void onStopTrackingTouch(SeekBar seekBar) {}
     };
 
+    private void loadFilterIntoView() {
+        mRadiusSlider.setProgress((mFilter.getRadiusInMiles() * 10) - 1);
+    }
+
     @OnClick(R.id.close)
     public void closeFilter() {
         finish();
@@ -57,12 +61,14 @@ public class FilterActivity extends AppCompatActivity {
 
     @OnClick(R.id.reset_all)
     public void resetFilter() {
-
+        mFilter.reset();
+        loadFilterIntoView();
     }
 
     @OnClick(R.id.apply_filter)
     public void applyFilter() {
-
+        PreferencesManager.get().saveFilter(mFilter);
+        finish();
     }
 
     @Override

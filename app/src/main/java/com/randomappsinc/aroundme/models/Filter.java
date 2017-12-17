@@ -9,7 +9,7 @@ import java.util.Set;
 public class Filter {
 
     public static final int DEFAULT_RADIUS = 8047;
-    public static final String DEFAULT_SORT = SortType.BEST_MATCH;
+    public static final String DEFAULT_SORT_TYPE = SortType.BEST_MATCH;
     public static final Set<String> DEFAULT_PRICE_RANGES =
             new HashSet<>(Arrays.asList(
                     PriceRange.CHEAP,
@@ -74,5 +74,11 @@ public class Filter {
 
     public void setPricesRanges(Set<String> priceRanges) {
         this.priceRanges = priceRanges;
+    }
+
+    public void reset() {
+        radius = DEFAULT_RADIUS;
+        sortType = DEFAULT_SORT_TYPE;
+        priceRanges = DEFAULT_PRICE_RANGES;
     }
 }

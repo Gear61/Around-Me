@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="filter">Filter</string>
+    <string name="reset_all">Reset all</string>
+    <string name="search_radius">Search radius</string>
+    <string name="radius_text">Show me places within %.1f miles of me.</string>
+    <string name="apply_filter">Apply Filter</string>
+</resources>

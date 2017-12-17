@@ -167,7 +167,7 @@ public class PlaceSearchResults {
             place.setAddress(location.getAddress());
             place.setLatitude(coordinates.getLatitude());
             place.setLongitude(coordinates.getLongitude());
-            place.setDistance(DistanceUtils.getMetersFromMiles(distance));
+            place.setDistance(DistanceUtils.getMilesFromMeters(distance));
             List<PlaceCategory> placeCategories = new ArrayList<>();
             for (Category category : categories) {
                 PlaceCategory placeCategory = new PlaceCategory();

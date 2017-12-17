@@ -2,13 +2,26 @@ package com.randomappsinc.aroundme.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.SeekBar;
+import android.widget.TextView;
 
 import com.randomappsinc.aroundme.R;
+import com.randomappsinc.aroundme.models.Filter;
+import com.randomappsinc.aroundme.persistence.PreferencesManager;
 
+import butterknife.BindString;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class FilterActivity extends AppCompatActivity {
+
+    @BindView(R.id.radius_slider) SeekBar mRadiusSlider;
+    @BindView(R.id.distance_text) TextView mDistanceText;
+
+    @BindString(R.string.radius_text) String radiusTemplate;
+
+    private Filter mFilter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,11 +29,40 @@ public class FilterActivity extends AppCompatActivity {
 
         setContentView(R.layout.filter);
         ButterKnife.bind(this);
+
+        mRadiusSlider.setOnSeekBarChangeListener(mRadiusSliderListener);
+
+        mFilter = PreferencesManager.get().getFilter();
+        mRadiusSlider.setProgress((mFilter.getRadiusInMiles() * 10) - 1);
     }
+
+    private final SeekBar.OnSeekBarChangeListener mRadiusSliderListener = new SeekBar.OnSeekBarChangeListener() {
+        @Override
+        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+            double progressAdjusted = (double) (progress + 1) / 10.0;
+            mDistanceText.setText(String.format(radiusTemplate, progressAdjusted));
+        }
+
+        @Override
+        public void onStartTrackingTouch(SeekBar seekBar) {}
+
+        @Override
+        public void onStopTrackingTouch(SeekBar seekBar) {}
+    };
 
     @OnClick(R.id.close)
     public void closeFilter() {
         finish();
+    }
+
+    @OnClick(R.id.reset_all)
+    public void resetFilter() {
+
+    }
+
+    @OnClick(R.id.apply_filter)
+    public void applyFilter() {
+
     }
 
     @Override

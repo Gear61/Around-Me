@@ -28,6 +28,10 @@ public class Filter {
         return radius;
     }
 
+    public int getRadiusInMiles() {
+        return (int) DistanceUtils.getMilesFromMeters(radius);
+    }
+
     public @SortType String getSortType() {
         return sortType;
     }
@@ -52,7 +56,7 @@ public class Filter {
     }
 
     public void setRadiusWithMiles(double miles) {
-        double converted = DistanceUtils.getMilesFromMeters(miles);
+        double converted = DistanceUtils.getMetersFromMiles(miles);
         radius = (int) Math.max(converted, MAX_YELP_DISTANCE);
     }
 

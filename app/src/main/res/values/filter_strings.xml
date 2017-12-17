@@ -6,4 +6,15 @@
     <string name="radius_text">Show me places within %.1f miles of me.</string>
     <string name="sort_by">Sort by</string>
     <string name="apply_filter">Apply Filter</string>
+
+    <string name="best_match">Best match</string>
+    <string name="rating">Rating</string>
+    <string name="review_count">Review count</string>
+    <string name="distance">Distance</string>
+
+    <string name="price_range">Price range</string>
+    <string name="cheap">Cheap</string>
+    <string name="moderate">Moderate</string>
+    <string name="pricey">Pricey</string>
+    <string name="very_expensive">Very expensive</string>
 </resources>

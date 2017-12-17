@@ -4,11 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:ignore="SpUsage">
+    tools:ignore="SpUsage, RtlHardcoded">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_above="@id/button_container">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -17,8 +18,7 @@
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content">
 
                 <com.joanzapata.iconify.widget.IconTextView
                     android:id="@+id/close"
@@ -28,14 +28,14 @@
                     android:gravity="center"
                     android:text="@string/close_icon"
                     android:textColor="@color/theater_black"
-                    android:textSize="32dp"
-                    android:shadowRadius="1"/>
+                    android:textSize="32dp"/>
 
                 <TextView
                     android:id="@+id/reset_all"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end|center_vertical"
+                    android:paddingLeft="16dp"
                     android:paddingRight="16dp"
                     android:text="@string/reset_all"
                     android:textColor="@color/theater_black"
@@ -43,12 +43,10 @@
             </FrameLayout>
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
                 android:text="@string/search_radius"
-                android:textSize="21dp"
-                android:textColor="@color/black"/>
+                style="@style/filter_header"/>
 
             <TextView
                 android:id="@+id/radius_text"
@@ -69,28 +67,107 @@
                 android:max="@integer/max_radius_volume"/>
 
             <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
-                android:background="@color/gray_300"/>
+                style="@style/filter_divider"/>
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
+                android:layout_marginBottom="10dp"
                 android:text="@string/sort_by"
-                android:textSize="21dp"
-                android:textColor="@color/black"/>
+                style="@style/filter_header"/>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-            </LinearLayout>
+            <FrameLayout style="@style/filter_checkbox_container">
+                <TextView
+                    android:text="@string/best_match"
+                    style="@style/filter_checkbox_text"/>
+
+                <CheckBox
+                    android:id="@+id/best_match_checkbox"
+                    style="@style/filter_checkbox"/>
+            </FrameLayout>
+
+            <FrameLayout style="@style/filter_checkbox_container">
+                <TextView
+                    android:text="@string/rating"
+                    style="@style/filter_checkbox_text"/>
+
+                <CheckBox
+                    android:id="@+id/rating_checkbox"
+                    style="@style/filter_checkbox"/>
+            </FrameLayout>
+
+            <FrameLayout style="@style/filter_checkbox_container">
+                <TextView
+                    android:text="@string/review_count"
+                    style="@style/filter_checkbox_text"/>
+
+                <CheckBox
+                    android:id="@+id/review_count_checkbox"
+                    style="@style/filter_checkbox"/>
+            </FrameLayout>
+
+            <FrameLayout style="@style/filter_checkbox_container">
+                <TextView
+                    android:text="@string/distance"
+                    style="@style/filter_checkbox_text"/>
+
+                <CheckBox
+                    android:id="@+id/distance_checkbox"
+                    style="@style/filter_checkbox"/>
+            </FrameLayout>
+
+            <View
+                android:layout_marginTop="14dp"
+                android:layout_marginBottom="20dp"
+                style="@style/filter_divider"/>
+
+            <TextView
+                android:layout_marginBottom="10dp"
+                android:text="@string/price_range"
+                style="@style/filter_header"/>
+
+            <FrameLayout style="@style/filter_checkbox_container">
+                <TextView
+                    android:text="@string/cheap"
+                    style="@style/filter_checkbox_text"/>
+
+                <CheckBox
+                    android:id="@+id/cheap_checkbox"
+                    style="@style/filter_checkbox"/>
+            </FrameLayout>
+
+            <FrameLayout style="@style/filter_checkbox_container">
+                <TextView
+                    android:text="@string/moderate"
+                    style="@style/filter_checkbox_text"/>
+
+                <CheckBox
+                    android:id="@+id/moderate_checkbox"
+                    style="@style/filter_checkbox"/>
+            </FrameLayout>
+
+            <FrameLayout style="@style/filter_checkbox_container">
+                <TextView
+                    android:text="@string/pricey"
+                    style="@style/filter_checkbox_text"/>
+
+                <CheckBox
+                    android:id="@+id/pricey_checkbox"
+                    style="@style/filter_checkbox"/>
+            </FrameLayout>
+
+            <FrameLayout
+                android:paddingBottom="16dp"
+                style="@style/filter_checkbox_container">
+
+                <TextView
+                    android:text="@string/very_expensive"
+                    style="@style/filter_checkbox_text"/>
+
+                <CheckBox
+                    android:id="@+id/very_expensive_checkbox"
+                    style="@style/filter_checkbox"/>
+            </FrameLayout>
         </LinearLayout>
     </ScrollView>
 

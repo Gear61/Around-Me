@@ -13,7 +13,7 @@ public class Filter {
     public static final Set<String> DEFAULT_PRICE_RANGES =
             new HashSet<>(Arrays.asList(
                     PriceRange.CHEAP,
-                    PriceRange.FAIR,
+                    PriceRange.MODERATE,
                     PriceRange.PRICEY,
                     PriceRange.VERY_EXPENSIVE));
 

@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AnticipateOvershootInterpolator;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -129,5 +130,10 @@ public class UIUtils {
             });
             shrink.start();
         }
+    }
+
+    public static void setCheckedImmediately(CheckBox checkbox, boolean checked) {
+        checkbox.setChecked(checked);
+        checkbox.jumpDrawablesToCurrentState();
     }
 }

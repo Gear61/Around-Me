@@ -7,7 +7,7 @@
     <string name="sort_by">Sort by</string>
     <string name="apply_filter">Apply Filter</string>
 
-    <string name="best_match">Best match</string>
+    <string name="best_match">Best match (default)</string>
     <string name="rating">Rating</string>
     <string name="review_count">Review count</string>
     <string name="distance">Distance</string>

@@ -12,6 +12,7 @@
         android:layout_above="@id/button_container">
 
         <LinearLayout
+            android:id="@+id/filter_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -76,7 +77,10 @@
                 android:text="@string/sort_by"
                 style="@style/filter_header"/>
 
-            <FrameLayout style="@style/filter_checkbox_container">
+            <FrameLayout
+                android:id="@+id/best_match_container"
+                style="@style/filter_checkbox_container">
+
                 <TextView
                     android:text="@string/best_match"
                     style="@style/filter_checkbox_text"/>
@@ -86,7 +90,10 @@
                     style="@style/filter_checkbox"/>
             </FrameLayout>
 
-            <FrameLayout style="@style/filter_checkbox_container">
+            <FrameLayout
+                android:id="@+id/rating_container"
+                style="@style/filter_checkbox_container">
+
                 <TextView
                     android:text="@string/rating"
                     style="@style/filter_checkbox_text"/>
@@ -96,7 +103,10 @@
                     style="@style/filter_checkbox"/>
             </FrameLayout>
 
-            <FrameLayout style="@style/filter_checkbox_container">
+            <FrameLayout
+                android:id="@+id/review_count_container"
+                style="@style/filter_checkbox_container">
+
                 <TextView
                     android:text="@string/review_count"
                     style="@style/filter_checkbox_text"/>
@@ -106,7 +116,10 @@
                     style="@style/filter_checkbox"/>
             </FrameLayout>
 
-            <FrameLayout style="@style/filter_checkbox_container">
+            <FrameLayout
+                android:id="@+id/distance_container"
+                style="@style/filter_checkbox_container">
+
                 <TextView
                     android:text="@string/distance"
                     style="@style/filter_checkbox_text"/>

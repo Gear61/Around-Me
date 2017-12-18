@@ -2,12 +2,14 @@ package com.randomappsinc.aroundme.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.randomappsinc.aroundme.R;
 import com.randomappsinc.aroundme.models.Filter;
 import com.randomappsinc.aroundme.persistence.PreferencesManager;
+import com.randomappsinc.aroundme.views.SortPickerView;
 
 import butterknife.BindString;
 import butterknife.BindView;
@@ -16,12 +18,14 @@ import butterknife.OnClick;
 
 public class FilterActivity extends AppCompatActivity {
 
+    @BindView(R.id.filter_content) View filterContent;
     @BindView(R.id.radius_slider) SeekBar mRadiusSlider;
     @BindView(R.id.radius_text) TextView mDistanceText;
 
     @BindString(R.string.radius_text) String radiusTemplate;
 
     private Filter mFilter;
+    private SortPickerView sortPickerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +35,7 @@ public class FilterActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         mRadiusSlider.setOnSeekBarChangeListener(mRadiusSliderListener);
+        sortPickerView = new SortPickerView(filterContent);
 
         mFilter = PreferencesManager.get().getFilter();
         loadFilterIntoView();
@@ -52,6 +57,7 @@ public class FilterActivity extends AppCompatActivity {
 
     private void loadFilterIntoView() {
         mRadiusSlider.setProgress((mFilter.getRadiusInMiles() * 10) - 1);
+        sortPickerView.loadFilter(mFilter);
     }
 
     @OnClick(R.id.close)

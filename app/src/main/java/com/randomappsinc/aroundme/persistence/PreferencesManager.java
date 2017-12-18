@@ -66,7 +66,7 @@ public class PreferencesManager {
     }
 
     public Filter getFilter() {
-        int radius = prefs.getInt(FILTER_RADIUS, Filter.DEFAULT_RADIUS);
+        float radius = prefs.getFloat(FILTER_RADIUS, Filter.DEFAULT_RADIUS);
         String sortType = prefs.getString(FILTER_SORT_TYPE, Filter.DEFAULT_SORT_TYPE);
         Set<String> priceRanges = prefs.getStringSet(FILTER_PRICE_RANGES, Filter.DEFAULT_PRICE_RANGES);
 
@@ -79,7 +79,7 @@ public class PreferencesManager {
 
     public void saveFilter(Filter filter) {
         prefs.edit()
-                .putInt(FILTER_RADIUS, filter.getRadius())
+                .putFloat(FILTER_RADIUS, filter.getRadius())
                 .putString(FILTER_SORT_TYPE, filter.getSortType())
                 .putStringSet(FILTER_PRICE_RANGES, filter.getPriceRanges())
                 .apply();

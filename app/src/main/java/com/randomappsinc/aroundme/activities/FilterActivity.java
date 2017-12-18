@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.randomappsinc.aroundme.R;
 import com.randomappsinc.aroundme.models.Filter;
 import com.randomappsinc.aroundme.persistence.PreferencesManager;
+import com.randomappsinc.aroundme.views.PriceRangePickerView;
 import com.randomappsinc.aroundme.views.SortPickerView;
 
 import butterknife.BindString;
@@ -19,13 +20,14 @@ import butterknife.OnClick;
 public class FilterActivity extends AppCompatActivity {
 
     @BindView(R.id.filter_content) View filterContent;
-    @BindView(R.id.radius_slider) SeekBar mRadiusSlider;
-    @BindView(R.id.radius_text) TextView mDistanceText;
+    @BindView(R.id.radius_slider) SeekBar radiusSlider;
+    @BindView(R.id.radius_text) TextView distanceText;
 
     @BindString(R.string.radius_text) String radiusTemplate;
 
-    private Filter mFilter;
+    private Filter filter;
     private SortPickerView sortPickerView;
+    private PriceRangePickerView priceRangePickerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,10 +36,11 @@ public class FilterActivity extends AppCompatActivity {
         setContentView(R.layout.filter);
         ButterKnife.bind(this);
 
-        mRadiusSlider.setOnSeekBarChangeListener(mRadiusSliderListener);
+        radiusSlider.setOnSeekBarChangeListener(mRadiusSliderListener);
         sortPickerView = new SortPickerView(filterContent);
+        priceRangePickerView = new PriceRangePickerView(filterContent);
 
-        mFilter = PreferencesManager.get().getFilter();
+        filter = PreferencesManager.get().getFilter();
         loadFilterIntoView();
     }
 
@@ -45,7 +48,7 @@ public class FilterActivity extends AppCompatActivity {
         @Override
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
             double progressAdjusted = (double) (progress + 1) / 10.0;
-            mDistanceText.setText(String.format(radiusTemplate, progressAdjusted));
+            distanceText.setText(String.format(radiusTemplate, progressAdjusted));
         }
 
         @Override
@@ -56,8 +59,10 @@ public class FilterActivity extends AppCompatActivity {
     };
 
     private void loadFilterIntoView() {
-        mRadiusSlider.setProgress((mFilter.getRadiusInMiles() * 10) - 1);
-        sortPickerView.loadFilter(mFilter);
+        float convertedSliderValue = (filter.getRadiusInMiles() * 10) - 1;
+        radiusSlider.setProgress(Math.round(convertedSliderValue));
+        sortPickerView.loadFilter(filter);
+        priceRangePickerView.loadFilter(filter);
     }
 
     @OnClick(R.id.close)
@@ -67,13 +72,18 @@ public class FilterActivity extends AppCompatActivity {
 
     @OnClick(R.id.reset_all)
     public void resetFilter() {
-        mFilter.reset();
+        filter.reset();
         loadFilterIntoView();
     }
 
     @OnClick(R.id.apply_filter)
     public void applyFilter() {
-        PreferencesManager.get().saveFilter(mFilter);
+        double sliderVal = radiusSlider.getProgress();
+        double miles = (sliderVal + 1) / 10;
+        filter.setRadiusWithMiles(miles);
+        filter.setSortType(sortPickerView.getChosenSortType());
+        filter.setPricesRanges(priceRangePickerView.getPriceRanges());
+        PreferencesManager.get().saveFilter(filter);
         finish();
     }
 

@@ -4,5 +4,5 @@
     <integer name="shorter_anim_length">150</integer>
     <integer name="skeleton_anim_length">1000</integer>
 
-    <integer name="max_radius_volume">249</integer>
+    <integer name="max_radius_volume">247</integer>
 </resources>

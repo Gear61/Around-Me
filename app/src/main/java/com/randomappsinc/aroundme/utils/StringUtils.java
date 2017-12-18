@@ -1,5 +1,7 @@
 package com.randomappsinc.aroundme.utils;
 
+import android.support.annotation.StringRes;
+
 import java.util.Currency;
 import java.util.Locale;
 
@@ -31,10 +33,13 @@ public class StringUtils {
         return capitalizedWords.toString().trim();
     }
 
-    public static
-    String getCurrencySymbol() {
+    public static String getCurrencySymbol() {
         Locale userLocale = Locale.getDefault();
         Currency currency = Currency.getInstance(userLocale);
         return currency.getSymbol();
+    }
+
+    public static String getString(@StringRes int resId) {
+        return MyApplication.getAppContext().getString(resId);
     }
 }

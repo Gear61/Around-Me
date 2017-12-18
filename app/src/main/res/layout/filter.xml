@@ -139,9 +139,12 @@
                 android:text="@string/price_range"
                 style="@style/filter_header"/>
 
-            <FrameLayout style="@style/filter_checkbox_container">
+            <FrameLayout
+                android:id="@+id/cheap_container"
+                style="@style/filter_checkbox_container">
+
                 <TextView
-                    android:text="@string/cheap"
+                    android:id="@+id/cheap_text"
                     style="@style/filter_checkbox_text"/>
 
                 <CheckBox
@@ -149,9 +152,12 @@
                     style="@style/filter_checkbox"/>
             </FrameLayout>
 
-            <FrameLayout style="@style/filter_checkbox_container">
+            <FrameLayout
+                android:id="@+id/moderate_container"
+                style="@style/filter_checkbox_container">
+
                 <TextView
-                    android:text="@string/moderate"
+                    android:id="@+id/moderate_text"
                     style="@style/filter_checkbox_text"/>
 
                 <CheckBox
@@ -159,9 +165,12 @@
                     style="@style/filter_checkbox"/>
             </FrameLayout>
 
-            <FrameLayout style="@style/filter_checkbox_container">
+            <FrameLayout
+                android:id="@+id/pricey_container"
+                style="@style/filter_checkbox_container">
+
                 <TextView
-                    android:text="@string/pricey"
+                    android:id="@+id/pricey_text"
                     style="@style/filter_checkbox_text"/>
 
                 <CheckBox
@@ -170,11 +179,12 @@
             </FrameLayout>
 
             <FrameLayout
+                android:id="@+id/very_expensive_container"
                 android:paddingBottom="16dp"
                 style="@style/filter_checkbox_container">
 
                 <TextView
-                    android:text="@string/very_expensive"
+                    android:id="@+id/very_expensive_text"
                     style="@style/filter_checkbox_text"/>
 
                 <CheckBox

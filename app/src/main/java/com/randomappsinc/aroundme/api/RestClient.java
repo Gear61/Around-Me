@@ -134,7 +134,7 @@ public class RestClient {
                         ApiConstants.DEFAULT_NUM_PLACES,
                         filter.getSortType(),
                         true,
-                        filter.getRadius(),
+                        (int) filter.getRadius(),
                         filter.getPriceRangesString());
                 mCurrentFindPlacesCall.enqueue(new FindPlacesCallback());
             }

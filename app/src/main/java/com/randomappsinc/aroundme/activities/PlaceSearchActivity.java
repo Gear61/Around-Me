@@ -29,6 +29,8 @@ public class PlaceSearchActivity extends StandardActivity
 
     public static final String SEARCH_TERM_KEY = "searchTerm";
 
+    private static final int FILTER_REQUEST_CODE = 1;
+
     @BindView(R.id.parent) View mParent;
     @BindView(R.id.skeleton_results) View mSkeletonResults;
     @BindView(R.id.search_results) RecyclerView mPlaces;
@@ -111,15 +113,23 @@ public class PlaceSearchActivity extends StandardActivity
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode != LocationManager.LOCATION_SERVICES_CODE) {
-            return;
-        }
-        if (resultCode == RESULT_OK) {
-            UIUtils.showSnackbar(mParent, R.string.location_services_on);
-            mLocationManager.fetchAutomaticLocation();
-        } else {
-            mDenialLock = true;
-            mLocationManager.showLocationDenialDialog();
+        switch (requestCode) {
+            case LocationManager.LOCATION_SERVICES_CODE:
+                if (resultCode == RESULT_OK) {
+                    UIUtils.showSnackbar(mParent, R.string.location_services_on);
+                    mLocationManager.fetchAutomaticLocation();
+                } else {
+                    mDenialLock = true;
+                    mLocationManager.showLocationDenialDialog();
+                }
+                break;
+            case FILTER_REQUEST_CODE:
+                if (resultCode == RESULT_OK) {
+                    mPlaces.setVisibility(View.GONE);
+                    mSkeletonResults.setVisibility(View.VISIBLE);
+                    mRestClient.findPlaces(mSearchTerm, mCurrentLocation);
+                }
+                break;
         }
     }
 
@@ -162,6 +172,9 @@ public class PlaceSearchActivity extends StandardActivity
         switch (item.getItemId()) {
             case R.id.set_location:
                 mLocationManager.showLocationForm();
+                return true;
+            case R.id.filter:
+                startActivityForResult(new Intent(this, FilterActivity.class), 1);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

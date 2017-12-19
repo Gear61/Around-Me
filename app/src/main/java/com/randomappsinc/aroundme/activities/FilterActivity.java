@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.randomappsinc.aroundme.R;
 import com.randomappsinc.aroundme.models.Filter;
@@ -84,6 +85,8 @@ public class FilterActivity extends AppCompatActivity {
         filter.setSortType(sortPickerView.getChosenSortType());
         filter.setPricesRanges(priceRangePickerView.getPriceRanges());
         PreferencesManager.get().saveFilter(filter);
+        Toast.makeText(this, R.string.filter_applied, Toast.LENGTH_SHORT).show();
+        setResult(RESULT_OK);
         finish();
     }
 

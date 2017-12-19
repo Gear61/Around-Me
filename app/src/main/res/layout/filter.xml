@@ -6,9 +6,37 @@
     android:layout_height="match_parent"
     tools:ignore="SpUsage, RtlHardcoded">
 
+    <FrameLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.joanzapata.iconify.widget.IconTextView
+            android:id="@+id/close"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_gravity="start|center_vertical"
+            android:gravity="center"
+            android:text="@string/close_icon"
+            android:textColor="@color/theater_black"
+            android:textSize="32dp"/>
+
+        <TextView
+            android:id="@+id/reset_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center_vertical"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:text="@string/reset_all"
+            android:textColor="@color/theater_black"
+            android:textSize="17dp"/>
+    </FrameLayout>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/toolbar"
         android:layout_above="@id/button_container">
 
         <LinearLayout
@@ -16,32 +44,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <com.joanzapata.iconify.widget.IconTextView
-                    android:id="@+id/close"
-                    android:layout_width="56dp"
-                    android:layout_height="56dp"
-                    android:layout_gravity="start|center_vertical"
-                    android:gravity="center"
-                    android:text="@string/close_icon"
-                    android:textColor="@color/theater_black"
-                    android:textSize="32dp"/>
-
-                <TextView
-                    android:id="@+id/reset_all"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end|center_vertical"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp"
-                    android:text="@string/reset_all"
-                    android:textColor="@color/theater_black"
-                    android:textSize="17dp"/>
-            </FrameLayout>
 
             <TextView
                 android:layout_marginTop="16dp"
@@ -193,6 +195,11 @@
             </FrameLayout>
         </LinearLayout>
     </ScrollView>
+
+    <View
+        android:layout_below="@id/toolbar"
+        android:layout_margin="0dp"
+        style="@style/filter_divider"/>
 
     <FrameLayout
         android:id="@+id/button_container"

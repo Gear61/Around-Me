@@ -8,12 +8,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.joanzapata.iconify.IconDrawable;
 import com.joanzapata.iconify.fonts.IoniconsIcons;
 import com.randomappsinc.aroundme.R;
+import com.randomappsinc.aroundme.activities.FilterActivity;
 import com.randomappsinc.aroundme.activities.PlaceSearchActivity;
 import com.randomappsinc.aroundme.adapters.PlaceTypesAdapter;
 import com.randomappsinc.aroundme.dialogs.PlaceTypeAdder;
@@ -50,6 +54,7 @@ public class PlaceTypesFragment extends Fragment implements PlaceTypesAdapter.Li
 
         mToolbar.setTitle(R.string.app_name);
         ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
+        setHasOptionsMenu(true);
 
         mAddPlaceType.setImageDrawable(
                 new IconDrawable(getActivity(), IoniconsIcons.ion_android_add).colorRes(R.color.white));
@@ -92,5 +97,23 @@ public class PlaceTypesFragment extends Fragment implements PlaceTypesAdapter.Li
     public void onDestroyView() {
         super.onDestroyView();
         mUnbinder.unbind();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_with_filter, menu);
+        UIUtils.loadMenuIcon(menu, R.id.filter, IoniconsIcons.ion_funnel, getActivity());
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.filter:
+                startActivity(new Intent(getActivity(), FilterActivity.class));
+                getActivity().overridePendingTransition(R.anim.slide_in_bottom, R.anim.stay);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

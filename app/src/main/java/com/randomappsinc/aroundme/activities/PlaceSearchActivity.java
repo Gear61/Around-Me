@@ -174,7 +174,10 @@ public class PlaceSearchActivity extends StandardActivity
                 mLocationManager.showLocationForm();
                 return true;
             case R.id.filter:
-                startActivityForResult(new Intent(this, FilterActivity.class), 1);
+                startActivityForResult(
+                        new Intent(this, FilterActivity.class),
+                        FILTER_REQUEST_CODE);
+                overridePendingTransition(R.anim.slide_in_bottom, R.anim.stay);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

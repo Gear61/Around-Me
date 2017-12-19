@@ -148,7 +148,7 @@ public class MainActivity extends StandardActivity {
         switch (item.getItemId()) {
             case R.id.filter:
                 startActivity(new Intent(this, FilterActivity.class));
-                overridePendingTransition(R.anim.slide_in_bottom, 0);
+                overridePendingTransition(R.anim.slide_in_bottom, R.anim.stay);
                 return true;
         }
         return super.onOptionsItemSelected(item);

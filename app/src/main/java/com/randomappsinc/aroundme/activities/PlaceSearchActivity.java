@@ -139,6 +139,9 @@ public class PlaceSearchActivity extends StandardActivity
             return;
         }
 
+        mPlaces.setVisibility(View.GONE);
+        mSkeletonResults.setVisibility(View.VISIBLE);
+
         mCurrentLocation = location;
         mRestClient.findPlaces(mSearchTerm, mCurrentLocation);
     }

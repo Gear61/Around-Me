@@ -135,7 +135,8 @@ public class RestClient {
                         filter.getSortType(),
                         true,
                         (int) filter.getRadius(),
-                        filter.getPriceRangesString());
+                        filter.getPriceRangesString(),
+                        filter.getAttributesString());
                 mCurrentFindPlacesCall.enqueue(new FindPlacesCallback());
             }
         });

@@ -18,4 +18,8 @@
     <string name="moderate">Moderate</string>
     <string name="pricey">Pricey</string>
     <string name="very_expensive">Very expensive</string>
+
+    <string name="other_options">Other options</string>
+    <string name="hot_and_new">Hot and new</string>
+    <string name="gender_neutral_restrooms">Gender neutral restrooms</string>
 </resources>

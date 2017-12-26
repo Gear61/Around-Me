@@ -1,5 +1,7 @@
 package com.randomappsinc.aroundme.models;
 
+import com.randomappsinc.aroundme.constants.PriceRange;
+import com.randomappsinc.aroundme.constants.SortType;
 import com.randomappsinc.aroundme.utils.DistanceUtils;
 
 import java.util.Arrays;
@@ -16,6 +18,7 @@ public class Filter {
                     PriceRange.MODERATE,
                     PriceRange.PRICEY,
                     PriceRange.VERY_EXPENSIVE));
+    public static final Set<String> DEFAULT_ATTRIBUTES = new HashSet<>();
 
     private static final float MAX_YELP_DISTANCE = 40000;
 
@@ -23,6 +26,7 @@ public class Filter {
     private float radius;
     private @SortType String sortType;
     private Set<String> priceRanges;
+    private Set<String> attributes;
 
     public float getRadius() {
         return radius;
@@ -51,6 +55,21 @@ public class Filter {
         return rangesString.toString();
     }
 
+    public Set<String> getAttributes() {
+        return attributes;
+    }
+
+    public String getAttributesString() {
+        StringBuilder attributesString = new StringBuilder();
+        for (String attribute : attributes) {
+            if (attributesString.length() > 0) {
+                attributesString.append(", ");
+            }
+            attributesString.append(attribute);
+        }
+        return attributesString.toString();
+    }
+
     public void setRadius(float radius) {
         this.radius = radius;
     }
@@ -70,9 +89,14 @@ public class Filter {
         this.priceRanges = priceRanges;
     }
 
+    public void setAttributes(Set<String> attributes) {
+        this.attributes = attributes;
+    }
+
     public void reset() {
         radius = DEFAULT_RADIUS;
         sortType = DEFAULT_SORT_TYPE;
         priceRanges = DEFAULT_PRICE_RANGES;
+        attributes = DEFAULT_ATTRIBUTES;
     }
 }

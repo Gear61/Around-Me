@@ -5,8 +5,8 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.randomappsinc.aroundme.R;
+import com.randomappsinc.aroundme.constants.PriceRange;
 import com.randomappsinc.aroundme.models.Filter;
-import com.randomappsinc.aroundme.models.PriceRange;
 import com.randomappsinc.aroundme.utils.StringUtils;
 import com.randomappsinc.aroundme.utils.UIUtils;
 

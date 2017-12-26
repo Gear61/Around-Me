@@ -5,7 +5,7 @@ import com.randomappsinc.aroundme.api.models.PlacePhotos;
 import com.randomappsinc.aroundme.api.models.PlaceReviewResults;
 import com.randomappsinc.aroundme.api.models.PlaceSearchResults;
 import com.randomappsinc.aroundme.api.models.TokenResponse;
-import com.randomappsinc.aroundme.models.SortType;
+import com.randomappsinc.aroundme.constants.SortType;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -30,7 +30,8 @@ public interface YelpService {
                                         @Query("sort_by") @SortType String sortBy,
                                         @Query("open_now") boolean openNow,
                                         @Query("radius") int radius,
-                                        @Query("price") String priceRanges);
+                                        @Query("price") String priceRanges,
+                                        @Query("attributes") String attributes);
 
     @GET("v3/businesses/{id}")
     Call<PlacePhotos> fetchPlacePhotos(@Path("id") String placeId);

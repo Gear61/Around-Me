@@ -1,4 +1,4 @@
-package com.randomappsinc.aroundme.models;
+package com.randomappsinc.aroundme.constants;
 
 import android.support.annotation.StringDef;
 

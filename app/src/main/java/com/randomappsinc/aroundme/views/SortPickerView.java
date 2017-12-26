@@ -4,8 +4,8 @@ import android.view.View;
 import android.widget.CheckBox;
 
 import com.randomappsinc.aroundme.R;
+import com.randomappsinc.aroundme.constants.SortType;
 import com.randomappsinc.aroundme.models.Filter;
-import com.randomappsinc.aroundme.models.SortType;
 import com.randomappsinc.aroundme.utils.UIUtils;
 
 import butterknife.BindView;

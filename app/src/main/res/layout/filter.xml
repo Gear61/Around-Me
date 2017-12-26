@@ -182,7 +182,6 @@
 
             <FrameLayout
                 android:id="@+id/very_expensive_container"
-                android:paddingBottom="16dp"
                 style="@style/filter_checkbox_container">
 
                 <TextView
@@ -191,6 +190,43 @@
 
                 <CheckBox
                     android:id="@+id/very_expensive_checkbox"
+                    style="@style/filter_checkbox"/>
+            </FrameLayout>
+
+            <View
+                android:layout_marginTop="14dp"
+                android:layout_marginBottom="20dp"
+                style="@style/filter_divider"/>
+
+            <TextView
+                android:layout_marginBottom="10dp"
+                android:text="@string/other_options"
+                style="@style/filter_header"/>
+
+            <FrameLayout
+                android:id="@+id/hot_new_container"
+                style="@style/filter_checkbox_container">
+
+                <TextView
+                    android:text="@string/hot_and_new"
+                    style="@style/filter_checkbox_text"/>
+
+                <CheckBox
+                    android:id="@+id/hot_new_checkbox"
+                    style="@style/filter_checkbox"/>
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/gender_neutral_container"
+                android:paddingBottom="16dp"
+                style="@style/filter_checkbox_container">
+
+                <TextView
+                    android:text="@string/gender_neutral_restrooms"
+                    style="@style/filter_checkbox_text"/>
+
+                <CheckBox
+                    android:id="@+id/gender_neutral_checkbox"
                     style="@style/filter_checkbox"/>
             </FrameLayout>
         </LinearLayout>

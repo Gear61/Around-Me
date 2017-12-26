@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.randomappsinc.aroundme.R;
 import com.randomappsinc.aroundme.models.Filter;
 import com.randomappsinc.aroundme.persistence.PreferencesManager;
+import com.randomappsinc.aroundme.views.AttributePickerView;
 import com.randomappsinc.aroundme.views.PriceRangePickerView;
 import com.randomappsinc.aroundme.views.SortPickerView;
 
@@ -29,6 +30,7 @@ public class FilterActivity extends AppCompatActivity {
     private Filter filter;
     private SortPickerView sortPickerView;
     private PriceRangePickerView priceRangePickerView;
+    private AttributePickerView attributePickerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +42,7 @@ public class FilterActivity extends AppCompatActivity {
         radiusSlider.setOnSeekBarChangeListener(mRadiusSliderListener);
         sortPickerView = new SortPickerView(filterContent);
         priceRangePickerView = new PriceRangePickerView(filterContent);
+        attributePickerView = new AttributePickerView(filterContent);
 
         filter = PreferencesManager.get().getFilter();
         loadFilterIntoView();
@@ -64,6 +67,7 @@ public class FilterActivity extends AppCompatActivity {
         radiusSlider.setProgress(Math.round(convertedSliderValue));
         sortPickerView.loadFilter(filter);
         priceRangePickerView.loadFilter(filter);
+        attributePickerView.loadFilter(filter);
     }
 
     @OnClick(R.id.close)
@@ -84,6 +88,7 @@ public class FilterActivity extends AppCompatActivity {
         filter.setRadiusWithMiles(miles);
         filter.setSortType(sortPickerView.getChosenSortType());
         filter.setPricesRanges(priceRangePickerView.getPriceRanges());
+        filter.setAttributes(attributePickerView.getAttributes());
         PreferencesManager.get().saveFilter(filter);
         Toast.makeText(this, R.string.filter_applied, Toast.LENGTH_SHORT).show();
         setResult(RESULT_OK);

@@ -74,18 +74,17 @@ public class PriceRangePickerView {
 
     public void loadFilter(Filter filter) {
         Set<String> priceRanges = filter.getPriceRanges();
-        if (priceRanges.contains(PriceRange.CHEAP)) {
-            UIUtils.setCheckedImmediately(cheapCheckbox, true);
-        }
-        if (priceRanges.contains(PriceRange.MODERATE)) {
-            UIUtils.setCheckedImmediately(moderateCheckbox, true);
-        }
-        if (priceRanges.contains(PriceRange.PRICEY)) {
-            UIUtils.setCheckedImmediately(priceyCheckbox, true);
-        }
-        if (priceRanges.contains(PriceRange.VERY_EXPENSIVE)) {
-            UIUtils.setCheckedImmediately(veryExpensiveCheckbox, true);
-        }
+        boolean cheapSelected = priceRanges.contains(PriceRange.CHEAP);
+        UIUtils.setCheckedImmediately(cheapCheckbox, cheapSelected);
+
+        boolean moderateSelected = priceRanges.contains(PriceRange.MODERATE);
+        UIUtils.setCheckedImmediately(moderateCheckbox, moderateSelected);
+
+        boolean priceySelected = priceRanges.contains(PriceRange.PRICEY);
+        UIUtils.setCheckedImmediately(priceyCheckbox, priceySelected);
+
+        boolean veryExpensiveSelected = priceRanges.contains(PriceRange.VERY_EXPENSIVE);
+        UIUtils.setCheckedImmediately(veryExpensiveCheckbox, veryExpensiveSelected);
     }
 
     @OnClick(R.id.cheap_container)

@@ -8,6 +8,8 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -93,6 +95,19 @@ public class PlaceReviewResults {
         for (PlaceReviewResult reviewResult : reviews) {
             placeReviews.add(reviewResult.toPlaceReview());
         }
+
+        // Put the most recent reviews first, because Yelp doesn't do that
+        Collections.sort(placeReviews, new Comparator<PlaceReview>() {
+            @Override
+            public int compare(PlaceReview review1, PlaceReview review2) {
+                if (review1.getTimeCreated() > review2.getTimeCreated()) {
+                    return -1;
+                } else if (review1.getTimeCreated() < review2.getTimeCreated()) {
+                    return 1;
+                }
+                return 0;
+            }
+        });
         return placeReviews;
     }
 }

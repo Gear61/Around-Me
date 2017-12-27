@@ -23,6 +23,10 @@ public class PlaceReview {
         return "\"" + text + "\"";
     }
 
+    public long getTimeCreated() {
+        return timeCreated;
+    }
+
     public void setText(String text) {
         this.text = text;
     }

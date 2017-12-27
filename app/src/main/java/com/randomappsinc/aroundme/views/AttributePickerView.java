@@ -25,14 +25,14 @@ public class AttributePickerView {
     }
 
     public Set<String> getAttributes() {
-        Set<String> priceRanges = new HashSet<>();
+        Set<String> attributes = new HashSet<>();
         if (hotNewCheckbox.isChecked()) {
-            priceRanges.add(PlaceAttribute.HOT_AND_NEW);
+            attributes.add(PlaceAttribute.HOT_AND_NEW);
         }
         if (genderNeutralCheckbox.isChecked()) {
-            priceRanges.add(PlaceAttribute.GENDER_NEUTRAL_RESTROOMS);
+            attributes.add(PlaceAttribute.GENDER_NEUTRAL_RESTROOMS);
         }
-        return priceRanges;
+        return attributes;
     }
 
     public void loadFilter(Filter filter) {

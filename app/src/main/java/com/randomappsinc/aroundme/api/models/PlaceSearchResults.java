@@ -4,8 +4,10 @@ import android.text.TextUtils;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.randomappsinc.aroundme.constants.DistanceUnit;
 import com.randomappsinc.aroundme.models.Place;
 import com.randomappsinc.aroundme.models.PlaceCategory;
+import com.randomappsinc.aroundme.persistence.PreferencesManager;
 import com.randomappsinc.aroundme.utils.DistanceUtils;
 
 import java.util.ArrayList;
@@ -167,7 +169,9 @@ public class PlaceSearchResults {
             place.setAddress(location.getAddress());
             place.setLatitude(coordinates.getLatitude());
             place.setLongitude(coordinates.getLongitude());
-            place.setDistance(DistanceUtils.getMilesFromMeters(distance));
+            place.setDistance(PreferencesManager.get().getDistanceUnit().equals(DistanceUnit.MILES)
+                    ? DistanceUtils.getMilesFromMeters(distance)
+                    : DistanceUtils.getKilometersFromMeters(distance));
             List<PlaceCategory> placeCategories = new ArrayList<>();
             for (Category category : categories) {
                 PlaceCategory placeCategory = new PlaceCategory();

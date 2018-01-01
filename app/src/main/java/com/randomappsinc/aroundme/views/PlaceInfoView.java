@@ -7,7 +7,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.randomappsinc.aroundme.R;
+import com.randomappsinc.aroundme.constants.DistanceUnit;
 import com.randomappsinc.aroundme.models.Place;
+import com.randomappsinc.aroundme.persistence.PreferencesManager;
 import com.randomappsinc.aroundme.utils.UIUtils;
 import com.squareup.picasso.Picasso;
 
@@ -75,7 +77,10 @@ public class PlaceInfoView {
             distanceIcon.setVisibility(View.GONE);
             distance.setVisibility(View.GONE);
         } else {
-            String distanceText = String.format(mContext.getString(R.string.miles_away), place.getDistance());
+            String distanceTemplate = PreferencesManager.get().getDistanceUnit().equals(DistanceUnit.MILES)
+                    ? mContext.getString(R.string.miles_away)
+                    : mContext.getString(R.string.kilometers_away);
+            String distanceText = String.format(distanceTemplate, place.getDistance());
             distance.setText(distanceText);
         }
 

@@ -5,6 +5,7 @@
     </string>
 
     <string name="miles_away">%.1f mi</string>
+    <string name="kilometers_away">%.1f km</string>
     <string name="one_review">1 review</string>
     <string name="num_reviews">%d reviews</string>
 

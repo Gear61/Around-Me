@@ -31,7 +31,8 @@ public class Place implements Parcelable {
     private boolean mIsFavorited;
     private List<PlaceCategory> mCategories;
 
-    // Distance between the place location and the user's current location in miles
+    // Distance between the place location and the user's current location in miles/kilometers
+    // Miles vs. kilometers is determined by the user's setting
     private double mDistance;
 
     public Place() {}

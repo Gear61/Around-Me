@@ -36,6 +36,10 @@ public class Filter {
         return (float) DistanceUtils.getMilesFromMeters(radius);
     }
 
+    public float getRadiusInKilometers() {
+        return (float) DistanceUtils.getKilometersFromMeters(radius);
+    }
+
     public @SortType String getSortType() {
         return sortType;
     }
@@ -76,6 +80,13 @@ public class Filter {
 
     public void setRadiusWithMiles(double miles) {
         float converted = (float) DistanceUtils.getMetersFromMiles(miles);
+
+        // The API call fails if we pass in a radius > 40,000 meters so curb value here to be extra safe
+        radius = Math.min(converted, MAX_YELP_DISTANCE);
+    }
+
+    public void setRadiusWithKilometers(double kilometers) {
+        float converted = (float) DistanceUtils.getMetersFromKilometers(kilometers);
 
         // The API call fails if we pass in a radius > 40,000 meters so curb value here to be extra safe
         radius = Math.min(converted, MAX_YELP_DISTANCE);

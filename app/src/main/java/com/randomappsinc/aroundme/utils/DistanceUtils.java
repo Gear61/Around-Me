@@ -6,15 +6,25 @@ import java.util.Locale;
 
 public class DistanceUtils {
 
-    private static final double METER_TO_MILES = 0.000621371;
-    private static final double MILES_TO_METERS = 1609.34;
+    private static final double MILES_IN_A_METER = 0.000621371;
+    private static final double METERS_IN_A_MILE = 1609.34;
+    private static final double METERS_IN_A_KILOMETER = 1000.00;
+    private static final double KILOMETERS_IN_A_METER = 0.001;
 
     public static double getMetersFromMiles(double miles) {
-        return miles * MILES_TO_METERS;
+        return miles * METERS_IN_A_MILE;
+    }
+
+    public static double getMetersFromKilometers(double kilometers) {
+        return kilometers * METERS_IN_A_KILOMETER;
     }
 
     public static double getMilesFromMeters(double meters) {
-        return meters * METER_TO_MILES;
+        return meters * MILES_IN_A_METER;
+    }
+
+    public static double getKilometersFromMeters(double meters) {
+        return meters * KILOMETERS_IN_A_METER;
     }
 
     public static @DistanceUnit String getDefaultDistanceUnit() {

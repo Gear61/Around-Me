@@ -3,7 +3,8 @@
     <string name="filter">Filter</string>
     <string name="reset_all">Reset all</string>
     <string name="search_radius">Search radius</string>
-    <string name="radius_text">Show me places within %.1f miles of me.</string>
+    <string name="radius_text_miles">Show me places within %.1f miles of me.</string>
+    <string name="radius_text_kilometers">Show me places within %.1f kilometers of me.</string>
     <string name="sort_by">Sort by</string>
     <string name="apply_filter">Apply Filter</string>
     <string name="filter_applied">Filter applied.</string>

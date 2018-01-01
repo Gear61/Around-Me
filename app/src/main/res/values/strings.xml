@@ -72,4 +72,6 @@
 
     <string name="call">Call</string>
     <string name="share">Share</string>
+    <string name="choose">Choose</string>
+    <string name="cancel">Cancel</string>
 </resources>

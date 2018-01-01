@@ -25,7 +25,7 @@ public class FilterActivity extends AppCompatActivity {
     @BindView(R.id.radius_slider) SeekBar radiusSlider;
     @BindView(R.id.radius_text) TextView distanceText;
 
-    @BindString(R.string.radius_text) String radiusTemplate;
+    @BindString(R.string.radius_text_miles) String radiusTemplate;
 
     private Filter filter;
     private SortPickerView sortPickerView;

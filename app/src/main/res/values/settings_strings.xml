@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="set_distance_unit">Set distance unit</string>
     <string name="send_feedback">Send feedback</string>
     <string name="share_this_app">Share this app</string>
     <string name="my_other_apps">My other apps</string>
     <string name="rate_this_app">Rate this app</string>
     <string name="source_code">Source code</string>
     <array name="settings_options">
+        <item>@string/set_distance_unit</item>
         <item>@string/send_feedback</item>
         <item>@string/share_this_app</item>
         <item>@string/my_other_apps</item>
@@ -17,17 +19,29 @@
     <string name="feedback_subject">Around Me Feedback</string>
     <string name="send_email">Send email</string>
 
+    <string name="walk_icon">{ion-android-walk}</string>
     <string name="email_icon">{ion-email}</string>
     <string name="android_icon">{ion-social-android}</string>
     <string name="rate_icon">{ion-thumbsup}</string>
     <string name="github_icon">{ion-social-github}</string>
     <array name="settings_icons">
+        <item>@string/walk_icon</item>
         <item>@string/email_icon</item>
         <item>@string/share_icon</item>
         <item>@string/android_icon</item>
         <item>@string/rate_icon</item>
         <item>@string/github_icon</item>
     </array>
+
+    <string name="set_distance_unit_title">Set Distance Unit</string>
+    <string name="distance_unit_prompt">
+        Which unit type do you want Around Me to use when showing distances?
+    </string>
+    <string-array name="distance_unit_options">
+        <item>Miles</item>
+        <item>Kilometers</item>
+    </string-array>
+    <string name="distance_unit_set">Your chosen distance unit has been set.</string>
 
     <string name="share_app_message">
         Hey! I think you\'ll enjoy Around Me, an Android app which helps you find nearby places you care about.

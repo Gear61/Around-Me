@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.randomappsinc.aroundme.R;
 import com.randomappsinc.aroundme.adapters.SettingsAdapter;
+import com.randomappsinc.aroundme.dialogs.DistanceUnitChooser;
 import com.randomappsinc.aroundme.utils.SimpleDividerItemDecoration;
 
 import butterknife.BindString;
@@ -33,20 +34,22 @@ public class SettingsFragment extends Fragment implements SettingsAdapter.ItemSe
         return fragment;
     }
 
-    @BindView(R.id.toolbar) Toolbar mToolbar;
+    @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.settings_options) RecyclerView settingsOptions;
     @BindString(R.string.feedback_subject) String feedbackSubject;
     @BindString(R.string.send_email) String sendEmail;
 
-    private Unbinder mUnbinder;
+    private Unbinder unbinder;
+    private DistanceUnitChooser distanceUnitChooser;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.settings, container, false);
-        mUnbinder = ButterKnife.bind(this, rootView);
-        mToolbar.setTitle(R.string.settings);
+        unbinder = ButterKnife.bind(this, rootView);
+        toolbar.setTitle(R.string.settings);
         settingsOptions.addItemDecoration(new SimpleDividerItemDecoration(getActivity()));
         settingsOptions.setAdapter(new SettingsAdapter(getActivity(), this));
+        distanceUnitChooser = new DistanceUnitChooser(getActivity());
         return rootView;
     }
 
@@ -55,12 +58,15 @@ public class SettingsFragment extends Fragment implements SettingsAdapter.ItemSe
         Intent intent = null;
         switch (position) {
             case 0:
+                distanceUnitChooser.show();
+                return;
+            case 1:
                 String uriText = "mailto:" + SUPPORT_EMAIL + "?subject=" + Uri.encode(feedbackSubject);
                 Uri mailUri = Uri.parse(uriText);
                 Intent sendIntent = new Intent(Intent.ACTION_SENDTO, mailUri);
                 getActivity().startActivity(Intent.createChooser(sendIntent, sendEmail));
                 return;
-            case 1:
+            case 2:
                 Intent shareIntent = ShareCompat.IntentBuilder.from(getActivity())
                         .setType("text/plain")
                         .setText(getString(R.string.share_app_message))
@@ -69,10 +75,10 @@ public class SettingsFragment extends Fragment implements SettingsAdapter.ItemSe
                     getActivity().startActivity(shareIntent);
                 }
                 return;
-            case 2:
+            case 3:
                 intent = new Intent(Intent.ACTION_VIEW, Uri.parse(OTHER_APPS_URL));
                 break;
-            case 3:
+            case 4:
                 Uri uri =  Uri.parse("market://details?id=" + getActivity().getPackageName());
                 intent = new Intent(Intent.ACTION_VIEW, uri);
                 if (!(getActivity().getPackageManager().queryIntentActivities(intent, 0).size() > 0)) {
@@ -80,7 +86,7 @@ public class SettingsFragment extends Fragment implements SettingsAdapter.ItemSe
                     return;
                 }
                 break;
-            case 4:
+            case 5:
                 intent = new Intent(Intent.ACTION_VIEW, Uri.parse(REPO_URL));
                 break;
         }
@@ -90,6 +96,6 @@ public class SettingsFragment extends Fragment implements SettingsAdapter.ItemSe
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mUnbinder.unbind();
+        unbinder.unbind();
     }
 }

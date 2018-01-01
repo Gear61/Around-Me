@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.randomappsinc.aroundme.constants.DistanceUnit;
 import com.randomappsinc.aroundme.models.Filter;
+import com.randomappsinc.aroundme.utils.DistanceUtils;
 import com.randomappsinc.aroundme.utils.MyApplication;
 
 import java.util.Set;
@@ -17,6 +19,7 @@ public class PreferencesManager {
     private static final String BEARER_TOKEN_KEY = "bearerToken";
     private static final String NUM_APP_OPENS = "numAppOpens";
     private static final int OPENS_BEFORE_RATING = 5;
+    private static final String DISTANCE_UNIT_KEY = "distanceUnit";
 
     // Filter
     private static final String FILTER_RADIUS = "filterRadius";
@@ -87,5 +90,13 @@ public class PreferencesManager {
                 .putStringSet(FILTER_PRICE_RANGES, filter.getPriceRanges())
                 .putStringSet(FILTER_ATTRIBUTES, filter.getAttributes())
                 .apply();
+    }
+
+    public @DistanceUnit String getDistanceUnit() {
+        return prefs.getString(DISTANCE_UNIT_KEY, DistanceUtils.getDefaultDistanceUnit());
+    }
+
+    public void setDistanceUnit(@DistanceUnit String distanceUnit) {
+        prefs.edit().putString(DISTANCE_UNIT_KEY, distanceUnit).apply();
     }
 }

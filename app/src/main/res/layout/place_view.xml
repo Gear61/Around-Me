@@ -112,6 +112,7 @@
                 android:id="@+id/place_photos"
                 android:layout_height="match_parent"
                 android:focusable="false"
+                android:visibility="invisible"
                 style="@style/horizontal_gallery"/>
 
             <LinearLayout

@@ -176,6 +176,7 @@ public class PlaceViewActivity extends StandardActivity implements RestClient.Ph
     public void onPhotosFetched(List<String> photos) {
         mPhotosStub.setVisibility(View.INVISIBLE);
         mPhotosAdapter.setPhotoUrls(photos);
+        mPhotos.setVisibility(View.VISIBLE);
     }
 
     @Override

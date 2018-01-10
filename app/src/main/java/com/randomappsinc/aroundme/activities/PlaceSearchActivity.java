@@ -31,17 +31,17 @@ public class PlaceSearchActivity extends StandardActivity
 
     private static final int FILTER_REQUEST_CODE = 1;
 
-    @BindView(R.id.parent) View mParent;
-    @BindView(R.id.skeleton_results) View mSkeletonResults;
-    @BindView(R.id.search_results) RecyclerView mPlaces;
-    @BindView(R.id.no_places) View mNoPlaces;
+    @BindView(R.id.parent) View parent;
+    @BindView(R.id.skeleton_results) View skeletonResults;
+    @BindView(R.id.search_results) RecyclerView placesList;
+    @BindView(R.id.no_places) View noPlaces;
 
-    private String mSearchTerm;
-    @Nullable private String mCurrentLocation;
-    private RestClient mRestClient;
-    private PlacesAdapter mPlacesAdapter;
-    private LocationManager mLocationManager;
-    private boolean mDenialLock;
+    private String searchTerm;
+    @Nullable private String currentLocation;
+    private RestClient restClient;
+    private PlacesAdapter placesAdapter;
+    private LocationManager locationManager;
+    private boolean denialLock;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,30 +53,30 @@ public class PlaceSearchActivity extends StandardActivity
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        mSearchTerm = getIntent().getStringExtra(SEARCH_TERM_KEY);
-        setTitle(mSearchTerm);
+        searchTerm = getIntent().getStringExtra(SEARCH_TERM_KEY);
+        setTitle(searchTerm);
 
-        mRestClient = RestClient.getInstance();
-        mRestClient.registerPlacesListener(this);
+        restClient = RestClient.getInstance();
+        restClient.registerPlacesListener(this);
 
-        mLocationManager = new LocationManager(this, this);
+        locationManager = new LocationManager(this, this);
 
-        mPlaces.addItemDecoration(new SimpleDividerItemDecoration(this));
-        mPlacesAdapter = new PlacesAdapter(this, this);
-        mPlaces.setAdapter(mPlacesAdapter);
+        placesList.addItemDecoration(new SimpleDividerItemDecoration(this));
+        placesAdapter = new PlacesAdapter(this, this);
+        placesList.setAdapter(placesAdapter);
     }
 
     @Override
     public void onPlacesFetched(List<Place> places) {
-        mSkeletonResults.setVisibility(View.GONE);
+        skeletonResults.setVisibility(View.GONE);
 
         if (places.isEmpty()) {
-            mPlaces.setVisibility(View.GONE);
-            mNoPlaces.setVisibility(View.VISIBLE);
+            placesList.setVisibility(View.GONE);
+            noPlaces.setVisibility(View.VISIBLE);
         } else {
-            mNoPlaces.setVisibility(View.GONE);
-            mPlacesAdapter.setPlaces(places);
-            mPlaces.setVisibility(View.VISIBLE);
+            noPlaces.setVisibility(View.GONE);
+            placesAdapter.setPlaces(places);
+            placesList.setVisibility(View.VISIBLE);
         }
     }
 
@@ -92,8 +92,8 @@ public class PlaceSearchActivity extends StandardActivity
         super.onResume();
 
         // Run this here instead of onCreate() to cover the case where they return from turning on location
-        if (mCurrentLocation == null && !mDenialLock) {
-            mLocationManager.fetchCurrentLocation();
+        if (currentLocation == null && !denialLock) {
+            locationManager.fetchCurrentLocation();
         }
     }
 
@@ -105,8 +105,8 @@ public class PlaceSearchActivity extends StandardActivity
 
         // No need to check if the location permission has been granted because of the onResume() block
         if (!(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-            mDenialLock = true;
-            mLocationManager.showLocationPermissionDialog();
+            denialLock = true;
+            locationManager.showLocationPermissionDialog();
         }
     }
 
@@ -116,18 +116,19 @@ public class PlaceSearchActivity extends StandardActivity
         switch (requestCode) {
             case LocationManager.LOCATION_SERVICES_CODE:
                 if (resultCode == RESULT_OK) {
-                    UIUtils.showSnackbar(mParent, R.string.location_services_on);
-                    mLocationManager.fetchAutomaticLocation();
+                    UIUtils.showSnackbar(parent, R.string.location_services_on);
+                    locationManager.fetchAutomaticLocation();
                 } else {
-                    mDenialLock = true;
-                    mLocationManager.showLocationDenialDialog();
+                    denialLock = true;
+                    locationManager.showLocationDenialDialog();
                 }
                 break;
             case FILTER_REQUEST_CODE:
                 if (resultCode == RESULT_OK) {
-                    mPlaces.setVisibility(View.GONE);
-                    mSkeletonResults.setVisibility(View.VISIBLE);
-                    mRestClient.findPlaces(mSearchTerm, mCurrentLocation);
+                    placesList.setVisibility(View.GONE);
+                    noPlaces.setVisibility(View.GONE);
+                    skeletonResults.setVisibility(View.VISIBLE);
+                    restClient.findPlaces(searchTerm, currentLocation);
                 }
                 break;
         }
@@ -135,31 +136,31 @@ public class PlaceSearchActivity extends StandardActivity
 
     @Override
     public void onLocationFetched(String location) {
-        if (mCurrentLocation != null && mCurrentLocation.equals(location)) {
+        if (currentLocation != null && currentLocation.equals(location)) {
             return;
         }
 
-        mPlaces.setVisibility(View.GONE);
-        mSkeletonResults.setVisibility(View.VISIBLE);
+        placesList.setVisibility(View.GONE);
+        skeletonResults.setVisibility(View.VISIBLE);
 
-        mCurrentLocation = location;
-        mRestClient.findPlaces(mSearchTerm, mCurrentLocation);
+        currentLocation = location;
+        restClient.findPlaces(searchTerm, currentLocation);
     }
 
     @Override
     public void onServicesOrPermissionChoice() {
-        mDenialLock = false;
+        denialLock = false;
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
 
-        mLocationManager.stopFetchingCurrentLocation();
+        locationManager.stopFetchingCurrentLocation();
 
         // Stop listening for place search results
-        mRestClient.cancelPlacesFetch();
-        mRestClient.unregisterPlacesListener();
+        restClient.cancelPlacesFetch();
+        restClient.unregisterPlacesListener();
     }
 
     @Override
@@ -174,7 +175,7 @@ public class PlaceSearchActivity extends StandardActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.set_location:
-                mLocationManager.showLocationForm();
+                locationManager.showLocationForm();
                 return true;
             case R.id.filter:
                 startActivityForResult(

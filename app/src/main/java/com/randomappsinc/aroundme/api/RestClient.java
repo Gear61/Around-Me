@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 
 import com.randomappsinc.aroundme.api.callbacks.FetchPhotosCallback;
 import com.randomappsinc.aroundme.api.callbacks.FetchReviewsCallback;
-import com.randomappsinc.aroundme.api.callbacks.FetchTokenCallback;
 import com.randomappsinc.aroundme.api.callbacks.FindEventsCallback;
 import com.randomappsinc.aroundme.api.callbacks.FindPlacesCallback;
 import com.randomappsinc.aroundme.api.models.EventSearchResults;
@@ -113,11 +112,6 @@ public class RestClient {
 
     public Retrofit getRetrofitInstance() {
         return mRetrofit;
-    }
-
-    public void refreshToken() {
-        mYelpService.fetchToken(YelpToken.CLIENT_ID, YelpToken.CLIENT_SECRET, ApiConstants.GRANT_TYPE)
-                .enqueue(new FetchTokenCallback());
     }
 
     public void findPlaces(final String searchTerm, final String location) {

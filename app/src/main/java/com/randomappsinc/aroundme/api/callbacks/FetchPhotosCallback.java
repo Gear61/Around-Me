@@ -27,8 +27,6 @@ public class FetchPhotosCallback implements Callback<PlacePhotos> {
             DatabaseManager.get().getPlacesDBManager().updateFavorite(response.body().getPlace());
 
             RestClient.getInstance().processPhotos(response.body().getPhotoUrls());
-        } else if (response.code() == ApiConstants.HTTP_STATUS_UNAUTHORIZED) {
-            RestClient.getInstance().refreshToken();
         } else if (response.code() == ApiConstants.HTTP_STATUS_FORBIDDEN) {
             Converter<ResponseBody, BusinessInfoFetchError> errorConverter =
                     RestClient.getInstance().getRetrofitInstance()

@@ -16,8 +16,6 @@ public class FindPlacesCallback implements Callback<PlaceSearchResults> {
     public void onResponse(@NonNull Call<PlaceSearchResults> call, @NonNull Response<PlaceSearchResults> response) {
         if (response.code() == ApiConstants.HTTP_STATUS_OK) {
             RestClient.getInstance().processPlaces(response.body().getPlaces());
-        } else if (response.code() == ApiConstants.HTTP_STATUS_UNAUTHORIZED) {
-            RestClient.getInstance().refreshToken();
         }
         // TODO: Process failure here
     }

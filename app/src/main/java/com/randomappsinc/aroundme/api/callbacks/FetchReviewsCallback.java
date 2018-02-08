@@ -24,8 +24,6 @@ public class FetchReviewsCallback implements Callback<PlaceReviewResults> {
     public void onResponse(@NonNull Call<PlaceReviewResults> call, @NonNull Response<PlaceReviewResults> response) {
         if (response.code() == ApiConstants.HTTP_STATUS_OK) {
             RestClient.getInstance().processReviews(response.body().getReviews());
-        } else if (response.code() == ApiConstants.HTTP_STATUS_UNAUTHORIZED) {
-            RestClient.getInstance().refreshToken();
         } else if (response.code() == ApiConstants.HTTP_STATUS_FORBIDDEN) {
             Converter<ResponseBody, BusinessInfoFetchError> errorConverter =
                     RestClient.getInstance().getRetrofitInstance()

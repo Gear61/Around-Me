@@ -16,8 +16,6 @@ public class FindEventsCallback implements Callback<EventSearchResults> {
     public void onResponse(@NonNull Call<EventSearchResults> call, @NonNull Response<EventSearchResults> response) {
         if (response.code() == ApiConstants.HTTP_STATUS_OK) {
             RestClient.getInstance().processEvents(response.body().getEvents());
-        } else if (response.code() == ApiConstants.HTTP_STATUS_UNAUTHORIZED) {
-            RestClient.getInstance().refreshToken();
         }
         // TODO: Process failure here
     }

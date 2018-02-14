@@ -1,5 +1,7 @@
 package com.randomappsinc.aroundme.api;
 
+import android.support.annotation.NonNull;
+
 import java.io.IOException;
 
 import okhttp3.Interceptor;
@@ -9,7 +11,7 @@ import okhttp3.Response;
 public class AuthInterceptor implements Interceptor {
 
     @Override
-    public Response intercept(Chain chain) throws IOException {
+    public Response intercept(@NonNull Chain chain) throws IOException {
         Request originalRequest = chain.request();
 
         String bearerToken = ApiConstants.BEARER_PREFIX + YelpToken.API_KEY;

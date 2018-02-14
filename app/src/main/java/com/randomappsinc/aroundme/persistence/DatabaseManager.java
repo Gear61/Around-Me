@@ -1,5 +1,7 @@
 package com.randomappsinc.aroundme.persistence;
 
+import android.support.annotation.NonNull;
+
 import com.randomappsinc.aroundme.R;
 import com.randomappsinc.aroundme.persistence.managers.EventsDBManager;
 import com.randomappsinc.aroundme.persistence.managers.PlaceTypesDBManager;
@@ -52,7 +54,7 @@ public class DatabaseManager {
 
     private RealmMigration migration = new RealmMigration() {
         @Override
-        public void migrate(DynamicRealm realm, long oldVersion, long newVersion) {
+        public void migrate(@NonNull DynamicRealm realm, long oldVersion, long newVersion) {
             RealmSchema schema = realm.getSchema();
 
             // Support for categories

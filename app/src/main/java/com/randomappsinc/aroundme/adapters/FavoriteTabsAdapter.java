@@ -11,11 +11,11 @@ import com.randomappsinc.aroundme.utils.MyApplication;
 
 public class FavoriteTabsAdapter extends FragmentPagerAdapter {
 
-    private String[] mFavoriteTabs;
+    private String[] favoriteTabs;
 
     public FavoriteTabsAdapter(FragmentManager fragmentManager) {
         super(fragmentManager);
-        mFavoriteTabs = MyApplication.getAppContext().getResources().getStringArray(R.array.favorite_tabs);
+        favoriteTabs = MyApplication.getAppContext().getResources().getStringArray(R.array.favorite_tabs);
     }
 
     @Override
@@ -32,11 +32,11 @@ public class FavoriteTabsAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return mFavoriteTabs.length;
+        return favoriteTabs.length;
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return mFavoriteTabs[position];
+        return favoriteTabs[position];
     }
 }

@@ -22,27 +22,27 @@ public class FavoritesFragment extends Fragment {
         return new FavoritesFragment();
     }
 
-    @BindView(R.id.toolbar) Toolbar mToolbar;
-    @BindView(R.id.favorite_tabs_layout) TabLayout mFavoriteTypes;
-    @BindView(R.id.favorites_pager) ViewPager mFavoritesPager;
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.favorite_tabs_layout) TabLayout favoritesTypes;
+    @BindView(R.id.favorites_pager) ViewPager favoritesPager;
 
-    private Unbinder mUnbinder;
+    private Unbinder unbinder;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.favorites, container, false);
-        mUnbinder = ButterKnife.bind(this, rootView);
+        unbinder = ButterKnife.bind(this, rootView);
 
-        mToolbar.setTitle(R.string.favorites);
+        toolbar.setTitle(R.string.favorites);
 
-        mFavoritesPager.setAdapter(new FavoriteTabsAdapter(getChildFragmentManager()));
-        mFavoriteTypes.setupWithViewPager(mFavoritesPager);
+        favoritesPager.setAdapter(new FavoriteTabsAdapter(getChildFragmentManager()));
+        favoritesTypes.setupWithViewPager(favoritesPager);
         return rootView;
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mUnbinder.unbind();
+        unbinder.unbind();
     }
 }

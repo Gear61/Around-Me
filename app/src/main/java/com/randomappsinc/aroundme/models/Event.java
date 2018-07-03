@@ -83,16 +83,8 @@ public class Event implements Parcelable {
         mNumInterested = numInterested;
     }
 
-    public double getCost() {
-        return mCost;
-    }
-
     public void setCost(double cost) {
         mCost = cost;
-    }
-
-    public double getCostMax() {
-        return mCostMax;
     }
 
     public void setCostMax(double costMax) {
@@ -113,10 +105,6 @@ public class Event implements Parcelable {
 
     public void setUrl(String url) {
         mUrl = url;
-    }
-
-    public boolean isCanceled() {
-        return mIsCanceled;
     }
 
     public void setCanceled(boolean canceled) {
@@ -155,32 +143,16 @@ public class Event implements Parcelable {
         mTimeEnd = timeEnd;
     }
 
-    public String getCity() {
-        return mCity;
-    }
-
     public void setCity(String city) {
         mCity = city;
-    }
-
-    public String getZipCode() {
-        return mZipCode;
     }
 
     public void setZipCode(String zipCode) {
         mZipCode = zipCode;
     }
 
-    public String getCountry() {
-        return mCountry;
-    }
-
     public void setCountry(String country) {
         mCountry = country;
-    }
-
-    public String getState() {
-        return mState;
     }
 
     public void setState(String state) {
@@ -247,11 +219,11 @@ public class Event implements Parcelable {
                 : "<b>" + MyApplication.getAppContext().getString(R.string.end) + "</b> " + getEndTime();
     }
 
-    public String getStartTime() {
+    private String getStartTime() {
         return TimeUtils.getEventTime(mTimeStart);
     }
 
-    public String getEndTime() {
+    private String getEndTime() {
         return TimeUtils.getEventTime(mTimeEnd);
     }
 

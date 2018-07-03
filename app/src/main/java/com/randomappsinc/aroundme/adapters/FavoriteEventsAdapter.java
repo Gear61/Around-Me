@@ -15,7 +15,6 @@ import com.randomappsinc.aroundme.models.Event;
 import com.randomappsinc.aroundme.persistence.DatabaseManager;
 import com.randomappsinc.aroundme.views.EventInfoView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -30,7 +29,7 @@ public class FavoriteEventsAdapter extends RecyclerView.Adapter<FavoriteEventsAd
 
     @NonNull private ItemSelectionListener mItemSelectionListener;
     private Context mContext;
-    private List<Event> mEvents = new ArrayList<>();
+    private List<Event> mEvents;
     private Drawable mDefaultThumbnail;
 
     public FavoriteEventsAdapter(Context context, @NonNull ItemSelectionListener itemSelectionListener) {

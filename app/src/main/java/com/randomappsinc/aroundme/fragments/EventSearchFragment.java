@@ -41,41 +41,40 @@ public class EventSearchFragment extends Fragment
         return fragment;
     }
 
-    @BindView(R.id.toolbar) Toolbar mToolbar;
-    @BindView(R.id.parent) View mParent;
-    @BindView(R.id.skeleton_results) View mSkeletonResults;
-    @BindView(R.id.events_list) RecyclerView mEventsList;
-    @BindView(R.id.no_events) View mNoEvents;
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.parent) View parent;
+    @BindView(R.id.skeleton_results) View skeletonResults;
+    @BindView(R.id.events_list) RecyclerView eventsList;
+    @BindView(R.id.no_events) View noEvents;
 
-    private List<Event> mEvents;
+    private List<Event> events;
 
-    private Unbinder mUnbinder;
-    @Nullable private String mCurrentLocation;
-    private RestClient mRestClient;
-    private EventsAdapter mEventsAdapter;
-    private LocationManager mLocationManager;
-    private boolean mDenialLock;
+    private Unbinder unbinder;
+    @Nullable private String currentLocation;
+    private RestClient restClient = RestClient.getInstance();
+    private EventsAdapter eventsAdapter;
+    private LocationManager locationManager;
+    private boolean denialLock;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.event_search, container, false);
-        mUnbinder = ButterKnife.bind(this, rootView);
+        unbinder = ButterKnife.bind(this, rootView);
 
-        mToolbar.setTitle(R.string.events);
-        ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
+        toolbar.setTitle(R.string.events);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         setHasOptionsMenu(true);
 
-        mEventsList.addItemDecoration(new SimpleDividerItemDecoration(getActivity()));
-        mEventsAdapter = new EventsAdapter(getActivity(), this);
-        mEventsList.setAdapter(mEventsAdapter);
+        eventsList.addItemDecoration(new SimpleDividerItemDecoration(getActivity()));
+        eventsAdapter = new EventsAdapter(getActivity(), this);
+        eventsList.setAdapter(eventsAdapter);
 
-        mRestClient = RestClient.getInstance();
-        mRestClient.registerEventsListener(this);
+        restClient.registerEventsListener(this);
 
-        mLocationManager = new LocationManager(this, this);
+        locationManager = new LocationManager(this, this);
 
-        if (mEvents != null) {
-            onEventsFetched(mEvents);
+        if (events != null) {
+            onEventsFetched(events);
         }
 
         return rootView;
@@ -83,16 +82,16 @@ public class EventSearchFragment extends Fragment
 
     @Override
     public void onEventsFetched(List<Event> events) {
-        mEvents = events;
-        mSkeletonResults.setVisibility(View.GONE);
+        this.events = events;
+        skeletonResults.setVisibility(View.GONE);
 
         if (events.isEmpty()) {
-            mEventsList.setVisibility(View.GONE);
-            mNoEvents.setVisibility(View.VISIBLE);
+            eventsList.setVisibility(View.GONE);
+            noEvents.setVisibility(View.VISIBLE);
         } else {
-            mNoEvents.setVisibility(View.GONE);
-            mEventsAdapter.setEvents(events);
-            mEventsList.setVisibility(View.VISIBLE);
+            noEvents.setVisibility(View.GONE);
+            eventsAdapter.setEvents(events);
+            eventsList.setVisibility(View.VISIBLE);
         }
     }
 
@@ -108,8 +107,8 @@ public class EventSearchFragment extends Fragment
         super.onResume();
 
         // Run this here instead of onCreate() to cover the case where they return from turning on location
-        if (mCurrentLocation == null && !mDenialLock) {
-            mLocationManager.fetchCurrentLocation();
+        if (currentLocation == null && !denialLock) {
+            locationManager.fetchCurrentLocation();
         }
     }
 
@@ -121,47 +120,47 @@ public class EventSearchFragment extends Fragment
 
         // No need to check if the location permission has been granted because of the onResume() block
         if (!(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-            mDenialLock = true;
-            mLocationManager.showLocationPermissionDialog();
+            denialLock = true;
+            locationManager.showLocationPermissionDialog();
         }
     }
 
     public void onLocationServicesGranted() {
-        UIUtils.showSnackbar(mParent, R.string.location_services_on);
-        mLocationManager.fetchAutomaticLocation();
+        UIUtils.showSnackbar(parent, R.string.location_services_on);
+        locationManager.fetchAutomaticLocation();
     }
 
     public void onLocationServicesDenied() {
-        mDenialLock = true;
-        mLocationManager.showLocationDenialDialog();
+        denialLock = true;
+        locationManager.showLocationDenialDialog();
     }
 
     @Override
     public void onLocationFetched(String location) {
         // No need to do a search on the same location
-        if (mCurrentLocation != null && mCurrentLocation.equals(location)) {
+        if (currentLocation != null && currentLocation.equals(location)) {
             return;
         }
 
-        mCurrentLocation = location;
-        mRestClient.findEvents(mCurrentLocation);
+        currentLocation = location;
+        restClient.findEvents(currentLocation);
     }
 
     @Override
     public void onServicesOrPermissionChoice() {
-        mDenialLock = false;
+        denialLock = false;
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mUnbinder.unbind();
+        unbinder.unbind();
 
-        mLocationManager.stopFetchingCurrentLocation();
+        locationManager.stopFetchingCurrentLocation();
 
         // Stop listening for event search results
-        mRestClient.cancelEventsFetch();
-        mRestClient.unregisterEventsListener();
+        restClient.cancelEventsFetch();
+        restClient.unregisterEventsListener();
     }
 
     @Override
@@ -175,7 +174,7 @@ public class EventSearchFragment extends Fragment
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.set_location:
-                mLocationManager.showLocationForm();
+                locationManager.showLocationForm();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

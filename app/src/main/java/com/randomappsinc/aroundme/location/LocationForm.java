@@ -14,14 +14,14 @@ public class LocationForm {
         void onLocationEntered(String location);
     }
 
-    @NonNull private Listener mListener;
-    private MaterialDialog mLocationDialog;
+    @NonNull private Listener listener;
+    private MaterialDialog locationDialog;
 
     LocationForm(Context context, @NonNull Listener listener) {
-        mListener = listener;
+        this.listener = listener;
 
         String location = context.getString(R.string.location);
-        mLocationDialog = new MaterialDialog.Builder(context)
+        locationDialog = new MaterialDialog.Builder(context)
                 .title(R.string.location_form_title)
                 .content(R.string.location_form_prompt)
                 .positiveText(android.R.string.yes)
@@ -38,13 +38,13 @@ public class LocationForm {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                         String locationInput = dialog.getInputEditText().getText().toString().trim();
-                        mListener.onLocationEntered(locationInput);
+                        LocationForm.this.listener.onLocationEntered(locationInput);
                     }
                 })
                 .build();
     }
 
     public void show() {
-        mLocationDialog.show();
+        locationDialog.show();
     }
 }

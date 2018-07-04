@@ -13,23 +13,23 @@ import io.realm.RealmList;
 
 public class Place implements Parcelable {
 
-    private String mId;
-    private String mName;
-    private String mImageUrl;
-    private String mUrl;
-    private double mRating;
-    private int mReviewCount;
-    private String mPhoneNumber;
-    private String mPrice;
-    private String mCity;
-    private String mZipCode;
-    private String mCountry;
-    private String mState;
-    private String mAddress;
-    private double mLatitude;
-    private double mLongitude;
-    private boolean mIsFavorited;
-    private List<PlaceCategory> mCategories;
+    private String id;
+    private String name;
+    private String imageUrl;
+    private String url;
+    private double rating;
+    private int reviewCount;
+    private String phoneNumber;
+    private String price;
+    private String city;
+    private String zipCode;
+    private String country;
+    private String state;
+    private String address;
+    private double latitude;
+    private double longitude;
+    private boolean isFavorited;
+    private List<PlaceCategory> categories;
 
     // Distance between the place location and the user's current location in miles/kilometers
     // Miles vs. kilometers is determined by the user's setting
@@ -38,115 +38,115 @@ public class Place implements Parcelable {
     public Place() {}
 
     public String getId() {
-        return mId;
+        return id;
     }
 
     public void setId(String id) {
-        mId = id;
+        this.id = id;
     }
 
     public String getName() {
-        return mName;
+        return name;
     }
 
     public void setName(String name) {
-        mName = name;
+        this.name = name;
     }
 
     public String getImageUrl() {
-        return mImageUrl;
+        return imageUrl;
     }
 
     public void setImageUrl(String imageUrl) {
-        mImageUrl = imageUrl;
+        this.imageUrl = imageUrl;
     }
 
     public String getUrl() {
-        return mUrl;
+        return url;
     }
 
     public void setUrl(String url) {
-        mUrl = url;
+        this.url = url;
     }
 
     public double getRating() {
-        return mRating;
+        return rating;
     }
 
     public void setRating(double rating) {
-        mRating = rating;
+        this.rating = rating;
     }
 
     public int getReviewCount() {
-        return mReviewCount;
+        return reviewCount;
     }
 
     public void setReviewCount(int reviewCount) {
-        mReviewCount = reviewCount;
+        this.reviewCount = reviewCount;
     }
 
     public String getPhoneNumber() {
-        return mPhoneNumber;
+        return phoneNumber;
     }
 
     public void setPhoneNumber(String phoneNumber) {
-        mPhoneNumber = phoneNumber;
+        this.phoneNumber = phoneNumber;
     }
 
     public String getPrice() {
-        return mPrice;
+        return price;
     }
 
     public void setPrice(String price) {
-        mPrice = price;
+        this.price = price;
     }
 
     public void setCity(String city) {
-        mCity = city;
+        this.city = city;
     }
 
     public void setZipCode(String zipCode) {
-        mZipCode = zipCode;
+        this.zipCode = zipCode;
     }
 
     public void setCountry(String country) {
-        mCountry = country;
+        this.country = country;
     }
 
     public void setState(String state) {
-        mState = state;
+        this.state = state;
     }
 
     public String getAddress() {
-        return mAddress;
+        return address;
     }
 
     public void setAddress(String address) {
-        mAddress = address;
+        this.address = address;
     }
 
     public double getLatitude() {
-        return mLatitude;
+        return latitude;
     }
 
     public void setLatitude(double latitude) {
-        mLatitude = latitude;
+        this.latitude = latitude;
     }
 
     public double getLongitude() {
-        return mLongitude;
+        return longitude;
     }
 
     public void setLongitude(double longitude) {
-        mLongitude = longitude;
+        this.longitude = longitude;
     }
 
     public boolean isFavorited() {
-        return mIsFavorited;
+        return isFavorited;
     }
 
     public void setIsFavorited(boolean isFavorited) {
-        mIsFavorited = isFavorited;
+        this.isFavorited = isFavorited;
     }
 
     public double getDistance() {
@@ -158,12 +158,12 @@ public class Place implements Parcelable {
     }
 
     public void setCategories(List<PlaceCategory> categories) {
-        mCategories = categories;
+        this.categories = categories;
     }
 
     public String getCategoriesListText() {
         StringBuilder categoriesList = new StringBuilder();
-        for (PlaceCategory placeCategory : mCategories) {
+        for (PlaceCategory placeCategory : categories) {
             if (categoriesList.length() > 0) {
                 categoriesList.append(", ");
             }
@@ -173,29 +173,29 @@ public class Place implements Parcelable {
     }
 
     public void toggleFavorite() {
-        mIsFavorited = !mIsFavorited;
+        isFavorited = !isFavorited;
     }
 
     public PlaceDO toPlaceDO() {
         PlaceDO placeDO = new PlaceDO();
-        placeDO.setId(mId);
-        placeDO.setName(mName);
-        placeDO.setImageUrl(mImageUrl);
-        placeDO.setUrl(mUrl);
-        placeDO.setRating(mRating);
-        placeDO.setReviewCount(mReviewCount);
-        placeDO.setPhoneNumber(mPhoneNumber);
-        placeDO.setPrice(mPrice);
-        placeDO.setCity(mCity);
-        placeDO.setZipCode(mZipCode);
-        placeDO.setCountry(mCountry);
-        placeDO.setState(mState);
-        placeDO.setAddress(mAddress);
-        placeDO.setLatitude(mLatitude);
-        placeDO.setLongitude(mLongitude);
-        placeDO.setIsFavorited(mIsFavorited);
+        placeDO.setId(id);
+        placeDO.setName(name);
+        placeDO.setImageUrl(imageUrl);
+        placeDO.setUrl(url);
+        placeDO.setRating(rating);
+        placeDO.setReviewCount(reviewCount);
+        placeDO.setPhoneNumber(phoneNumber);
+        placeDO.setPrice(price);
+        placeDO.setCity(city);
+        placeDO.setZipCode(zipCode);
+        placeDO.setCountry(country);
+        placeDO.setState(state);
+        placeDO.setAddress(address);
+        placeDO.setLatitude(latitude);
+        placeDO.setLongitude(longitude);
+        placeDO.setIsFavorited(isFavorited);
         RealmList<PlaceCategoryDO> categoryDOs = new RealmList<>();
-        for (PlaceCategory placeCategory : mCategories) {
+        for (PlaceCategory placeCategory : categories) {
             categoryDOs.add(placeCategory.toPlaceCategoryDO());
         }
         placeDO.setCategories(categoryDOs);
@@ -203,27 +203,27 @@ public class Place implements Parcelable {
     }
 
     protected Place(Parcel in) {
-        mId = in.readString();
-        mName = in.readString();
-        mImageUrl = in.readString();
-        mUrl = in.readString();
-        mRating = in.readDouble();
-        mReviewCount = in.readInt();
-        mPhoneNumber = in.readString();
-        mPrice = in.readString();
-        mCity = in.readString();
-        mZipCode = in.readString();
-        mCountry = in.readString();
-        mState = in.readString();
-        mAddress = in.readString();
-        mLatitude = in.readDouble();
-        mLongitude = in.readDouble();
-        mIsFavorited = in.readByte() != 0x00;
+        id = in.readString();
+        name = in.readString();
+        imageUrl = in.readString();
+        url = in.readString();
+        rating = in.readDouble();
+        reviewCount = in.readInt();
+        phoneNumber = in.readString();
+        price = in.readString();
+        city = in.readString();
+        zipCode = in.readString();
+        country = in.readString();
+        state = in.readString();
+        address = in.readString();
+        latitude = in.readDouble();
+        longitude = in.readDouble();
+        isFavorited = in.readByte() != 0x00;
         if (in.readByte() == 0x01) {
-            mCategories = new ArrayList<>();
-            in.readList(mCategories, PlaceCategory.class.getClassLoader());
+            categories = new ArrayList<>();
+            in.readList(categories, PlaceCategory.class.getClassLoader());
         } else {
-            mCategories = null;
+            categories = null;
         }
         mDistance = in.readDouble();
     }
@@ -235,27 +235,27 @@ public class Place implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(mId);
-        dest.writeString(mName);
-        dest.writeString(mImageUrl);
-        dest.writeString(mUrl);
-        dest.writeDouble(mRating);
-        dest.writeInt(mReviewCount);
-        dest.writeString(mPhoneNumber);
-        dest.writeString(mPrice);
-        dest.writeString(mCity);
-        dest.writeString(mZipCode);
-        dest.writeString(mCountry);
-        dest.writeString(mState);
-        dest.writeString(mAddress);
-        dest.writeDouble(mLatitude);
-        dest.writeDouble(mLongitude);
-        dest.writeByte((byte) (mIsFavorited ? 0x01 : 0x00));
-        if (mCategories == null) {
+        dest.writeString(id);
+        dest.writeString(name);
+        dest.writeString(imageUrl);
+        dest.writeString(url);
+        dest.writeDouble(rating);
+        dest.writeInt(reviewCount);
+        dest.writeString(phoneNumber);
+        dest.writeString(price);
+        dest.writeString(city);
+        dest.writeString(zipCode);
+        dest.writeString(country);
+        dest.writeString(state);
+        dest.writeString(address);
+        dest.writeDouble(latitude);
+        dest.writeDouble(longitude);
+        dest.writeByte((byte) (isFavorited ? 0x01 : 0x00));
+        if (categories == null) {
             dest.writeByte((byte) (0x00));
         } else {
             dest.writeByte((byte) (0x01));
-            dest.writeList(mCategories);
+            dest.writeList(categories);
         }
         dest.writeDouble(mDistance);
     }

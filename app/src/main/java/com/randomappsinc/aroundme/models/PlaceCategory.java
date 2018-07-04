@@ -7,37 +7,33 @@ import com.randomappsinc.aroundme.persistence.models.PlaceCategoryDO;
 
 public class PlaceCategory implements Parcelable {
 
-    private String mAlias;
-    private String mTitle;
+    private String alias;
+    private String title;
 
     public PlaceCategory() {}
 
-    public String getAlias() {
-        return mAlias;
-    }
-
     public void setAlias(String alias) {
-        mAlias = alias;
+        this.alias = alias;
     }
 
     public String getTitle() {
-        return mTitle;
+        return title;
     }
 
     public void setTitle(String title) {
-        mTitle = title;
+        this.title = title;
     }
 
     public PlaceCategoryDO toPlaceCategoryDO() {
         PlaceCategoryDO placeCategoryDO = new PlaceCategoryDO();
-        placeCategoryDO.setAlias(mAlias);
-        placeCategoryDO.setTitle(mTitle);
+        placeCategoryDO.setAlias(alias);
+        placeCategoryDO.setTitle(title);
         return placeCategoryDO;
     }
 
     protected PlaceCategory(Parcel in) {
-        mAlias = in.readString();
-        mTitle = in.readString();
+        alias = in.readString();
+        title = in.readString();
     }
 
     @Override
@@ -47,8 +43,8 @@ public class PlaceCategory implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(mAlias);
-        dest.writeString(mTitle);
+        dest.writeString(alias);
+        dest.writeString(title);
     }
 
     @SuppressWarnings("unused")

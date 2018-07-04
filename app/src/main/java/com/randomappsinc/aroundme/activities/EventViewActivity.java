@@ -81,7 +81,7 @@ public class EventViewActivity extends StandardActivity implements OnMapReadyCal
         numAttending.setText(String.valueOf(event.getNumAttending()));
         numInterested.setText(String.valueOf(event.getNumInterested()));
 
-        if (event.getTicketsUrl() == null || event.getTicketsUrl().isEmpty()) {
+        if (TextUtils.isEmpty(event.getTicketsUrl())) {
             buyTicketsButton.setVisibility(View.GONE);
         }
     }

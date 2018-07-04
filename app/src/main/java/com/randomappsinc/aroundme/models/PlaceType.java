@@ -4,39 +4,35 @@ import com.randomappsinc.aroundme.persistence.models.PlaceTypeDO;
 
 public class PlaceType {
 
-    private int mPlaceTypeId;
-    private String mText;
-    private long mTimeLastUpdated;
+    private int placeTypeId;
+    private String text;
+    private long timeLastUpdated;
 
     public int getId() {
-        return mPlaceTypeId;
+        return placeTypeId;
     }
 
     public void setPlaceTypeId(int placeTypeId) {
-        mPlaceTypeId = placeTypeId;
+        this.placeTypeId = placeTypeId;
     }
 
     public String getText() {
-        return mText;
+        return text;
     }
 
     public void setText(String text) {
-        mText = text;
-    }
-
-    public long getTimeLastUpdated() {
-        return mTimeLastUpdated;
+        this.text = text;
     }
 
     public void setTimeLastUpdated(long timeLastUpdated) {
-        mTimeLastUpdated = timeLastUpdated;
+        this.timeLastUpdated = timeLastUpdated;
     }
 
     public PlaceTypeDO toPlaceTypeDO() {
         PlaceTypeDO placeTypeDO = new PlaceTypeDO();
-        placeTypeDO.setPlaceTypeId(mPlaceTypeId);
-        placeTypeDO.setText(mText);
-        placeTypeDO.setTimeLastUpdated(mTimeLastUpdated);
+        placeTypeDO.setPlaceTypeId(placeTypeId);
+        placeTypeDO.setText(text);
+        placeTypeDO.setTimeLastUpdated(timeLastUpdated);
         return placeTypeDO;
     }
 }

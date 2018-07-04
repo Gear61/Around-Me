@@ -23,7 +23,8 @@ import com.randomappsinc.aroundme.R;
 public class UIUtils {
 
     public static void hideKeyboard(Activity activity) {
-        InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        InputMethodManager inputMethodManager =
+                (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
         if (inputMethodManager == null) {
             return;
         }
@@ -98,8 +99,10 @@ public class UIUtils {
         final int darkGray = context.getResources().getColor(R.color.dark_gray);
 
         if (favoriteToggle.getAnimation() == null || favoriteToggle.getAnimation().hasEnded()) {
-            ObjectAnimator animX = ObjectAnimator.ofFloat(favoriteToggle, "scaleX", 0.75f);
-            ObjectAnimator animY = ObjectAnimator.ofFloat(favoriteToggle, "scaleY", 0.75f);
+            ObjectAnimator animX = ObjectAnimator.ofFloat(
+                    favoriteToggle, "scaleX", 0.75f);
+            ObjectAnimator animY = ObjectAnimator.ofFloat(
+                    favoriteToggle, "scaleY", 0.75f);
             AnimatorSet shrink = new AnimatorSet();
             shrink.playTogether(animX, animY);
             shrink.setDuration(animLength);
@@ -113,8 +116,10 @@ public class UIUtils {
                     favoriteToggle.setText(isFavorited ? R.string.heart_filled_icon : R.string.heart_icon);
                     favoriteToggle.setTextColor(isFavorited ? lightRed : darkGray);
 
-                    ObjectAnimator animX = ObjectAnimator.ofFloat(favoriteToggle, "scaleX", 1.0f);
-                    ObjectAnimator animY = ObjectAnimator.ofFloat(favoriteToggle, "scaleY", 1.0f);
+                    ObjectAnimator animX = ObjectAnimator.ofFloat(
+                            favoriteToggle, "scaleX", 1.0f);
+                    ObjectAnimator animY = ObjectAnimator.ofFloat(
+                            favoriteToggle, "scaleY", 1.0f);
                     AnimatorSet grow = new AnimatorSet();
                     grow.playTogether(animX, animY);
                     grow.setDuration(animLength);

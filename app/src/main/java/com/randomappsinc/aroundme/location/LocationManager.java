@@ -28,46 +28,46 @@ public class LocationManager implements LocationForm.Listener{
         void onServicesOrPermissionChoice();
     }
 
-    @NonNull private Listener mListener;
-    @NonNull private Activity mActivity;
-    private Fragment mFragment;
+    @NonNull private Listener listener;
+    @NonNull private Activity activity;
+    private Fragment fragment;
 
-    private boolean mLocationFetched;
-    private Handler mLocationChecker;
-    private Runnable mLocationCheckTask;
-    private LocationServicesManager mLocationServicesManager;
-    private MaterialDialog mLocationDenialDialog;
-    private MaterialDialog mLocationPermissionDialog;
-    private LocationForm mLocationForm;
+    private boolean locationFetched;
+    private Handler locationChecker;
+    private Runnable locationCheckTask;
+    private LocationServicesManager locationServicesManager;
+    private MaterialDialog locationDenialDialog;
+    private MaterialDialog locationPermissionDialog;
+    private LocationForm locationForm;
 
     public LocationManager(@NonNull Listener listener, @NonNull Activity activity) {
-        mListener = listener;
-        mActivity = activity;
+        this.listener = listener;
+        this.activity = activity;
         initNonContext();
     }
 
     public LocationManager(@NonNull Listener listener, Fragment fragment) {
-        mListener = listener;
-        mActivity = fragment.getActivity();
-        mFragment = fragment;
+        this.listener = listener;
+        activity = fragment.getActivity();
+        this.fragment = fragment;
         initNonContext();
     }
 
     private void initNonContext() {
-        mLocationServicesManager = new LocationServicesManager(mActivity);
-        mLocationChecker = new Handler();
-        mLocationCheckTask = new Runnable() {
+        locationServicesManager = new LocationServicesManager(activity);
+        locationChecker = new Handler();
+        locationCheckTask = new Runnable() {
             @Override
             public void run() {
-                SmartLocation.with(mActivity).location().stop();
-                if (!mLocationFetched) {
+                SmartLocation.with(activity).location().stop();
+                if (!locationFetched) {
                     UIUtils.showToast(R.string.auto_location_fail);
                 }
             }
         };
 
-        mLocationForm = new LocationForm(mActivity, this);
-        mLocationDenialDialog = new MaterialDialog.Builder(mActivity)
+        locationForm = new LocationForm(activity, this);
+        locationDenialDialog = new MaterialDialog.Builder(activity)
                 .cancelable(false)
                 .title(R.string.location_services_needed)
                 .content(R.string.location_services_denial)
@@ -76,20 +76,20 @@ public class LocationManager implements LocationForm.Listener{
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        mLocationServicesManager.askForLocationServices(LOCATION_SERVICES_CODE);
-                        mListener.onServicesOrPermissionChoice();
+                        locationServicesManager.askForLocationServices(LOCATION_SERVICES_CODE);
+                        listener.onServicesOrPermissionChoice();
                     }
                 })
                 .onNegative(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        mLocationForm.show();
-                        mListener.onServicesOrPermissionChoice();
+                        locationForm.show();
+                        listener.onServicesOrPermissionChoice();
                     }
                 })
                 .build();
 
-        mLocationPermissionDialog = new MaterialDialog.Builder(mActivity)
+        locationPermissionDialog = new MaterialDialog.Builder(activity)
                 .cancelable(false)
                 .title(R.string.location_permission_needed)
                 .content(R.string.location_permission_denial)
@@ -99,14 +99,14 @@ public class LocationManager implements LocationForm.Listener{
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                         requestLocationPermission();
-                        mListener.onServicesOrPermissionChoice();
+                        listener.onServicesOrPermissionChoice();
                     }
                 })
                 .onNegative(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        mLocationForm.show();
-                        mListener.onServicesOrPermissionChoice();
+                        locationForm.show();
+                        listener.onServicesOrPermissionChoice();
                     }
                 })
                 .build();
@@ -115,15 +115,15 @@ public class LocationManager implements LocationForm.Listener{
     @Override
     public void onLocationEntered(String location) {
         stopFetchingCurrentLocation();
-        mListener.onLocationFetched(location);
+        listener.onLocationFetched(location);
     }
 
     public void fetchCurrentLocation() {
         if (PermissionUtils.isPermissionGranted(Manifest.permission.ACCESS_FINE_LOCATION)) {
-            if (SmartLocation.with(mActivity).location().state().locationServicesEnabled()) {
+            if (SmartLocation.with(activity).location().state().locationServicesEnabled()) {
                 fetchAutomaticLocation();
             } else {
-                mLocationServicesManager.askForLocationServices(LOCATION_SERVICES_CODE);
+                locationServicesManager.askForLocationServices(LOCATION_SERVICES_CODE);
             }
         } else {
             requestLocationPermission();
@@ -131,51 +131,51 @@ public class LocationManager implements LocationForm.Listener{
     }
 
     private void requestLocationPermission() {
-        if (mFragment != null) {
+        if (fragment != null) {
             PermissionUtils.requestPermission(
-                    mFragment,
+                    fragment,
                     Manifest.permission.ACCESS_FINE_LOCATION,
                     LOCATION_PERMISSION_REQUEST_CODE);
         } else {
             PermissionUtils.requestPermission(
-                    mActivity,
+                    activity,
                     Manifest.permission.ACCESS_FINE_LOCATION,
                     LOCATION_PERMISSION_REQUEST_CODE);
         }
     }
 
     public void fetchAutomaticLocation() {
-        mLocationFetched = false;
-        SmartLocation.with(mActivity).location()
+        locationFetched = false;
+        SmartLocation.with(activity).location()
                 .oneFix()
                 .start(new OnLocationUpdatedListener() {
                     @Override
                     public void onLocationUpdated(Location location) {
-                        mLocationChecker.removeCallbacks(mLocationCheckTask);
-                        mLocationFetched = true;
+                        locationChecker.removeCallbacks(locationCheckTask);
+                        locationFetched = true;
                         String currentLocation = String.valueOf(location.getLatitude())
                                 + ", "
                                 + String.valueOf(location.getLongitude());
-                        mListener.onLocationFetched(currentLocation);
+                        listener.onLocationFetched(currentLocation);
                     }
                 });
-        mLocationChecker.postDelayed(mLocationCheckTask, 10000L);
+        locationChecker.postDelayed(locationCheckTask, 10000L);
     }
 
     public void stopFetchingCurrentLocation() {
-        mLocationChecker.removeCallbacks(mLocationCheckTask);
-        SmartLocation.with(mActivity).location().stop();
+        locationChecker.removeCallbacks(locationCheckTask);
+        SmartLocation.with(activity).location().stop();
     }
 
     public void showLocationForm() {
-        mLocationForm.show();
+        locationForm.show();
     }
 
     public void showLocationDenialDialog() {
-        mLocationDenialDialog.show();
+        locationDenialDialog.show();
     }
 
     public void showLocationPermissionDialog() {
-        mLocationPermissionDialog.show();
+        locationPermissionDialog.show();
     }
 }

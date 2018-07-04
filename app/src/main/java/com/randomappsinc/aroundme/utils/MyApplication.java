@@ -11,13 +11,13 @@ import com.randomappsinc.aroundme.persistence.PreferencesManager;
 
 public final class MyApplication extends Application {
 
-    private static Context mInstance;
+    private static Context instance;
 
     @Override
     public void onCreate() {
         super.onCreate();
         Iconify.with(new IoniconsModule()).with(new FontAwesomeModule());
-        mInstance = getApplicationContext();
+        instance = getApplicationContext();
 
         if (PreferencesManager.get().isFirstAppOpen()) {
             DatabaseManager.get().seedPlaceTypes();
@@ -25,6 +25,6 @@ public final class MyApplication extends Application {
     }
 
     public static Context getAppContext() {
-        return mInstance;
+        return instance;
     }
 }

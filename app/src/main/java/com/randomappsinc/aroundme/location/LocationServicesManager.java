@@ -21,25 +21,25 @@ import com.randomappsinc.aroundme.R;
 /** Utility class to ask for location services */
 class LocationServicesManager {
 
-    private Activity mActivity;
-    private LocationSettingsRequest.Builder mLocationBuilder;
+    private Activity activity;
+    private LocationSettingsRequest.Builder locationBuilder;
 
     LocationServicesManager(Activity activity) {
-        mActivity = activity;
+        this.activity = activity;
         LocationRequest locationRequest = LocationRequest.create();
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
-        mLocationBuilder = new LocationSettingsRequest
+        locationBuilder = new LocationSettingsRequest
                 .Builder()
                 .addLocationRequest(locationRequest);
-        mLocationBuilder.setAlwaysShow(true);
+        locationBuilder.setAlwaysShow(true);
     }
 
     void askForLocationServices(final int requestCode) {
         Task<LocationSettingsResponse> result =
                 LocationServices
-                        .getSettingsClient(mActivity)
-                        .checkLocationSettings(mLocationBuilder.build());
+                        .getSettingsClient(activity)
+                        .checkLocationSettings(locationBuilder.build());
 
         result.addOnCompleteListener(new OnCompleteListener<LocationSettingsResponse>() {
             @Override
@@ -52,7 +52,7 @@ class LocationServicesManager {
                             try {
                                 ResolvableApiException resolvable = (ResolvableApiException) exception;
                                 // Show dialog to turn on location services
-                                resolvable.startResolutionForResult(mActivity, requestCode);
+                                resolvable.startResolutionForResult(activity, requestCode);
                             } catch (IntentSender.SendIntentException |ClassCastException ignored) {}
                             break;
                         case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
@@ -66,7 +66,7 @@ class LocationServicesManager {
 
     // Get location services the old fashioned way
     private void openLocationSettings() {
-        Toast.makeText(mActivity, R.string.turn_on_location_services, Toast.LENGTH_LONG).show();
-        mActivity.startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+        Toast.makeText(activity, R.string.turn_on_location_services, Toast.LENGTH_LONG).show();
+        activity.startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
     }
 }

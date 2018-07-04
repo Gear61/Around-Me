@@ -35,9 +35,9 @@ public class DatabaseManager {
         return instance;
     }
 
-    private PlaceTypesDBManager mPlaceTypesDBManager;
-    private PlacesDBManager mPlacesDBManager;
-    private EventsDBManager mEventsDBManager;
+    private PlaceTypesDBManager placeTypesDBManager;
+    private PlacesDBManager placesDBManager;
+    private EventsDBManager eventsDBManager;
 
     private DatabaseManager() {
         Realm.init(MyApplication.getAppContext());
@@ -47,9 +47,9 @@ public class DatabaseManager {
                 .build();
         Realm.setDefaultConfiguration(realmConfig);
 
-        mPlaceTypesDBManager = PlaceTypesDBManager.get();
-        mPlacesDBManager = PlacesDBManager.get();
-        mEventsDBManager = EventsDBManager.get();
+        placeTypesDBManager = PlaceTypesDBManager.get();
+        placesDBManager = PlacesDBManager.get();
+        eventsDBManager = EventsDBManager.get();
     }
 
     private RealmMigration migration = new RealmMigration() {
@@ -81,19 +81,19 @@ public class DatabaseManager {
                 .getStringArray(R.array.initial_options);
 
         for (String initialType : initialTypes) {
-            mPlaceTypesDBManager.addPlaceType(initialType);
+            placeTypesDBManager.addPlaceType(initialType);
         }
     }
 
     public PlaceTypesDBManager getPlaceTypesDBManager() {
-        return mPlaceTypesDBManager;
+        return placeTypesDBManager;
     }
 
     public PlacesDBManager getPlacesDBManager() {
-        return mPlacesDBManager;
+        return placesDBManager;
     }
 
     public EventsDBManager getEventsDBManager() {
-        return mEventsDBManager;
+        return eventsDBManager;
     }
 }

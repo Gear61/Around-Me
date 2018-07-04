@@ -13,8 +13,6 @@ import java.util.Set;
 
 public class PreferencesManager {
 
-    private SharedPreferences prefs;
-
     private static final String FIRST_TIME_KEY = "firstTime";
     private static final String NUM_APP_OPENS = "numAppOpens";
     private static final int OPENS_BEFORE_RATING = 5;
@@ -41,6 +39,8 @@ public class PreferencesManager {
         }
         return instance;
     }
+
+    private SharedPreferences prefs;
 
     private PreferencesManager() {
         Context context = MyApplication.getAppContext();

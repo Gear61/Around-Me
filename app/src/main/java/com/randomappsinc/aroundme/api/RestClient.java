@@ -63,33 +63,33 @@ public class RestClient {
         public void onEventsFetched(List<Event> events) {}
     };
 
-    private static RestClient mInstance;
+    private static RestClient instance;
 
-    private Retrofit mRetrofit;
-    private YelpService mYelpService;
-    private Handler mHandler;
+    private Retrofit retrofit;
+    private YelpService yelpService;
+    private Handler handler;
 
     // Places
-    @NonNull private PlacesListener mPlacesListener = DUMMY_PLACES_LISTENER;
-    private Call<PlaceSearchResults> mCurrentFindPlacesCall;
+    @NonNull private PlacesListener placesListener = DUMMY_PLACES_LISTENER;
+    private Call<PlaceSearchResults> currentFindPlacesCall;
 
     // Photos
-    @NonNull private PhotosListener mPhotosListener = DUMMY_PHOTOS_LISTENER;
-    private Call<PlacePhotos> mCurrentFetchPhotosCall;
+    @NonNull private PhotosListener photosListener = DUMMY_PHOTOS_LISTENER;
+    private Call<PlacePhotos> currentFetchPhotosCall;
 
     // Reviews
-    @NonNull private ReviewsListener mReviewsListener = DUMMY_REVIEWS_LISTENER;
-    private Call<PlaceReviewResults> mCurrentFetchReviewsCall;
+    @NonNull private ReviewsListener reviewsListener = DUMMY_REVIEWS_LISTENER;
+    private Call<PlaceReviewResults> currentFetchReviewsCall;
 
     // Events
-    @NonNull private EventsListener mEventsListener = DUMMY_EVENTS_LISTENER;
-    private Call<EventSearchResults> mCurrentFindEventsCall;
+    @NonNull private EventsListener eventsListener = DUMMY_EVENTS_LISTENER;
+    private Call<EventSearchResults> currentFindEventsCall;
 
     public static RestClient getInstance() {
-        if (mInstance == null) {
-            mInstance = new RestClient();
+        if (instance == null) {
+            instance = new RestClient();
         }
-        return mInstance;
+        return instance;
     }
 
     private RestClient() {
@@ -97,32 +97,32 @@ public class RestClient {
                 .addInterceptor(new AuthInterceptor())
                 .build();
 
-        mRetrofit = new Retrofit.Builder()
+        retrofit = new Retrofit.Builder()
                 .baseUrl(ApiConstants.BASE_URL)
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        mYelpService = mRetrofit.create(YelpService.class);
+        yelpService = retrofit.create(YelpService.class);
 
         HandlerThread backgroundThread = new HandlerThread("");
         backgroundThread.start();
-        mHandler = new Handler(backgroundThread.getLooper());
+        handler = new Handler(backgroundThread.getLooper());
     }
 
     public Retrofit getRetrofitInstance() {
-        return mRetrofit;
+        return retrofit;
     }
 
     public void findPlaces(final String searchTerm, final String location) {
-        mHandler.post(new Runnable() {
+        handler.post(new Runnable() {
             @Override
             public void run() {
-                if (mCurrentFindPlacesCall != null) {
-                    mCurrentFindPlacesCall.cancel();
+                if (currentFindPlacesCall != null) {
+                    currentFindPlacesCall.cancel();
                 }
                 Filter filter = PreferencesManager.get().getFilter();
-                mCurrentFindPlacesCall = mYelpService.findPlaces(
+                currentFindPlacesCall = yelpService.findPlaces(
                         searchTerm,
                         location,
                         ApiConstants.DEFAULT_NUM_PLACES,
@@ -131,144 +131,144 @@ public class RestClient {
                         (int) filter.getRadius(),
                         filter.getPriceRangesString(),
                         filter.getAttributesString());
-                mCurrentFindPlacesCall.enqueue(new FindPlacesCallback());
+                currentFindPlacesCall.enqueue(new FindPlacesCallback());
             }
         });
     }
 
     public void registerPlacesListener(PlacesListener placesListener) {
-        mPlacesListener = placesListener;
+        this.placesListener = placesListener;
     }
 
     public void unregisterPlacesListener() {
-        mPlacesListener = DUMMY_PLACES_LISTENER;
+        placesListener = DUMMY_PLACES_LISTENER;
     }
 
     public void processPlaces(List<Place> places) {
-        mPlacesListener.onPlacesFetched(places);
+        placesListener.onPlacesFetched(places);
     }
 
     public void cancelPlacesFetch() {
-        mHandler.post(new Runnable() {
+        handler.post(new Runnable() {
             @Override
             public void run() {
-                if (mCurrentFindPlacesCall != null) {
-                    mCurrentFindPlacesCall.cancel();
+                if (currentFindPlacesCall != null) {
+                    currentFindPlacesCall.cancel();
                 }
             }
         });
     }
 
     public void fetchPlacePhotos(final Place place) {
-        mHandler.post(new Runnable() {
+        handler.post(new Runnable() {
             @Override
             public void run() {
-                if (mCurrentFetchPhotosCall != null) {
-                    mCurrentFetchPhotosCall.cancel();
+                if (currentFetchPhotosCall != null) {
+                    currentFetchPhotosCall.cancel();
                 }
-                mCurrentFetchPhotosCall = mYelpService.fetchPlacePhotos(place.getId());
-                mCurrentFetchPhotosCall.enqueue(new FetchPhotosCallback());
+                currentFetchPhotosCall = yelpService.fetchPlacePhotos(place.getId());
+                currentFetchPhotosCall.enqueue(new FetchPhotosCallback());
             }
         });
     }
 
     public void registerPhotosListener(PhotosListener photosListener) {
-        mPhotosListener = photosListener;
+        this.photosListener = photosListener;
     }
 
     public void unregisterPhotosListener() {
-        mPhotosListener = DUMMY_PHOTOS_LISTENER;
+        photosListener = DUMMY_PHOTOS_LISTENER;
     }
 
     public void processPhotos(List<String> photoUrls) {
-        mPhotosListener.onPhotosFetched(photoUrls);
+        photosListener.onPhotosFetched(photoUrls);
     }
 
     public void cancelPhotosFetch() {
-        mHandler.post(new Runnable() {
+        handler.post(new Runnable() {
             @Override
             public void run() {
-                if (mCurrentFetchPhotosCall != null) {
-                    mCurrentFetchPhotosCall.cancel();
+                if (currentFetchPhotosCall != null) {
+                    currentFetchPhotosCall.cancel();
                 }
             }
         });
     }
 
     public void fetchPlaceReviews(final Place place) {
-        mHandler.post(new Runnable() {
+        handler.post(new Runnable() {
             @Override
             public void run() {
-                if (mCurrentFetchReviewsCall != null) {
-                    mCurrentFetchReviewsCall.cancel();
+                if (currentFetchReviewsCall != null) {
+                    currentFetchReviewsCall.cancel();
                 }
-                mCurrentFetchReviewsCall = mYelpService.fetchPlaceReviews(place.getId());
-                mCurrentFetchReviewsCall.enqueue(new FetchReviewsCallback());
+                currentFetchReviewsCall = yelpService.fetchPlaceReviews(place.getId());
+                currentFetchReviewsCall.enqueue(new FetchReviewsCallback());
             }
         });
     }
 
     public void registerReviewsListener(ReviewsListener reviewsListener) {
-        mReviewsListener = reviewsListener;
+        this.reviewsListener = reviewsListener;
     }
 
     public void unregisterReviewsListener() {
-        mReviewsListener = DUMMY_REVIEWS_LISTENER;
+        reviewsListener = DUMMY_REVIEWS_LISTENER;
     }
 
     public void processReviews(List<PlaceReview> reviews) {
-        mReviewsListener.onReviewsFetched(reviews);
+        reviewsListener.onReviewsFetched(reviews);
     }
 
     public void cancelReviewsFetch() {
-        mHandler.post(new Runnable() {
+        handler.post(new Runnable() {
             @Override
             public void run() {
-                if (mCurrentFetchReviewsCall != null) {
-                    mCurrentFetchReviewsCall.cancel();
+                if (currentFetchReviewsCall != null) {
+                    currentFetchReviewsCall.cancel();
                 }
             }
         });
     }
 
     public void findEvents(final String location) {
-        mHandler.post(new Runnable() {
+        handler.post(new Runnable() {
             @Override
             public void run() {
-                if (mCurrentFindEventsCall != null) {
-                    mCurrentFindEventsCall.cancel();
+                if (currentFindEventsCall != null) {
+                    currentFindEventsCall.cancel();
                 }
 
                 long currentUnixTime = System.currentTimeMillis() / 1000L;
-                mCurrentFindEventsCall = mYelpService.findEvents(
+                currentFindEventsCall = yelpService.findEvents(
                         location,
                         currentUnixTime,
                         ApiConstants.DEFAULT_NUM_EVENTS,
                         ApiConstants.TIME_START_SORT,
                         ApiConstants.ASC_SORT);
-                mCurrentFindEventsCall.enqueue(new FindEventsCallback());
+                currentFindEventsCall.enqueue(new FindEventsCallback());
             }
         });
     }
 
     public void registerEventsListener(EventsListener eventsListener) {
-        mEventsListener = eventsListener;
+        this.eventsListener = eventsListener;
     }
 
     public void unregisterEventsListener() {
-        mEventsListener = DUMMY_EVENTS_LISTENER;
+        eventsListener = DUMMY_EVENTS_LISTENER;
     }
 
     public void processEvents(List<Event> events) {
-        mEventsListener.onEventsFetched(events);
+        eventsListener.onEventsFetched(events);
     }
 
     public void cancelEventsFetch() {
-        mHandler.post(new Runnable() {
+        handler.post(new Runnable() {
             @Override
             public void run() {
-                if (mCurrentFindEventsCall != null) {
-                    mCurrentFindEventsCall.cancel();
+                if (currentFindEventsCall != null) {
+                    currentFindEventsCall.cancel();
                 }
             }
         });

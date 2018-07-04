@@ -7,158 +7,158 @@ import io.realm.annotations.PrimaryKey;
 public class PlaceDO extends RealmObject {
 
     @PrimaryKey
-    private String mId;
+    private String id;
 
-    private String mName;
-    private String mImageUrl;
-    private String mUrl;
-    private double mRating;
-    private int mReviewCount;
-    private String mPhoneNumber;
-    private String mPrice;
-    private String mCity;
-    private String mZipCode;
-    private String mCountry;
-    private String mState;
-    private String mAddress;
-    private double mLatitude;
-    private double mLongitude;
-    private boolean mIsFavorited;
-    private RealmList<PlaceCategoryDO> mCategories;
+    private String name;
+    private String imageUrl;
+    private String url;
+    private double rating;
+    private int reviewCount;
+    private String phoneNumber;
+    private String price;
+    private String city;
+    private String zipCode;
+    private String country;
+    private String state;
+    private String address;
+    private double latitude;
+    private double longitude;
+    private boolean isFavorited;
+    private RealmList<PlaceCategoryDO> categories;
 
     public String getId() {
-        return mId;
+        return id;
     }
 
     public void setId(String id) {
-        mId = id;
+        this.id = id;
     }
 
     public String getName() {
-        return mName;
+        return name;
     }
 
     public void setName(String name) {
-        mName = name;
+        this.name = name;
     }
 
     public String getImageUrl() {
-        return mImageUrl;
+        return imageUrl;
     }
 
     public void setImageUrl(String imageUrl) {
-        mImageUrl = imageUrl;
+        this.imageUrl = imageUrl;
     }
 
     public String getUrl() {
-        return mUrl;
+        return url;
     }
 
     public void setUrl(String url) {
-        mUrl = url;
+        this.url = url;
     }
 
     public double getRating() {
-        return mRating;
+        return rating;
     }
 
     public void setRating(double rating) {
-        mRating = rating;
+        this.rating = rating;
     }
 
     public int getReviewCount() {
-        return mReviewCount;
+        return reviewCount;
     }
 
     public void setReviewCount(int reviewCount) {
-        mReviewCount = reviewCount;
+        this.reviewCount = reviewCount;
     }
 
     public String getPhoneNumber() {
-        return mPhoneNumber;
+        return phoneNumber;
     }
 
     public void setPhoneNumber(String phoneNumber) {
-        mPhoneNumber = phoneNumber;
+        this.phoneNumber = phoneNumber;
     }
 
     public String getPrice() {
-        return mPrice;
+        return price;
     }
 
     public void setPrice(String price) {
-        mPrice = price;
+        this.price = price;
     }
 
     public String getCity() {
-        return mCity;
+        return city;
     }
 
     public void setCity(String city) {
-        mCity = city;
+        this.city = city;
     }
 
     public String getZipCode() {
-        return mZipCode;
+        return zipCode;
     }
 
     public void setZipCode(String zipCode) {
-        mZipCode = zipCode;
+        this.zipCode = zipCode;
     }
 
     public String getCountry() {
-        return mCountry;
+        return country;
     }
 
     public void setCountry(String country) {
-        mCountry = country;
+        this.country = country;
     }
 
     public String getState() {
-        return mState;
+        return state;
     }
 
     public void setState(String state) {
-        mState = state;
+        this.state = state;
     }
 
     public String getAddress() {
-        return mAddress;
+        return address;
     }
 
     public void setAddress(String address) {
-        mAddress = address;
+        this.address = address;
     }
 
     public double getLatitude() {
-        return mLatitude;
+        return latitude;
     }
 
     public void setLatitude(double latitude) {
-        mLatitude = latitude;
+        this.latitude = latitude;
     }
 
     public double getLongitude() {
-        return mLongitude;
+        return longitude;
     }
 
     public void setLongitude(double longitude) {
-        mLongitude = longitude;
+        this.longitude = longitude;
     }
 
     public boolean isFavorited() {
-        return mIsFavorited;
+        return isFavorited;
     }
 
     public void setIsFavorited(boolean isFavorited) {
-        mIsFavorited = isFavorited;
+        this.isFavorited = isFavorited;
     }
 
     public RealmList<PlaceCategoryDO> getCategories() {
-        return mCategories;
+        return categories;
     }
 
     public void setCategories(RealmList<PlaceCategoryDO> categories) {
-        mCategories = categories;
+        this.categories = categories;
     }
 }

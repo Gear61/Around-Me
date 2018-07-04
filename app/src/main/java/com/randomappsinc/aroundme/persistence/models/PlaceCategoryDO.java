@@ -4,22 +4,22 @@ import io.realm.RealmObject;
 
 public class PlaceCategoryDO extends RealmObject {
 
-    private String mAlias;
-    private String mTitle;
+    private String alias;
+    private String title;
 
     public String getAlias() {
-        return mAlias;
+        return alias;
     }
 
     public void setAlias(String alias) {
-        mAlias = alias;
+        this.alias = alias;
     }
 
     public String getTitle() {
-        return mTitle;
+        return title;
     }
 
     public void setTitle(String title) {
-        mTitle = title;
+        this.title = title;
     }
 }

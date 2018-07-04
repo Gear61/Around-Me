@@ -95,7 +95,6 @@ public class DatabaseManager {
                             .renameField("mZipCode", "zipCode")
                             .renameField("mCountry", "country")
                             .renameField("mState", "state")
-                            .renameField("mZipCode", "zipCode")
                             .renameField("mAddress", "address")
                             .renameField("mLatitude", "latitude")
                             .renameField("mLongitude", "longitude")
@@ -103,6 +102,39 @@ public class DatabaseManager {
                 } else {
                     realm.deleteAll();
                     throw new IllegalStateException("EventDO doesn't exist.");
+                }
+
+                RealmObjectSchema placeCategorySchema = schema.get("PlaceCategoryDO");
+                if (placeCategorySchema != null) {
+                    placeCategorySchema.renameField("mAlias", "alias")
+                            .renameField("mTitle", "title");
+                } else {
+                    realm.deleteAll();
+                    throw new IllegalStateException("PlaceCategoryDO doesn't exist.");
+                }
+
+                RealmObjectSchema placeSchema = schema.get("PlaceDO");
+                if (placeSchema != null) {
+                    placeSchema.renameField("mId", "id")
+                            .renameField("mName", "name")
+                            .renameField("mImageUrl", "imageUrl")
+                            .renameField("mUrl", "url")
+                            .renameField("mRating", "rating")
+                            .renameField("mReviewCount", "reviewCount")
+                            .renameField("mPhoneNumber", "phoneNumber")
+                            .renameField("mPrice", "price")
+                            .renameField("mCity", "city")
+                            .renameField("mZipCode", "zipCode")
+                            .renameField("mCountry", "country")
+                            .renameField("mState", "state")
+                            .renameField("mAddress", "address")
+                            .renameField("mLatitude", "latitude")
+                            .renameField("mLongitude", "longitude")
+                            .renameField("mIsFavorited", "isFavorited")
+                            .renameField("mCategories", "categories");
+                } else {
+                    realm.deleteAll();
+                    throw new IllegalStateException("PlaceDO doesn't exist.");
                 }
             }
         }

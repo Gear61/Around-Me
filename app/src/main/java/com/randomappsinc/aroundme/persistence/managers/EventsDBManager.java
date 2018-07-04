@@ -45,7 +45,7 @@ public class EventsDBManager {
     public void removeFavorite(final Event event) {
         final EventDO eventDO = getRealm()
                 .where(EventDO.class)
-                .equalTo("mId", event.getId())
+                .equalTo("id", event.getId())
                 .findFirst();
 
         if (eventDO == null) {
@@ -63,7 +63,7 @@ public class EventsDBManager {
     public List<Event> getFavoriteEvents() {
         List<EventDO> eventDOs = getRealm()
                 .where(EventDO.class)
-                .equalTo("mIsFavorited", true)
+                .equalTo("isFavorited", true)
                 .findAll();
 
         List<Event> favorites = new ArrayList<>();
@@ -76,7 +76,7 @@ public class EventsDBManager {
     public boolean isEventFavorited(Event event) {
         EventDO eventDO = getRealm()
                 .where(EventDO.class)
-                .equalTo("mId", event.getId())
+                .equalTo("id", event.getId())
                 .findFirst();
 
         return eventDO != null && eventDO.isFavorited();

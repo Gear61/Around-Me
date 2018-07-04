@@ -45,7 +45,7 @@ public class PlacesDBManager {
     public void removeFavorite(final Place place) {
         final PlaceDO placeDO = getRealm()
                 .where(PlaceDO.class)
-                .equalTo("mId", place.getId())
+                .equalTo("id", place.getId())
                 .findFirst();
 
         if (placeDO == null) {
@@ -63,7 +63,7 @@ public class PlacesDBManager {
     public List<Place> getFavoritePlaces() {
         List<PlaceDO> placeDOs = getRealm()
                 .where(PlaceDO.class)
-                .equalTo("mIsFavorited", true)
+                .equalTo("isFavorited", true)
                 .findAll();
 
         List<Place> favorites = new ArrayList<>();
@@ -76,7 +76,7 @@ public class PlacesDBManager {
     public boolean isPlaceFavorited(Place place) {
         PlaceDO placeDO = getRealm()
                 .where(PlaceDO.class)
-                .equalTo("mId", place.getId())
+                .equalTo("id", place.getId())
                 .findFirst();
 
         return placeDO != null && placeDO.isFavorited();

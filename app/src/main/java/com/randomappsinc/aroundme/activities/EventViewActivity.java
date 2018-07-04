@@ -35,19 +35,19 @@ public class EventViewActivity extends StandardActivity implements OnMapReadyCal
 
     public static final String EVENT_KEY = "event";
 
-    @BindView(R.id.favorite_toggle) TextView mFavoriteToggle;
-    @BindView(R.id.event_map) MapView mEventMap;
-    @BindView(R.id.event_info_parent) View mEventInfo;
-    @BindView(R.id.description_text) TextView mDescriptionText;
-    @BindView(R.id.num_attending) TextView mNumAttending;
-    @BindView(R.id.num_interested) TextView mNumInterested;
-    @BindView(R.id.buy_tickets) View mBuyTicketsButton;
+    @BindView(R.id.favorite_toggle) TextView favoriteToggle;
+    @BindView(R.id.event_map) MapView eventMap;
+    @BindView(R.id.event_info_parent) View eventInfo;
+    @BindView(R.id.description_text) TextView descriptionText;
+    @BindView(R.id.num_attending) TextView numAttending;
+    @BindView(R.id.num_interested) TextView numInterested;
+    @BindView(R.id.buy_tickets) View buyTicketsButton;
 
     @BindColor(R.color.light_red) int heartRed;
     @BindColor(R.color.dark_gray) int darkGray;
 
-    private Event mEvent;
-    private EventInfoView mEventInfoView;
+    private Event event;
+    private EventInfoView eventInfoView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,41 +59,41 @@ public class EventViewActivity extends StandardActivity implements OnMapReadyCal
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        mEvent = getIntent().getParcelableExtra(EVENT_KEY);
-        setTitle(mEvent.getName());
+        event = getIntent().getParcelableExtra(EVENT_KEY);
+        setTitle(event.getName());
 
-        mEventMap.onCreate(savedInstanceState);
-        mEventMap.getMapAsync(this);
+        eventMap.onCreate(savedInstanceState);
+        eventMap.getMapAsync(this);
 
         // They could be opening up a favorited event from search
-        mEvent.setIsFavorited(DatabaseManager.get().getEventsDBManager().isEventFavorited(mEvent));
+        event.setIsFavorited(DatabaseManager.get().getEventsDBManager().isEventFavorited(event));
 
-        mFavoriteToggle.setText(mEvent.isFavorited() ? R.string.heart_filled_icon : R.string.heart_icon);
-        mFavoriteToggle.setTextColor(mEvent.isFavorited() ? heartRed : darkGray);
+        favoriteToggle.setText(event.isFavorited() ? R.string.heart_filled_icon : R.string.heart_icon);
+        favoriteToggle.setTextColor(event.isFavorited() ? heartRed : darkGray);
 
-        mEventInfoView = new EventInfoView(
+        eventInfoView = new EventInfoView(
                 this,
-                mEventInfo,
+                eventInfo,
                 new IconDrawable(this, IoniconsIcons.ion_android_calendar).colorRes(R.color.dark_gray));
-        mEventInfoView.loadEvent(mEvent);
+        eventInfoView.loadEvent(event);
 
-        mDescriptionText.setText(mEvent.getDescriptionText());
-        mNumAttending.setText(String.valueOf(mEvent.getNumAttending()));
-        mNumInterested.setText(String.valueOf(mEvent.getNumInterested()));
+        descriptionText.setText(event.getDescriptionText());
+        numAttending.setText(String.valueOf(event.getNumAttending()));
+        numInterested.setText(String.valueOf(event.getNumInterested()));
 
-        if (mEvent.getTicketsUrl() == null || mEvent.getTicketsUrl().isEmpty()) {
-            mBuyTicketsButton.setVisibility(View.GONE);
+        if (event.getTicketsUrl() == null || event.getTicketsUrl().isEmpty()) {
+            buyTicketsButton.setVisibility(View.GONE);
         }
     }
 
     @OnClick(R.id.favorite_toggle)
     public void onFavoriteClick() {
-        mEvent.toggleFavorite();
-        UIUtils.animateFavoriteToggle(mFavoriteToggle, mEvent.isFavorited());
-        if (mEvent.isFavorited()) {
-            DatabaseManager.get().getEventsDBManager().addFavorite(mEvent);
+        event.toggleFavorite();
+        UIUtils.animateFavoriteToggle(favoriteToggle, event.isFavorited());
+        if (event.isFavorited()) {
+            DatabaseManager.get().getEventsDBManager().addFavorite(event);
         } else {
-            DatabaseManager.get().getEventsDBManager().removeFavorite(mEvent);
+            DatabaseManager.get().getEventsDBManager().removeFavorite(event);
         }
     }
 
@@ -102,10 +102,10 @@ public class EventViewActivity extends StandardActivity implements OnMapReadyCal
         googleMap.getUiSettings().setAllGesturesEnabled(false);
         googleMap.setOnMapClickListener(mMapClickListener);
 
-        LatLng place = new LatLng(mEvent.getLatitude(), mEvent.getLongitude());
+        LatLng place = new LatLng(event.getLatitude(), event.getLongitude());
         googleMap.addMarker(new MarkerOptions()
                 .position(place)
-                .title(mEvent.getName()));
+                .title(event.getName()));
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(place)
                 .zoom(16)
@@ -118,7 +118,7 @@ public class EventViewActivity extends StandardActivity implements OnMapReadyCal
     private final GoogleMap.OnMapClickListener mMapClickListener = new GoogleMap.OnMapClickListener() {
         @Override
         public void onMapClick(LatLng latLng) {
-            String mapUri = "google.navigation:q=" + mEvent.getAddress() + " " + mEvent.getName();
+            String mapUri = "google.navigation:q=" + event.getAddress() + " " + event.getName();
             startActivity(Intent.createChooser(
                     new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(mapUri)),
                     getString(R.string.navigate_with)));
@@ -127,13 +127,13 @@ public class EventViewActivity extends StandardActivity implements OnMapReadyCal
 
     @OnClick(R.id.event_thumbnail)
     public void onThumbnailClicked() {
-        if (TextUtils.isEmpty(mEvent.getImageUrl())) {
+        if (TextUtils.isEmpty(event.getImageUrl())) {
             return;
         }
 
         Intent intent = new Intent(this, PictureFullViewActivity.class);
         ArrayList<String> imageUrl = new ArrayList<>();
-        imageUrl.add(mEvent.getImageUrl());
+        imageUrl.add(event.getImageUrl());
         intent.putStringArrayListExtra(PictureFullViewActivity.IMAGE_URLS_KEY, imageUrl);
         startActivity(intent);
         overridePendingTransition(0, 0);
@@ -141,7 +141,7 @@ public class EventViewActivity extends StandardActivity implements OnMapReadyCal
 
     @OnClick(R.id.description)
     public void openEventPage() {
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(mEvent.getUrl()));
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(event.getUrl()));
         startActivity(intent);
     }
 
@@ -149,17 +149,17 @@ public class EventViewActivity extends StandardActivity implements OnMapReadyCal
     public void addEventToCalendar() {
         Intent intent = new Intent(Intent.ACTION_EDIT);
         intent.setType("vnd.android.cursor.item/event");
-        intent.putExtra(CalendarContract.Events.TITLE, mEvent.getName());
+        intent.putExtra(CalendarContract.Events.TITLE, event.getName());
 
-        if (mEvent.getTimeStart() > 0L) {
-            intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, mEvent.getTimeStart());
+        if (event.getTimeStart() > 0L) {
+            intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, event.getTimeStart());
         }
-        if (mEvent.getTimeEnd() > 0L) {
-            intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, mEvent.getTimeEnd());
+        if (event.getTimeEnd() > 0L) {
+            intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, event.getTimeEnd());
         }
 
         intent.putExtra(CalendarContract.Events.ALL_DAY, false);
-        intent.putExtra(CalendarContract.Events.DESCRIPTION, mEvent.getDescription());
+        intent.putExtra(CalendarContract.Events.DESCRIPTION, event.getDescription());
         startActivity(intent);
     }
 
@@ -167,7 +167,7 @@ public class EventViewActivity extends StandardActivity implements OnMapReadyCal
     public void shareEvent() {
         Intent shareIntent = ShareCompat.IntentBuilder.from(this)
                 .setType("text/plain")
-                .setText(mEvent.getUrl())
+                .setText(event.getUrl())
                 .getIntent();
         if (shareIntent.resolveActivity(getPackageManager()) != null) {
             startActivity(shareIntent);
@@ -176,49 +176,49 @@ public class EventViewActivity extends StandardActivity implements OnMapReadyCal
 
     @OnClick(R.id.buy_tickets)
     public void buyTickets() {
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(mEvent.getTicketsUrl()));
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(event.getTicketsUrl()));
         startActivity(intent);
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        mEventMap.onSaveInstanceState(outState);
+        eventMap.onSaveInstanceState(outState);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        mEventMap.onResume();
+        eventMap.onResume();
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        mEventMap.onStart();
+        eventMap.onStart();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        mEventMap.onPause();
+        eventMap.onPause();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        mEventMap.onStop();
+        eventMap.onStop();
     }
 
     @Override
     public void onLowMemory() {
         super.onLowMemory();
-        mEventMap.onLowMemory();
+        eventMap.onLowMemory();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mEventMap.onDestroy();
+        eventMap.onDestroy();
     }
 }

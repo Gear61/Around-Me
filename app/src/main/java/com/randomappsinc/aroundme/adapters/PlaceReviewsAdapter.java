@@ -18,10 +18,10 @@ public class PlaceReviewsAdapter implements PlaceReviewCell.Listener {
         void onReviewClicked(PlaceReview review);
     }
 
-    @NonNull private Listener mListener;
+    @NonNull private Listener listener;
 
     public PlaceReviewsAdapter(@NonNull Listener listener) {
-        mListener = listener;
+        this.listener = listener;
     }
 
     public void setReviews(List<PlaceReview> reviews, ViewGroup reviewContainer, Context context) {
@@ -48,6 +48,6 @@ public class PlaceReviewsAdapter implements PlaceReviewCell.Listener {
 
     @Override
     public void onReviewClicked(PlaceReview placeReview) {
-        mListener.onReviewClicked(placeReview);
+        listener.onReviewClicked(placeReview);
     }
 }

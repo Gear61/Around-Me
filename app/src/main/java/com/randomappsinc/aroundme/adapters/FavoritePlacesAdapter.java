@@ -15,7 +15,6 @@ import com.randomappsinc.aroundme.models.Place;
 import com.randomappsinc.aroundme.persistence.DatabaseManager;
 import com.randomappsinc.aroundme.views.PlaceInfoView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -30,29 +29,30 @@ public class FavoritePlacesAdapter extends RecyclerView.Adapter<FavoritePlacesAd
 
     @NonNull private ItemSelectionListener mItemSelectionListener;
     private Context mContext;
-    @NonNull private List<Place> mPlaces = new ArrayList<>();
-    private Drawable mDefaultThumbnail;
+    @NonNull private List<Place> places;
+    private Drawable defaultThumbnail;
 
     public FavoritePlacesAdapter(Context context, @NonNull ItemSelectionListener itemSelectionListener) {
         mItemSelectionListener = itemSelectionListener;
         mContext = context;
-        mPlaces = DatabaseManager.get().getPlacesDBManager().getFavoritePlaces();
-        mDefaultThumbnail = new IconDrawable(mContext, IoniconsIcons.ion_location).colorRes(R.color.dark_gray);
+        places = DatabaseManager.get().getPlacesDBManager().getFavoritePlaces();
+        defaultThumbnail = new IconDrawable(mContext, IoniconsIcons.ion_location).colorRes(R.color.dark_gray);
     }
 
     public void resyncWithDB() {
-        mPlaces.clear();
-        mPlaces.addAll(DatabaseManager.get().getPlacesDBManager().getFavoritePlaces());
+        places.clear();
+        places.addAll(DatabaseManager.get().getPlacesDBManager().getFavoritePlaces());
         notifyDataSetChanged();
     }
 
     private Place getItem(int position) {
-        return mPlaces.get(position);
+        return places.get(position);
     }
 
     @Override
     public PlaceViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(mContext).inflate(R.layout.place_cell, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.place_cell, parent, false);
         return new PlaceViewHolder(itemView);
     }
 
@@ -63,7 +63,7 @@ public class FavoritePlacesAdapter extends RecyclerView.Adapter<FavoritePlacesAd
 
     @Override
     public int getItemCount() {
-        return mPlaces.size();
+        return places.size();
     }
 
     class PlaceViewHolder extends RecyclerView.ViewHolder {
@@ -74,7 +74,7 @@ public class FavoritePlacesAdapter extends RecyclerView.Adapter<FavoritePlacesAd
         PlaceViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
-            mPlaceInfoView = new PlaceInfoView(mContext, placeInfo, mDefaultThumbnail);
+            mPlaceInfoView = new PlaceInfoView(mContext, placeInfo, defaultThumbnail);
         }
 
         void loadPlace(int position) {

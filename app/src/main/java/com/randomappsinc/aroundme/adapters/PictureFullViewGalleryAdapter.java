@@ -10,20 +10,20 @@ import java.util.List;
 
 public class PictureFullViewGalleryAdapter extends FragmentStatePagerAdapter {
 
-    private List<String> mImageUrls;
+    private List<String> imageUrls;
 
     public PictureFullViewGalleryAdapter(FragmentManager fragmentManager, List<String> imageUrls) {
         super(fragmentManager);
-        mImageUrls = imageUrls;
+        this.imageUrls = imageUrls;
     }
 
     @Override
     public Fragment getItem(int position) {
-        return PictureFullViewFragment.newInstance(mImageUrls.get(position));
+        return PictureFullViewFragment.newInstance(imageUrls.get(position));
     }
 
     @Override
     public int getCount() {
-        return mImageUrls.size();
+        return imageUrls.size();
     }
 }

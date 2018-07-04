@@ -27,27 +27,28 @@ public class PlacePhotosAdapter extends RecyclerView.Adapter<PlacePhotosAdapter.
         void onPhotoClicked(ArrayList<String> imageUrls, int position);
     }
 
-    @NonNull private Listener mListener;
-    private Context mContext;
-    private ArrayList<String> mPhotoUrls;
-    private Drawable mDefaultThumbnail;
+    @NonNull private Listener listener;
+    private Context context;
+    private ArrayList<String> photoUrls;
+    private Drawable defaultThumbnail;
 
     public PlacePhotosAdapter(Context context, @NonNull Listener listener) {
-        mListener = listener;
-        mContext = context;
-        mPhotoUrls = new ArrayList<>();
-        mDefaultThumbnail = new IconDrawable(mContext, IoniconsIcons.ion_image).colorRes(R.color.dark_gray);
+        this.listener = listener;
+        this.context = context;
+        photoUrls = new ArrayList<>();
+        defaultThumbnail = new IconDrawable(this.context, IoniconsIcons.ion_image).colorRes(R.color.dark_gray);
     }
 
     public void setPhotoUrls(List<String> photoUrls) {
-        mPhotoUrls.clear();
-        mPhotoUrls.addAll(photoUrls);
+        this.photoUrls.clear();
+        this.photoUrls.addAll(photoUrls);
         notifyDataSetChanged();
     }
 
     @Override
     public PlacePhotoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(mContext).inflate(R.layout.place_photo_cell, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.place_photo_cell, parent, false);
         return new PlacePhotoViewHolder(itemView);
     }
 
@@ -58,7 +59,7 @@ public class PlacePhotosAdapter extends RecyclerView.Adapter<PlacePhotosAdapter.
 
     @Override
     public int getItemCount() {
-        return mPhotoUrls.isEmpty() ? 1 : mPhotoUrls.size();
+        return photoUrls.isEmpty() ? 1 : photoUrls.size();
     }
 
     class PlacePhotoViewHolder extends RecyclerView.ViewHolder {
@@ -72,15 +73,15 @@ public class PlacePhotosAdapter extends RecyclerView.Adapter<PlacePhotosAdapter.
         }
 
         void loadPhoto(int position) {
-            if (mPhotoUrls.isEmpty()) {
+            if (photoUrls.isEmpty()) {
                 mPhotoView.setVisibility(View.GONE);
                 mNoPhotos.setVisibility(View.VISIBLE);
             } else {
                 mNoPhotos.setVisibility(View.GONE);
                 mPhotoView.setVisibility(View.VISIBLE);
-                Picasso.with(mContext)
-                        .load(mPhotoUrls.get(position))
-                        .error(mDefaultThumbnail)
+                Picasso.with(context)
+                        .load(photoUrls.get(position))
+                        .error(defaultThumbnail)
                         .fit()
                         .centerCrop()
                         .into(mPhotoView);
@@ -89,11 +90,11 @@ public class PlacePhotosAdapter extends RecyclerView.Adapter<PlacePhotosAdapter.
 
         @OnClick(R.id.parent)
         public void onPhotoClicked() {
-            if (mPhotoUrls.isEmpty()) {
+            if (photoUrls.isEmpty()) {
                 return;
             }
 
-            mListener.onPhotoClicked(mPhotoUrls, getAdapterPosition());
+            listener.onPhotoClicked(photoUrls, getAdapterPosition());
         }
     }
 }

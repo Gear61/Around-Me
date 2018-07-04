@@ -27,32 +27,32 @@ public class FavoriteEventsAdapter extends RecyclerView.Adapter<FavoriteEventsAd
         void onEventClicked(Event event);
     }
 
-    @NonNull private ItemSelectionListener mItemSelectionListener;
-    private Context mContext;
-    private List<Event> mEvents;
-    private Drawable mDefaultThumbnail;
+    @NonNull private ItemSelectionListener itemSelectionListener;
+    private Context context;
+    private List<Event> events;
+    private Drawable defaultThumbnail;
 
     public FavoriteEventsAdapter(Context context, @NonNull ItemSelectionListener itemSelectionListener) {
-        mItemSelectionListener = itemSelectionListener;
-        mContext = context;
-        mEvents = DatabaseManager.get().getEventsDBManager().getFavoriteEvents();
-        mDefaultThumbnail = new IconDrawable(
-                mContext,
+        this.itemSelectionListener = itemSelectionListener;
+        this.context = context;
+        events = DatabaseManager.get().getEventsDBManager().getFavoriteEvents();
+        defaultThumbnail = new IconDrawable(
+                this.context,
                 IoniconsIcons.ion_android_calendar).colorRes(R.color.dark_gray);    }
 
     public void resyncWithDB() {
-        mEvents.clear();
-        mEvents.addAll(DatabaseManager.get().getEventsDBManager().getFavoriteEvents());
+        events.clear();
+        events.addAll(DatabaseManager.get().getEventsDBManager().getFavoriteEvents());
         notifyDataSetChanged();
     }
 
     private Event getItem(int position) {
-        return mEvents.get(position);
+        return events.get(position);
     }
 
     @Override
     public EventViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(mContext).inflate(R.layout.event_cell, parent, false);
+        View itemView = LayoutInflater.from(context).inflate(R.layout.event_cell, parent, false);
         return new EventViewHolder(itemView);
     }
 
@@ -63,7 +63,7 @@ public class FavoriteEventsAdapter extends RecyclerView.Adapter<FavoriteEventsAd
 
     @Override
     public int getItemCount() {
-        return mEvents.size();
+        return events.size();
     }
 
     class EventViewHolder extends RecyclerView.ViewHolder {
@@ -74,7 +74,7 @@ public class FavoriteEventsAdapter extends RecyclerView.Adapter<FavoriteEventsAd
         EventViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
-            mEventInfoView = new EventInfoView(mContext, eventInfo, mDefaultThumbnail);
+            mEventInfoView = new EventInfoView(context, eventInfo, defaultThumbnail);
         }
 
         void loadEvent(int position) {
@@ -84,7 +84,7 @@ public class FavoriteEventsAdapter extends RecyclerView.Adapter<FavoriteEventsAd
         @OnClick(R.id.event_info_parent)
         void onEventClicked() {
             Event event = getItem(getAdapterPosition());
-            mItemSelectionListener.onEventClicked(event);
+            itemSelectionListener.onEventClicked(event);
         }
     }
 }

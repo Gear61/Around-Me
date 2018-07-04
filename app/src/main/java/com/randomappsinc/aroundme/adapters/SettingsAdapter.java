@@ -20,21 +20,21 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.Settin
         void onItemClick(int position);
     }
 
-    @NonNull private ItemSelectionListener mItemSelectionListener;
-    private Context mContext;
-    private String[] mOptions;
-    private String[] mIcons;
+    @NonNull private ItemSelectionListener itemSelectionListener;
+    private Context context;
+    private String[] options;
+    private String[] icons;
 
     public SettingsAdapter(Context context, @NonNull ItemSelectionListener itemSelectionListener) {
-        mItemSelectionListener = itemSelectionListener;
-        mContext = context;
-        mOptions = context.getResources().getStringArray(R.array.settings_options);
-        mIcons = context.getResources().getStringArray(R.array.settings_icons);
+        this.itemSelectionListener = itemSelectionListener;
+        this.context = context;
+        options = context.getResources().getStringArray(R.array.settings_options);
+        icons = context.getResources().getStringArray(R.array.settings_icons);
     }
 
     @Override
     public SettingViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(mContext).inflate(R.layout.settings_list_item, parent, false);
+        View itemView = LayoutInflater.from(context).inflate(R.layout.settings_list_item, parent, false);
         return new SettingViewHolder(itemView);
     }
 
@@ -45,7 +45,7 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.Settin
 
     @Override
     public int getItemCount() {
-        return mOptions.length;
+        return options.length;
     }
 
     class SettingViewHolder extends RecyclerView.ViewHolder {
@@ -58,13 +58,13 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.Settin
         }
 
         void loadSetting(int position) {
-            option.setText(mOptions[position]);
-            icon.setText(mIcons[position]);
+            option.setText(options[position]);
+            icon.setText(icons[position]);
         }
 
         @OnClick(R.id.parent)
         public void onSettingSelected() {
-            mItemSelectionListener.onItemClick(getAdapterPosition());
+            itemSelectionListener.onItemClick(getAdapterPosition());
         }
     }
 }

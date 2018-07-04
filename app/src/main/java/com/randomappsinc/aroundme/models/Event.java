@@ -18,189 +18,189 @@ import java.text.NumberFormat;
 
 public class Event implements Parcelable {
 
-    private String mId;
-    private String mImageUrl;
-    private String mName;
-    private int mNumAttending;
-    private int mNumInterested;
-    private double mCost;
-    private double mCostMax;
-    private String mDescription;
-    private String mUrl;
-    private boolean mIsCanceled;
-    private boolean mIsFree;
-    @Nullable private String mTicketsUrl;
-    private long mTimeStart;
-    private long mTimeEnd;
-    private String mCity;
-    private String mZipCode;
-    private String mCountry;
-    private String mState;
-    private String mAddress;
-    private double mLatitude;
-    private double mLongitude;
-    private boolean mIsFavorited;
+    private String id;
+    private String imageUrl;
+    private String name;
+    private int numAttending;
+    private int numInterested;
+    private double cost;
+    private double costMax;
+    private String description;
+    private String url;
+    private boolean isCanceled;
+    private boolean isFree;
+    @Nullable private String ticketsUrl;
+    private long timeStart;
+    private long timeEnd;
+    private String city;
+    private String zipCode;
+    private String country;
+    private String state;
+    private String address;
+    private double latitude;
+    private double longitude;
+    private boolean isFavorited;
 
     public Event() {}
 
     public String getId() {
-        return mId;
+        return id;
     }
 
     public void setId(String id) {
-        mId = id;
+        this.id = id;
     }
 
     public String getImageUrl() {
-        return mImageUrl;
+        return imageUrl;
     }
 
     public void setImageUrl(String imageUrl) {
-        mImageUrl = imageUrl;
+        this.imageUrl = imageUrl;
     }
 
     public String getName() {
-        return mName;
+        return name;
     }
 
     public void setName(String name) {
-        mName = name;
+        this.name = name;
     }
 
     public int getNumAttending() {
-        return mNumAttending;
+        return numAttending;
     }
 
     public void setNumAttending(int numAttending) {
-        mNumAttending = numAttending;
+        this.numAttending = numAttending;
     }
 
     public int getNumInterested() {
-        return mNumInterested;
+        return numInterested;
     }
 
     public void setNumInterested(int numInterested) {
-        mNumInterested = numInterested;
+        this.numInterested = numInterested;
     }
 
     public void setCost(double cost) {
-        mCost = cost;
+        this.cost = cost;
     }
 
     public void setCostMax(double costMax) {
-        mCostMax = costMax;
+        this.costMax = costMax;
     }
 
     public String getDescription() {
-        return mDescription;
+        return description;
     }
 
     public void setDescription(String description) {
-        mDescription = description;
+        this.description = description;
     }
 
     public String getUrl() {
-        return mUrl;
+        return url;
     }
 
     public void setUrl(String url) {
-        mUrl = url;
+        this.url = url;
     }
 
     public void setCanceled(boolean canceled) {
-        mIsCanceled = canceled;
+        isCanceled = canceled;
     }
 
     public boolean isFree() {
-        return mIsFree;
+        return isFree;
     }
 
     public void setFree(boolean free) {
-        mIsFree = free;
+        isFree = free;
     }
 
     public String getTicketsUrl() {
-        return mTicketsUrl;
+        return ticketsUrl;
     }
 
     public void setTicketsUrl(@Nullable String ticketsUrl) {
-        mTicketsUrl = ticketsUrl;
+        this.ticketsUrl = ticketsUrl;
     }
 
     public long getTimeStart() {
-        return mTimeStart;
+        return timeStart;
     }
 
     public void setTimeStart(long timeStart) {
-        mTimeStart = timeStart;
+        this.timeStart = timeStart;
     }
 
     public long getTimeEnd() {
-        return mTimeEnd;
+        return timeEnd;
     }
 
     public void setTimeEnd(long timeEnd) {
-        mTimeEnd = timeEnd;
+        this.timeEnd = timeEnd;
     }
 
     public void setCity(String city) {
-        mCity = city;
+        this.city = city;
     }
 
     public void setZipCode(String zipCode) {
-        mZipCode = zipCode;
+        this.zipCode = zipCode;
     }
 
     public void setCountry(String country) {
-        mCountry = country;
+        this.country = country;
     }
 
     public void setState(String state) {
-        mState = state;
+        this.state = state;
     }
 
     public String getAddress() {
-        return mAddress;
+        return address;
     }
 
     public void setAddress(String address) {
-        mAddress = address;
+        this.address = address;
     }
 
     public double getLatitude() {
-        return mLatitude;
+        return latitude;
     }
 
     public void setLatitude(double latitude) {
-        mLatitude = latitude;
+        this.latitude = latitude;
     }
 
     public double getLongitude() {
-        return mLongitude;
+        return longitude;
     }
 
     public void setLongitude(double longitude) {
-        mLongitude = longitude;
+        this.longitude = longitude;
     }
 
     public boolean isFavorited() {
-        return mIsFavorited;
+        return isFavorited;
     }
 
     public void setIsFavorited(boolean isFavorited) {
-        mIsFavorited = isFavorited;
+        this.isFavorited = isFavorited;
     }
 
     public String getCostText() {
         StringBuilder costText = new StringBuilder();
-        if (mCost > 0) {
+        if (cost > 0) {
             NumberFormat formatter = new DecimalFormat("#0.00");
-            String costFormatted = formatter.format(mCost);
+            String costFormatted = formatter.format(cost);
 
             costText.append(StringUtils.getCurrencySymbol()).append(costFormatted);
 
-            if (mCostMax > 0) {
-                String costMaxFormatted = formatter.format(mCostMax);
+            if (costMax > 0) {
+                String costMaxFormatted = formatter.format(costMax);
                 costText.append(" - ").append(StringUtils.getCurrencySymbol()).append(costMaxFormatted);
             }
         }
@@ -208,31 +208,31 @@ public class Event implements Parcelable {
     }
 
     public String getStartText() {
-        return mTimeStart == 0L
+        return timeStart == 0L
                 ? ""
                 : "<b>" + MyApplication.getAppContext().getString(R.string.start) + "</b> " + getStartTime();
     }
 
     public String getEndText() {
-        return mTimeEnd == 0L
+        return timeEnd == 0L
                 ? ""
                 : "<b>" + MyApplication.getAppContext().getString(R.string.end) + "</b> " + getEndTime();
     }
 
     private String getStartTime() {
-        return TimeUtils.getEventTime(mTimeStart);
+        return TimeUtils.getEventTime(timeStart);
     }
 
     private String getEndTime() {
-        return TimeUtils.getEventTime(mTimeEnd);
+        return TimeUtils.getEventTime(timeEnd);
     }
 
     public Spannable getDescriptionText() {
-        if (mDescription.endsWith("...")) {
+        if (description.endsWith("...")) {
             String readMore = MyApplication.getAppContext().getString(R.string.read_more);
-            Spannable descriptionText = new SpannableString(mDescription + " " + readMore);
+            Spannable descriptionText = new SpannableString(description + " " + readMore);
             int colorAccent = MyApplication.getAppContext().getResources().getColor(R.color.colorAccent);
-            int start = mDescription.length() + 1;
+            int start = description.length() + 1;
             int end = start + readMore.length();
             descriptionText.setSpan(
                     new ForegroundColorSpan(colorAccent),
@@ -241,64 +241,64 @@ public class Event implements Parcelable {
                     Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             return descriptionText;
         } else {
-            return new SpannableString(mDescription);
+            return new SpannableString(description);
         }
     }
 
     public void toggleFavorite() {
-        mIsFavorited = !mIsFavorited;
+        isFavorited = !isFavorited;
     }
 
     public EventDO toEventDO() {
         EventDO eventDO = new EventDO();
-        eventDO.setId(mId);
-        eventDO.setImageUrl(mImageUrl);
-        eventDO.setName(mName);
-        eventDO.setNumAttending(mNumAttending);
-        eventDO.setNumInterested(mNumInterested);
-        eventDO.setCost(mCost);
-        eventDO.setCostMax(mCostMax);
-        eventDO.setDescription(mDescription);
-        eventDO.setUrl(mUrl);
-        eventDO.setIsCanceled(mIsCanceled);
-        eventDO.setIsFree(mIsFree);
-        eventDO.setTicketsUrl(mTicketsUrl);
-        eventDO.setTimeStart(mTimeStart);
-        eventDO.setTimeEnd(mTimeEnd);
-        eventDO.setCity(mCity);
-        eventDO.setZipCode(mZipCode);
-        eventDO.setCountry(mCountry);
-        eventDO.setState(mState);
-        eventDO.setAddress(mAddress);
-        eventDO.setLatitude(mLatitude);
-        eventDO.setLongitude(mLongitude);
-        eventDO.setIsFavorited(mIsFavorited);
+        eventDO.setId(id);
+        eventDO.setImageUrl(imageUrl);
+        eventDO.setName(name);
+        eventDO.setNumAttending(numAttending);
+        eventDO.setNumInterested(numInterested);
+        eventDO.setCost(cost);
+        eventDO.setCostMax(costMax);
+        eventDO.setDescription(description);
+        eventDO.setUrl(url);
+        eventDO.setIsCanceled(isCanceled);
+        eventDO.setIsFree(isFree);
+        eventDO.setTicketsUrl(ticketsUrl);
+        eventDO.setTimeStart(timeStart);
+        eventDO.setTimeEnd(timeEnd);
+        eventDO.setCity(city);
+        eventDO.setZipCode(zipCode);
+        eventDO.setCountry(country);
+        eventDO.setState(state);
+        eventDO.setAddress(address);
+        eventDO.setLatitude(latitude);
+        eventDO.setLongitude(longitude);
+        eventDO.setIsFavorited(isFavorited);
         return eventDO;
     }
 
     protected Event(Parcel in) {
-        mId = in.readString();
-        mImageUrl = in.readString();
-        mName = in.readString();
-        mNumAttending = in.readInt();
-        mNumInterested = in.readInt();
-        mCost = in.readDouble();
-        mCostMax = in.readDouble();
-        mDescription = in.readString();
-        mUrl = in.readString();
-        mIsCanceled = in.readByte() != 0x00;
-        mIsFree = in.readByte() != 0x00;
-        mTicketsUrl = in.readString();
-        mTimeStart = in.readLong();
-        mTimeEnd = in.readLong();
-        mCity = in.readString();
-        mZipCode = in.readString();
-        mCountry = in.readString();
-        mState = in.readString();
-        mAddress = in.readString();
-        mLatitude = in.readDouble();
-        mLongitude = in.readDouble();
-        mIsFavorited = in.readByte() != 0x00;
+        id = in.readString();
+        imageUrl = in.readString();
+        name = in.readString();
+        numAttending = in.readInt();
+        numInterested = in.readInt();
+        cost = in.readDouble();
+        costMax = in.readDouble();
+        description = in.readString();
+        url = in.readString();
+        isCanceled = in.readByte() != 0x00;
+        isFree = in.readByte() != 0x00;
+        ticketsUrl = in.readString();
+        timeStart = in.readLong();
+        timeEnd = in.readLong();
+        city = in.readString();
+        zipCode = in.readString();
+        country = in.readString();
+        state = in.readString();
+        address = in.readString();
+        latitude = in.readDouble();
+        longitude = in.readDouble();
+        isFavorited = in.readByte() != 0x00;
     }
 
     @Override
@@ -308,28 +308,28 @@ public class Event implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(mId);
-        dest.writeString(mImageUrl);
-        dest.writeString(mName);
-        dest.writeInt(mNumAttending);
-        dest.writeInt(mNumInterested);
-        dest.writeDouble(mCost);
-        dest.writeDouble(mCostMax);
-        dest.writeString(mDescription);
-        dest.writeString(mUrl);
-        dest.writeByte((byte) (mIsCanceled ? 0x01 : 0x00));
-        dest.writeByte((byte) (mIsFree ? 0x01 : 0x00));
-        dest.writeString(mTicketsUrl);
-        dest.writeLong(mTimeStart);
-        dest.writeLong(mTimeEnd);
-        dest.writeString(mCity);
-        dest.writeString(mZipCode);
-        dest.writeString(mCountry);
-        dest.writeString(mState);
-        dest.writeString(mAddress);
-        dest.writeDouble(mLatitude);
-        dest.writeDouble(mLongitude);
-        dest.writeByte((byte) (mIsFavorited ? 0x01 : 0x00));
+        dest.writeString(id);
+        dest.writeString(imageUrl);
+        dest.writeString(name);
+        dest.writeInt(numAttending);
+        dest.writeInt(numInterested);
+        dest.writeDouble(cost);
+        dest.writeDouble(costMax);
+        dest.writeString(description);
+        dest.writeString(url);
+        dest.writeByte((byte) (isCanceled ? 0x01 : 0x00));
+        dest.writeByte((byte) (isFree ? 0x01 : 0x00));
+        dest.writeString(ticketsUrl);
+        dest.writeLong(timeStart);
+        dest.writeLong(timeEnd);
+        dest.writeString(city);
+        dest.writeString(zipCode);
+        dest.writeString(country);
+        dest.writeString(state);
+        dest.writeString(address);
+        dest.writeDouble(latitude);
+        dest.writeDouble(longitude);
+        dest.writeByte((byte) (isFavorited ? 0x01 : 0x00));
     }
 
     @SuppressWarnings("unused")

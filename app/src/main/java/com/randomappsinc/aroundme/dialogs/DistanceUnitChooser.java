@@ -11,13 +11,13 @@ import com.randomappsinc.aroundme.utils.UIUtils;
 
 public class DistanceUnitChooser {
 
-    private MaterialDialog mDialog;
+    private MaterialDialog dialog;
 
     public DistanceUnitChooser(Context context) {
         @DistanceUnit String currentUnit = PreferencesManager.get().getDistanceUnit();
         int currentPosition = currentUnit.equals(DistanceUnit.MILES) ? 0 : 1;
 
-        mDialog = new MaterialDialog.Builder(context)
+        dialog = new MaterialDialog.Builder(context)
                 .title(R.string.set_distance_unit_title)
                 .content(R.string.distance_unit_prompt)
                 .items(R.array.distance_unit_options)
@@ -41,6 +41,6 @@ public class DistanceUnitChooser {
     }
 
     public void show() {
-        mDialog.show();
+        dialog.show();
     }
 }

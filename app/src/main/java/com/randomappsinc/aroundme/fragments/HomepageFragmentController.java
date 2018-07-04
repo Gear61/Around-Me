@@ -8,65 +8,65 @@ import com.randomappsinc.aroundme.R;
 
 public class HomepageFragmentController {
 
-    private FragmentManager mFragmentManager;
-    private int mContainerId;
-    private PlaceTypesFragment mPlaceTypesFragment;
-    private EventSearchFragment mEventSearchFragment;
-    private FavoritesFragment mFavoritesFragment;
-    private SettingsFragment mSettingsFragment;
+    private FragmentManager fragmentManager;
+    private int containerId;
+    private PlaceTypesFragment placeTypesFragment;
+    private EventSearchFragment eventSearchFragment;
+    private FavoritesFragment favoritesFragment;
+    private SettingsFragment settingsFragment;
 
-    @IdRes private int mCurrentViewId;
+    @IdRes private int currentViewId;
 
     public HomepageFragmentController(FragmentManager fragmentManager, int containerId) {
-        mFragmentManager = fragmentManager;
-        mContainerId = containerId;
-        mPlaceTypesFragment = PlaceTypesFragment.newInstance();
-        mEventSearchFragment = EventSearchFragment.newInstance();
-        mFavoritesFragment = FavoritesFragment.newInstance();
-        mSettingsFragment = SettingsFragment.newInstance();
+        this.fragmentManager = fragmentManager;
+        this.containerId = containerId;
+        placeTypesFragment = PlaceTypesFragment.newInstance();
+        eventSearchFragment = EventSearchFragment.newInstance();
+        favoritesFragment = FavoritesFragment.newInstance();
+        settingsFragment = SettingsFragment.newInstance();
     }
 
     public void onNavItemSelected(@IdRes int viewId) {
-        if (mCurrentViewId == viewId) {
+        if (currentViewId == viewId) {
             return;
         }
 
-        mCurrentViewId = viewId;
+        currentViewId = viewId;
         switch (viewId) {
             case R.id.home:
-                swapInFragment(mPlaceTypesFragment);
+                swapInFragment(placeTypesFragment);
                 break;
             case R.id.events:
-                swapInFragment(mEventSearchFragment);
+                swapInFragment(eventSearchFragment);
                 break;
             case R.id.favorites:
-                swapInFragment(mFavoritesFragment);
+                swapInFragment(favoritesFragment);
                 break;
             case R.id.settings:
-                swapInFragment(mSettingsFragment);
+                swapInFragment(settingsFragment);
                 break;
         }
     }
 
     /** Called by the app upon start up to load the home fragment */
     public void loadHome() {
-        mCurrentViewId = R.id.home;
-        swapInFragment(mPlaceTypesFragment);
+        currentViewId = R.id.home;
+        swapInFragment(placeTypesFragment);
     }
 
     private void swapInFragment(Fragment fragment) {
-        mFragmentManager.beginTransaction().replace(mContainerId, fragment).commit();
+        fragmentManager.beginTransaction().replace(containerId, fragment).commit();
     }
 
     public void alertEventsOfLocationServicesGrant() {
-        if (mEventSearchFragment != null) {
-            mEventSearchFragment.onLocationServicesGranted();
+        if (eventSearchFragment != null) {
+            eventSearchFragment.onLocationServicesGranted();
         }
     }
 
     public void alertEventsOfLocationServicesDenial() {
-        if (mEventSearchFragment != null) {
-            mEventSearchFragment.onLocationServicesDenied();
+        if (eventSearchFragment != null) {
+            eventSearchFragment.onLocationServicesDenied();
         }
     }
 }

@@ -15,12 +15,12 @@ public class PlaceTypeAdder {
         void onPlaceTypeAdded();
     }
 
-    @NonNull private Listener mListener;
-    private MaterialDialog mAdderDialog;
+    @NonNull private Listener listener;
+    private MaterialDialog adderDialog;
 
     public PlaceTypeAdder(Context context, @NonNull Listener listener) {
-        mListener = listener;
-        mAdderDialog = new MaterialDialog.Builder(context)
+        this.listener = listener;
+        adderDialog = new MaterialDialog.Builder(context)
                 .title(R.string.add_place_type)
                 .alwaysCallInputCallback()
                 .inputType(InputType.TYPE_TEXT_FLAG_CAP_WORDS)
@@ -41,14 +41,14 @@ public class PlaceTypeAdder {
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                         String placeType = dialog.getInputEditText().getText().toString().trim();
                         DatabaseManager.get().getPlaceTypesDBManager().addPlaceType(placeType);
-                        mListener.onPlaceTypeAdded();
+                        PlaceTypeAdder.this.listener.onPlaceTypeAdded();
                     }
                 })
                 .build();
     }
 
     public void show() {
-        mAdderDialog.getInputEditText().setText("");
-        mAdderDialog.show();
+        adderDialog.getInputEditText().setText("");
+        adderDialog.show();
     }
 }

@@ -24,20 +24,20 @@ public class FavoritePlacesFragment extends Fragment implements FavoritePlacesAd
         return new FavoritePlacesFragment();
     }
 
-    @BindView(R.id.favorite_places) RecyclerView mPlaces;
-    @BindView(R.id.no_favorite_places) View mNoPlaces;
+    @BindView(R.id.favorite_places) RecyclerView places;
+    @BindView(R.id.no_favorite_places) View noPlaces;
 
-    private Unbinder mUnbinder;
-    private FavoritePlacesAdapter mPlacesAdapter;
+    private Unbinder unbinder;
+    private FavoritePlacesAdapter placesAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.favorite_places, container, false);
-        mUnbinder = ButterKnife.bind(this, rootView);
+        unbinder = ButterKnife.bind(this, rootView);
 
-        mPlaces.addItemDecoration(new SimpleDividerItemDecoration(getActivity()));
-        mPlacesAdapter = new FavoritePlacesAdapter(getActivity(), this);
-        mPlaces.setAdapter(mPlacesAdapter);
+        places.addItemDecoration(new SimpleDividerItemDecoration(getActivity()));
+        placesAdapter = new FavoritePlacesAdapter(getActivity(), this);
+        places.setAdapter(placesAdapter);
 
         refreshViews();
 
@@ -47,17 +47,17 @@ public class FavoritePlacesFragment extends Fragment implements FavoritePlacesAd
     @Override
     public void onResume() {
         super.onResume();
-        mPlacesAdapter.resyncWithDB();
+        placesAdapter.resyncWithDB();
         refreshViews();
     }
 
     private void refreshViews() {
-        if (mPlacesAdapter.getItemCount() == 0) {
-            mPlaces.setVisibility(View.GONE);
-            mNoPlaces.setVisibility(View.VISIBLE);
+        if (placesAdapter.getItemCount() == 0) {
+            places.setVisibility(View.GONE);
+            noPlaces.setVisibility(View.VISIBLE);
         } else {
-            mNoPlaces.setVisibility(View.GONE);
-            mPlaces.setVisibility(View.VISIBLE);
+            noPlaces.setVisibility(View.GONE);
+            places.setVisibility(View.VISIBLE);
         }
     }
     @Override
@@ -71,6 +71,6 @@ public class FavoritePlacesFragment extends Fragment implements FavoritePlacesAd
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mUnbinder.unbind();
+        unbinder.unbind();
     }
 }

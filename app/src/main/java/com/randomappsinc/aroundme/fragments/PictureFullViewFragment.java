@@ -31,10 +31,10 @@ public class PictureFullViewFragment extends Fragment {
         return fragment;
     }
 
-    private final Callback mImageLoadingCallback = new Callback() {
+    private final Callback imageLoadingCallback = new Callback() {
         @Override
         public void onSuccess() {
-            mParent.animate().alpha(1.0f).setDuration(getResources().getInteger(R.integer.default_anim_length));
+            parent.animate().alpha(1.0f).setDuration(getResources().getInteger(R.integer.default_anim_length));
         }
 
         @Override
@@ -43,15 +43,15 @@ public class PictureFullViewFragment extends Fragment {
         }
     };
 
-    @BindView(R.id.parent) View mParent;
-    @BindView(R.id.picture) ImageView mPicture;
+    @BindView(R.id.parent) View parent;
+    @BindView(R.id.picture) ImageView picture;
 
-    private Unbinder mUnbinder;
+    private Unbinder unbinder;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.picture_full_view_fragment, container, false);
-        mUnbinder = ButterKnife.bind(this, rootView);
+        unbinder = ButterKnife.bind(this, rootView);
 
         Drawable defaultThumbnail = new IconDrawable(getActivity(), IoniconsIcons.ion_image).colorRes(R.color.dark_gray);
         String imageUrl = getArguments().getString(IMAGE_URL_KEY);
@@ -60,7 +60,7 @@ public class PictureFullViewFragment extends Fragment {
                 .error(defaultThumbnail)
                 .fit()
                 .centerInside()
-                .into(mPicture, mImageLoadingCallback);
+                .into(picture, imageLoadingCallback);
 
         return rootView;
     }
@@ -68,6 +68,6 @@ public class PictureFullViewFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mUnbinder.unbind();
+        unbinder.unbind();
     }
 }

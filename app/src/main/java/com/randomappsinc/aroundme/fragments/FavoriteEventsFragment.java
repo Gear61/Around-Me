@@ -24,20 +24,20 @@ public class FavoriteEventsFragment extends Fragment implements FavoriteEventsAd
         return new FavoriteEventsFragment();
     }
 
-    @BindView(R.id.favorite_events) RecyclerView mEvents;
-    @BindView(R.id.no_favorite_events) View mNoEvents;
+    @BindView(R.id.favorite_events) RecyclerView events;
+    @BindView(R.id.no_favorite_events) View noEvents;
 
-    private Unbinder mUnbinder;
-    private FavoriteEventsAdapter mEventsAdapter;
+    private Unbinder unbinder;
+    private FavoriteEventsAdapter eventsAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.favorite_events, container, false);
-        mUnbinder = ButterKnife.bind(this, rootView);
+        unbinder = ButterKnife.bind(this, rootView);
 
-        mEvents.addItemDecoration(new SimpleDividerItemDecoration(getActivity()));
-        mEventsAdapter = new FavoriteEventsAdapter(getActivity(), this);
-        mEvents.setAdapter(mEventsAdapter);
+        events.addItemDecoration(new SimpleDividerItemDecoration(getActivity()));
+        eventsAdapter = new FavoriteEventsAdapter(getActivity(), this);
+        events.setAdapter(eventsAdapter);
 
         refreshViews();
 
@@ -47,17 +47,17 @@ public class FavoriteEventsFragment extends Fragment implements FavoriteEventsAd
     @Override
     public void onResume() {
         super.onResume();
-        mEventsAdapter.resyncWithDB();
+        eventsAdapter.resyncWithDB();
         refreshViews();
     }
 
     private void refreshViews() {
-        if (mEventsAdapter.getItemCount() == 0) {
-            mEvents.setVisibility(View.GONE);
-            mNoEvents.setVisibility(View.VISIBLE);
+        if (eventsAdapter.getItemCount() == 0) {
+            events.setVisibility(View.GONE);
+            noEvents.setVisibility(View.VISIBLE);
         } else {
-            mNoEvents.setVisibility(View.GONE);
-            mEvents.setVisibility(View.VISIBLE);
+            noEvents.setVisibility(View.GONE);
+            events.setVisibility(View.VISIBLE);
         }
     }
 
@@ -71,6 +71,6 @@ public class FavoriteEventsFragment extends Fragment implements FavoriteEventsAd
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mUnbinder.unbind();
+        unbinder.unbind();
     }
 }

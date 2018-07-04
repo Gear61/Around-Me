@@ -15,13 +15,13 @@ public class PlaceTypeDeleter {
         void onPlaceTypeDeleted();
     }
 
-    @NonNull private Listener mListener;
-    private MaterialDialog mDeleterDialog;
-    private PlaceType mPlaceType;
+    @NonNull private Listener listener;
+    private MaterialDialog deleterDialog;
+    private PlaceType placeType;
 
     public PlaceTypeDeleter(Context context, @NonNull Listener listener) {
-        mListener = listener;
-        mDeleterDialog = new MaterialDialog.Builder(context)
+        this.listener = listener;
+        deleterDialog = new MaterialDialog.Builder(context)
                 .title("")
                 .content(R.string.confirm_place_type_deletion)
                 .positiveText(R.string.yes)
@@ -29,16 +29,16 @@ public class PlaceTypeDeleter {
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        DatabaseManager.get().getPlaceTypesDBManager().deletePlaceType(mPlaceType);
-                        mListener.onPlaceTypeDeleted();
+                        DatabaseManager.get().getPlaceTypesDBManager().deletePlaceType(placeType);
+                        PlaceTypeDeleter.this.listener.onPlaceTypeDeleted();
                     }
                 })
                 .build();
     }
 
     public void show(PlaceType placeType) {
-        mPlaceType = placeType;
-        mDeleterDialog.setTitle(placeType.getText());
-        mDeleterDialog.show();
+        this.placeType = placeType;
+        deleterDialog.setTitle(placeType.getText());
+        deleterDialog.show();
     }
 }

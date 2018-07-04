@@ -20,76 +20,75 @@ public class BottomNavigationView {
         void doVoiceSearch();
     }
 
-    @BindView(R.id.home) TextView mHomeButton;
-    @BindView(R.id.events) TextView mEventsButton;
-    @BindView(R.id.favorites) TextView mFavoritesButton;
-    @BindView(R.id.settings) TextView mSettingsButton;
+    @BindView(R.id.home) TextView homeButton;
+    @BindView(R.id.events) TextView eventsButton;
+    @BindView(R.id.favorites) TextView favoritesButton;
+    @BindView(R.id.settings) TextView settingsButton;
 
     @BindColor(R.color.dark_gray) int darkGray;
     @BindColor(R.color.colorPrimary) int navyBlue;
 
-    @NonNull
-    private Listener mListener;
-    private TextView mCurrentlySelected;
+    @NonNull private Listener listener;
+    private TextView currentlySelected;
 
     public BottomNavigationView(View parent, @NonNull Listener listener) {
         ButterKnife.bind(this, parent);
-        mListener = listener;
+        this.listener = listener;
 
-        mCurrentlySelected = mHomeButton;
-        mHomeButton.setTextColor(navyBlue);
+        currentlySelected = homeButton;
+        homeButton.setTextColor(navyBlue);
     }
 
     @OnClick(R.id.home)
     public void onHomeClicked() {
-        if (mCurrentlySelected == mHomeButton) {
+        if (currentlySelected == homeButton) {
             return;
         }
 
-        mCurrentlySelected.setTextColor(darkGray);
-        mCurrentlySelected = mHomeButton;
-        mHomeButton.setTextColor(navyBlue);
-        mListener.onNavItemSelected(R.id.home);
+        currentlySelected.setTextColor(darkGray);
+        currentlySelected = homeButton;
+        homeButton.setTextColor(navyBlue);
+        listener.onNavItemSelected(R.id.home);
     }
 
     @OnClick(R.id.events)
     public void onRestaurantsClicked() {
-        if (mCurrentlySelected == mEventsButton) {
+        if (currentlySelected == eventsButton) {
             return;
         }
 
-        mCurrentlySelected.setTextColor(darkGray);
-        mEventsButton.setTextColor(navyBlue);
-        mCurrentlySelected = mEventsButton;
-        mListener.onNavItemSelected(R.id.events);
+        currentlySelected.setTextColor(darkGray);
+        eventsButton.setTextColor(navyBlue);
+        currentlySelected = eventsButton;
+        listener.onNavItemSelected(R.id.events);
     }
 
     @OnClick(R.id.microphone)
     public void doVoiceSearch() {
-        mListener.doVoiceSearch();
+        listener.doVoiceSearch();
     }
 
     @OnClick(R.id.favorites)
     public void onCheckInsClicked() {
-        if (mCurrentlySelected == mFavoritesButton) {
+        if (currentlySelected == favoritesButton) {
             return;
         }
 
-        mCurrentlySelected.setTextColor(darkGray);
-        mFavoritesButton.setTextColor(navyBlue);
-        mCurrentlySelected = mFavoritesButton;
-        mListener.onNavItemSelected(R.id.favorites);
+        currentlySelected.setTextColor(darkGray);
+        favoritesButton.setTextColor(navyBlue);
+        currentlySelected = favoritesButton;
+        listener.onNavItemSelected(R.id.favorites);
     }
 
     @OnClick(R.id.settings)
     public void onSettingsClicked() {
-        if (mCurrentlySelected == mSettingsButton) {
+        if (currentlySelected == settingsButton) {
             return;
         }
 
-        mCurrentlySelected.setTextColor(darkGray);
-        mSettingsButton.setTextColor(navyBlue);
-        mCurrentlySelected = mSettingsButton;
-        mListener.onNavItemSelected(R.id.settings);
+        currentlySelected.setTextColor(darkGray);
+        settingsButton.setTextColor(navyBlue);
+        currentlySelected = settingsButton;
+        listener.onNavItemSelected(R.id.settings);
     }
 }

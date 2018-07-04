@@ -24,54 +24,54 @@ public class PlaceReviewCell {
         void onReviewClicked(PlaceReview placeReview);
     }
 
-    @BindView(R.id.user_image) CircleImageView mUserImage;
-    @BindView(R.id.user_icon) View mUserIcon;
-    @BindView(R.id.user_name) TextView mUserName;
-    @BindView(R.id.review_text) TextView mReviewText;
-    @BindView(R.id.rating) ImageView mRating;
-    @BindView(R.id.review_date) TextView mReviewDate;
+    @BindView(R.id.user_image) CircleImageView userImage;
+    @BindView(R.id.user_icon) View userIcon;
+    @BindView(R.id.user_name) TextView userName;
+    @BindView(R.id.review_text) TextView reviewText;
+    @BindView(R.id.rating) ImageView rating;
+    @BindView(R.id.review_date) TextView reviewDate;
 
-    private Listener mListener;
-    private PlaceReview mReview;
+    private Listener listener;
+    private PlaceReview review;
 
     public PlaceReviewCell(View view, Listener listener) {
         ButterKnife.bind(this, view);
-        mListener = listener;
+        this.listener = listener;
     }
 
     public void loadReview(PlaceReview review, Context context) {
-        mReview = review;
+        this.review = review;
 
         Drawable defaultThumbnail = new IconDrawable(context, IoniconsIcons.ion_android_person)
                 .colorRes(R.color.dark_gray);
 
         String userImageUrl = review.getUserImageUrl();
         if (userImageUrl == null || userImageUrl.isEmpty()) {
-            mUserImage.setVisibility(View.GONE);
-            mUserIcon.setVisibility(View.VISIBLE);
+            userImage.setVisibility(View.GONE);
+            userIcon.setVisibility(View.VISIBLE);
         } else {
-            mUserIcon.setVisibility(View.GONE);
-            mUserImage.setVisibility(View.VISIBLE);
+            userIcon.setVisibility(View.GONE);
+            userImage.setVisibility(View.VISIBLE);
             Picasso.with(context)
                     .load(review.getUserImageUrl())
                     .error(defaultThumbnail)
                     .fit()
                     .centerCrop()
                     .noFade()
-                    .into(mUserImage);
+                    .into(userImage);
         }
 
-        mUserName.setText(review.getUsername());
-        mReviewText.setText(review.getText());
+        userName.setText(review.getUsername());
+        reviewText.setText(review.getText());
 
         Picasso.with(context)
                 .load(UIUtils.getRatingDrawableId(review.getRating()))
-                .into(mRating);
-        mReviewDate.setText(review.getTimeCreatedText());
+                .into(rating);
+        reviewDate.setText(review.getTimeCreatedText());
     }
 
     @OnClick(R.id.parent)
     public void onReviewClicked() {
-        mListener.onReviewClicked(mReview);
+        listener.onReviewClicked(review);
     }
 }

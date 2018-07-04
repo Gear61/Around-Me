@@ -38,46 +38,46 @@ public class PlaceTypesFragment extends Fragment implements PlaceTypesAdapter.Li
         return fragment;
     }
 
-    @BindView(R.id.toolbar) Toolbar mToolbar;
-    @BindView(R.id.parent) View mParent;
-    @BindView(R.id.place_types) RecyclerView mPlaceTypes;
-    @BindView(R.id.add_place_type) FloatingActionButton mAddPlaceType;
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.parent) View parent;
+    @BindView(R.id.place_types) RecyclerView placeTypes;
+    @BindView(R.id.add_place_type) FloatingActionButton addPlaceType;
 
-    private PlaceTypeAdder mPlaceTypeAdder;
-    private PlaceTypesAdapter mPlaceTypesAdapter;
-    private Unbinder mUnbinder;
+    private PlaceTypeAdder placeTypeAdder;
+    private PlaceTypesAdapter placeTypesAdapter;
+    private Unbinder unbinder;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.place_types, container, false);
-        mUnbinder = ButterKnife.bind(this, rootView);
+        unbinder = ButterKnife.bind(this, rootView);
 
-        mToolbar.setTitle(R.string.app_name);
-        ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
+        toolbar.setTitle(R.string.app_name);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         setHasOptionsMenu(true);
 
-        mAddPlaceType.setImageDrawable(
+        addPlaceType.setImageDrawable(
                 new IconDrawable(getActivity(), IoniconsIcons.ion_android_add).colorRes(R.color.white));
 
-        mPlaceTypes.addItemDecoration(new SimpleDividerItemDecoration(getActivity()));
-        mPlaceTypesAdapter = new PlaceTypesAdapter(getActivity(), this, mParent);
-        mPlaceTypes.setAdapter(mPlaceTypesAdapter);
+        placeTypes.addItemDecoration(new SimpleDividerItemDecoration(getActivity()));
+        placeTypesAdapter = new PlaceTypesAdapter(getActivity(), this, parent);
+        placeTypes.setAdapter(placeTypesAdapter);
 
-        mPlaceTypeAdder = new PlaceTypeAdder(getActivity(), mTypeAddedListener);
+        placeTypeAdder = new PlaceTypeAdder(getActivity(), mTypeAddedListener);
 
         return rootView;
     }
 
     @OnClick(R.id.add_place_type)
     public void addPlaceType() {
-        mPlaceTypeAdder.show();
+        placeTypeAdder.show();
     }
 
     private final PlaceTypeAdder.Listener mTypeAddedListener = new PlaceTypeAdder.Listener() {
         @Override
         public void onPlaceTypeAdded() {
-            mPlaceTypesAdapter.updateWithAdded();
-            UIUtils.showSnackbar(mParent, R.string.place_type_added);
+            placeTypesAdapter.updateWithAdded();
+            UIUtils.showSnackbar(parent, R.string.place_type_added);
         }
     };
 
@@ -90,13 +90,13 @@ public class PlaceTypesFragment extends Fragment implements PlaceTypesAdapter.Li
 
     @Override
     public void scrollToItem(int position) {
-        mPlaceTypes.smoothScrollToPosition(position);
+        placeTypes.smoothScrollToPosition(position);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mUnbinder.unbind();
+        unbinder.unbind();
     }
 
     @Override

@@ -6,203 +6,203 @@ import io.realm.annotations.PrimaryKey;
 public class EventDO extends RealmObject {
 
     @PrimaryKey
-    private String mId;
+    private String id;
 
-    private String mImageUrl;
-    private String mName;
-    private int mNumAttending;
-    private int mNumInterested;
-    private double mCost;
-    private double mCostMax;
-    private String mDescription;
-    private String mUrl;
-    private boolean mIsCanceled;
-    private boolean mIsFree;
-    private String mTicketsUrl;
-    private long mTimeStart;
-    private long mTimeEnd;
-    private String mCity;
-    private String mZipCode;
-    private String mCountry;
-    private String mState;
-    private String mAddress;
-    private double mLatitude;
-    private double mLongitude;
-    private boolean mIsFavorited;
+    private String imageUrl;
+    private String name;
+    private int numAttending;
+    private int numInterested;
+    private double cost;
+    private double costMax;
+    private String description;
+    private String url;
+    private boolean isCanceled;
+    private boolean isFree;
+    private String ticketsUrl;
+    private long timeStart;
+    private long timeEnd;
+    private String city;
+    private String zipCode;
+    private String country;
+    private String state;
+    private String address;
+    private double latitude;
+    private double longitude;
+    private boolean isFavorited;
 
     public String getId() {
-        return mId;
+        return id;
     }
 
     public void setId(String id) {
-        mId = id;
+        this.id = id;
     }
 
     public String getImageUrl() {
-        return mImageUrl;
+        return imageUrl;
     }
 
     public void setImageUrl(String imageUrl) {
-        mImageUrl = imageUrl;
+        this.imageUrl = imageUrl;
     }
 
     public String getName() {
-        return mName;
+        return name;
     }
 
     public void setName(String name) {
-        mName = name;
+        this.name = name;
     }
 
     public int getNumAttending() {
-        return mNumAttending;
+        return numAttending;
     }
 
     public void setNumAttending(int numAttending) {
-        mNumAttending = numAttending;
+        this.numAttending = numAttending;
     }
 
     public int getNumInterested() {
-        return mNumInterested;
+        return numInterested;
     }
 
     public void setNumInterested(int numInterested) {
-        mNumInterested = numInterested;
+        this.numInterested = numInterested;
     }
 
     public double getCost() {
-        return mCost;
+        return cost;
     }
 
     public void setCost(double cost) {
-        mCost = cost;
+        this.cost = cost;
     }
 
     public double getCostMax() {
-        return mCostMax;
+        return costMax;
     }
 
     public void setCostMax(double costMax) {
-        mCostMax = costMax;
+        this.costMax = costMax;
     }
 
     public String getDescription() {
-        return mDescription;
+        return description;
     }
 
     public void setDescription(String description) {
-        mDescription = description;
+        this.description = description;
     }
 
     public String getUrl() {
-        return mUrl;
+        return url;
     }
 
     public void setUrl(String url) {
-        mUrl = url;
+        this.url = url;
     }
 
     public boolean isCanceled() {
-        return mIsCanceled;
+        return isCanceled;
     }
 
     public void setIsCanceled(boolean isCanceled) {
-        mIsCanceled = isCanceled;
+        this.isCanceled = isCanceled;
     }
 
     public boolean isFree() {
-        return mIsFree;
+        return isFree;
     }
 
     public void setIsFree(boolean isFree) {
-        mIsFree = isFree;
+        this.isFree = isFree;
     }
 
     public String getTicketsUrl() {
-        return mTicketsUrl;
+        return ticketsUrl;
     }
 
     public void setTicketsUrl(String ticketsUrl) {
-        mTicketsUrl = ticketsUrl;
+        this.ticketsUrl = ticketsUrl;
     }
 
     public long getTimeStart() {
-        return mTimeStart;
+        return timeStart;
     }
 
     public void setTimeStart(long timeStart) {
-        mTimeStart = timeStart;
+        this.timeStart = timeStart;
     }
 
     public long getTimeEnd() {
-        return mTimeEnd;
+        return timeEnd;
     }
 
     public void setTimeEnd(long timeEnd) {
-        mTimeEnd = timeEnd;
+        this.timeEnd = timeEnd;
     }
 
     public String getCity() {
-        return mCity;
+        return city;
     }
 
     public void setCity(String city) {
-        mCity = city;
+        this.city = city;
     }
 
     public String getZipCode() {
-        return mZipCode;
+        return zipCode;
     }
 
     public void setZipCode(String zipCode) {
-        mZipCode = zipCode;
+        this.zipCode = zipCode;
     }
 
     public String getCountry() {
-        return mCountry;
+        return country;
     }
 
     public void setCountry(String country) {
-        mCountry = country;
+        this.country = country;
     }
 
     public String getState() {
-        return mState;
+        return state;
     }
 
     public void setState(String state) {
-        mState = state;
+        this.state = state;
     }
 
     public String getAddress() {
-        return mAddress;
+        return address;
     }
 
     public void setAddress(String address) {
-        mAddress = address;
+        this.address = address;
     }
 
     public double getLatitude() {
-        return mLatitude;
+        return latitude;
     }
 
     public void setLatitude(double latitude) {
-        mLatitude = latitude;
+        this.latitude = latitude;
     }
 
     public double getLongitude() {
-        return mLongitude;
+        return longitude;
     }
 
     public void setLongitude(double longitude) {
-        mLongitude = longitude;
+        this.longitude = longitude;
     }
 
     public boolean isFavorited() {
-        return mIsFavorited;
+        return isFavorited;
     }
 
     public void setIsFavorited(boolean isFavorited) {
-        mIsFavorited = isFavorited;
+        this.isFavorited = isFavorited;
     }
 }

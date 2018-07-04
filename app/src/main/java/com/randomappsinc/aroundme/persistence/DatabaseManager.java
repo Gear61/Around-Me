@@ -17,7 +17,7 @@ import io.realm.RealmSchema;
 
 public class DatabaseManager {
 
-    private static final int CURRENT_REALM_VERSION = 1;
+    private static final int CURRENT_REALM_VERSION = 2;
 
     private static DatabaseManager instance;
 
@@ -69,6 +69,40 @@ public class DatabaseManager {
                 } else {
                     realm.deleteAll();
                     throw new IllegalStateException("PlaceDO doesn't exist.");
+                }
+                oldVersion++;
+            }
+
+            // Get rid of Hungarian
+            if (oldVersion == 1) {
+                RealmObjectSchema eventSchema = schema.get("EventDO");
+                if (eventSchema != null) {
+                    eventSchema.renameField("mId", "id")
+                            .renameField("mImageUrl", "imageUrl")
+                            .renameField("mName", "name")
+                            .renameField("mNumAttending", "numAttending")
+                            .renameField("mNumInterested", "numInterested")
+                            .renameField("mCost", "cost")
+                            .renameField("mCostMax", "costMax")
+                            .renameField("mDescription", "description")
+                            .renameField("mUrl", "url")
+                            .renameField("mIsCanceled", "isCanceled")
+                            .renameField("mIsFree", "isFree")
+                            .renameField("mTicketsUrl", "ticketsUrl")
+                            .renameField("mTimeStart", "timeStart")
+                            .renameField("mTimeEnd", "timeEnd")
+                            .renameField("mCity", "city")
+                            .renameField("mZipCode", "zipCode")
+                            .renameField("mCountry", "country")
+                            .renameField("mState", "state")
+                            .renameField("mZipCode", "zipCode")
+                            .renameField("mAddress", "address")
+                            .renameField("mLatitude", "latitude")
+                            .renameField("mLongitude", "longitude")
+                            .renameField("mIsFavorited", "isFavorited");
+                } else {
+                    realm.deleteAll();
+                    throw new IllegalStateException("EventDO doesn't exist.");
                 }
             }
         }

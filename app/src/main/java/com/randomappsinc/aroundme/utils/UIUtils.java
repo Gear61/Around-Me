@@ -141,4 +141,12 @@ public class UIUtils {
         checkbox.setChecked(checked);
         checkbox.jumpDrawablesToCurrentState();
     }
+
+    public static void showLongToast(@StringRes int stringId) {
+        showToast(stringId, Toast.LENGTH_LONG);
+    }
+
+    private static void showToast(@StringRes int stringId, int toastLength) {
+        Toast.makeText(MyApplication.getAppContext(), stringId, toastLength).show();
+    }
 }

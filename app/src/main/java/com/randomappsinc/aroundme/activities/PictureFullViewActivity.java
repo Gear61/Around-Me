@@ -27,7 +27,8 @@ public class PictureFullViewActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         ArrayList<String> imageUrls = getIntent().getStringArrayListExtra(IMAGE_URLS_KEY);
-        PictureFullViewGalleryAdapter adapter = new PictureFullViewGalleryAdapter(getFragmentManager(), imageUrls);
+        PictureFullViewGalleryAdapter adapter =
+                new PictureFullViewGalleryAdapter(getSupportFragmentManager(), imageUrls);
         mPicturesPager.setOffscreenPageLimit(2);
         mPicturesPager.setAdapter(adapter);
         mPicturesPager.setCurrentItem(getIntent().getIntExtra(POSITION_KEY, 0));

@@ -52,7 +52,7 @@ public class PlaceReviewCell {
         } else {
             userIcon.setVisibility(View.GONE);
             userImage.setVisibility(View.VISIBLE);
-            Picasso.with(context)
+            Picasso.get()
                     .load(review.getUserImageUrl())
                     .error(defaultThumbnail)
                     .fit()
@@ -64,7 +64,7 @@ public class PlaceReviewCell {
         userName.setText(review.getUsername());
         reviewText.setText(review.getText());
 
-        Picasso.with(context)
+        Picasso.get()
                 .load(UIUtils.getRatingDrawableId(review.getRating()))
                 .into(rating);
         reviewDate.setText(review.getTimeCreatedText());

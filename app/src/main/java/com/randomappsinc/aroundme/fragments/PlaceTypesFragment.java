@@ -2,6 +2,7 @@ package com.randomappsinc.aroundme.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -48,7 +49,7 @@ public class PlaceTypesFragment extends Fragment implements PlaceTypesAdapter.Li
     private Unbinder unbinder;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.place_types, container, false);
         unbinder = ButterKnife.bind(this, rootView);
 

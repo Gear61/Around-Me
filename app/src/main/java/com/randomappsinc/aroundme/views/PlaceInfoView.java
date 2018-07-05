@@ -31,12 +31,12 @@ public class PlaceInfoView {
 
     @BindDrawable(R.drawable.gray_border) Drawable grayBorder;
 
-    private Context mContext;
-    private Drawable mDefaultThumbnail;
+    private Context context;
+    private Drawable defaultThumbnail;
 
-    public PlaceInfoView(Context context, View view, Drawable defaultThumbnail) {
-        mContext = context;
-        mDefaultThumbnail = defaultThumbnail;
+    public PlaceInfoView(View view, Drawable defaultThumbnail) {
+        this.context = view.getContext();
+        this.defaultThumbnail = defaultThumbnail;
         ButterKnife.bind(this, view);
     }
 
@@ -44,23 +44,23 @@ public class PlaceInfoView {
         String placeImageUrl = place.getImageUrl();
         if (placeImageUrl != null && !placeImageUrl.isEmpty()) {
             thumbnail.setBackground(null);
-            Picasso.with(mContext)
+            Picasso.get()
                     .load(placeImageUrl)
-                    .error(mDefaultThumbnail)
+                    .error(defaultThumbnail)
                     .fit().centerCrop()
                     .into(thumbnail);
         } else {
             thumbnail.setBackground(grayBorder);
-            thumbnail.setImageDrawable(mDefaultThumbnail);
+            thumbnail.setImageDrawable(defaultThumbnail);
         }
         name.setText(place.getName());
-        Picasso.with(mContext)
+        Picasso.get()
                 .load(UIUtils.getRatingDrawableId(place.getRating()))
                 .into(rating);
 
         String numReviewsText = place.getReviewCount() == 1
-                ? mContext.getString(R.string.one_review)
-                : String.format(mContext.getString(R.string.num_reviews), place.getReviewCount());
+                ? context.getString(R.string.one_review)
+                : String.format(context.getString(R.string.num_reviews), place.getReviewCount());
         numReviews.setText(numReviewsText);
 
         address.setText(place.getAddress());
@@ -78,8 +78,8 @@ public class PlaceInfoView {
             distance.setVisibility(View.GONE);
         } else {
             String distanceTemplate = PreferencesManager.get().getDistanceUnit().equals(DistanceUnit.MILES)
-                    ? mContext.getString(R.string.miles_away)
-                    : mContext.getString(R.string.kilometers_away);
+                    ? context.getString(R.string.miles_away)
+                    : context.getString(R.string.kilometers_away);
             String distanceText = String.format(distanceTemplate, place.getDistance());
             distance.setText(distanceText);
         }

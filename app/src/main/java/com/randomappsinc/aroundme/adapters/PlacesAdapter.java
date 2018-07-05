@@ -28,14 +28,12 @@ public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.PlaceViewH
     }
 
     @NonNull private ItemSelectionListener itemSelectionListener;
-    private Context context;
     private List<Place> places = new ArrayList<>();
     private Drawable defaultThumbnail;
 
     public PlacesAdapter(Context context, @NonNull ItemSelectionListener itemSelectionListener) {
         this.itemSelectionListener = itemSelectionListener;
-        this.context = context;
-        defaultThumbnail = new IconDrawable(this.context, IoniconsIcons.ion_location)
+        defaultThumbnail = new IconDrawable(context, IoniconsIcons.ion_location)
                 .colorRes(R.color.dark_gray);
     }
 
@@ -49,14 +47,16 @@ public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.PlaceViewH
         return places.get(position);
     }
 
+    @NonNull
     @Override
-    public PlaceViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(context).inflate(R.layout.place_cell, parent, false);
+    public PlaceViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.place_cell, parent, false);
         return new PlaceViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(PlaceViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull PlaceViewHolder holder, int position) {
         holder.loadPlace(position);
     }
 
@@ -73,7 +73,7 @@ public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.PlaceViewH
         PlaceViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
-            mPlaceInfoView = new PlaceInfoView(context, placeInfo, defaultThumbnail);
+            mPlaceInfoView = new PlaceInfoView(placeInfo, defaultThumbnail);
         }
 
         void loadPlace(int position) {

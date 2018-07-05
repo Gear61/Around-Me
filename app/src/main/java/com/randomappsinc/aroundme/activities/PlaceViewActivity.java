@@ -93,7 +93,6 @@ public class PlaceViewActivity extends StandardActivity implements RestClient.Ph
         mRestClient.fetchPlaceReviews(mPlace);
 
         mPlaceInfoView = new PlaceInfoView(
-                this,
                 mPlaceInfo,
                 new IconDrawable(this, IoniconsIcons.ion_location).colorRes(R.color.dark_gray));
         boolean fromFavorites = getIntent().getBooleanExtra(FROM_FAVORITES, false);

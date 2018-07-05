@@ -13,6 +13,7 @@ import com.randomappsinc.aroundme.dialogs.PlaceTypeDeleter;
 import com.randomappsinc.aroundme.dialogs.PlaceTypeEditor;
 import com.randomappsinc.aroundme.models.PlaceType;
 import com.randomappsinc.aroundme.persistence.DatabaseManager;
+import com.randomappsinc.aroundme.persistence.managers.PlaceTypesDBManager;
 import com.randomappsinc.aroundme.utils.UIUtils;
 
 import java.util.List;
@@ -35,6 +36,7 @@ public class PlaceTypesAdapter extends RecyclerView.Adapter<PlaceTypesAdapter.Pl
     private int lastClickedItem;
     private PlaceTypeEditor placeTypeEditor;
     private PlaceTypeDeleter placeTypeDeleter;
+    private PlaceTypesDBManager placeTypesDBManager = DatabaseManager.get().getPlaceTypesDBManager();
 
     public PlaceTypesAdapter(Context context, @NonNull Listener listener, View parent) {
         this.listener = listener;
@@ -45,7 +47,7 @@ public class PlaceTypesAdapter extends RecyclerView.Adapter<PlaceTypesAdapter.Pl
     }
 
     public void updateWithAdded() {
-        PlaceType newlyAdded = DatabaseManager.get().getPlaceTypesDBManager().getLastUpdatedPlaceType();
+        PlaceType newlyAdded = placeTypesDBManager.getLastUpdatedPlaceType();
         for (int i = 0; i < placeTypes.size(); i++) {
             // If the newly added place type comes before the current one, insert it here
             if (newlyAdded.getText().toLowerCase().compareTo(placeTypes.get(i).getText().toLowerCase()) < 0) {
@@ -102,14 +104,14 @@ public class PlaceTypesAdapter extends RecyclerView.Adapter<PlaceTypesAdapter.Pl
     };
 
     @Override
-    public PlaceTypeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public PlaceTypeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.place_type_cell, parent, false);
         return new PlaceTypeViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(PlaceTypeViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull PlaceTypeViewHolder holder, int position) {
         holder.loadPlaceType(position);
     }
 

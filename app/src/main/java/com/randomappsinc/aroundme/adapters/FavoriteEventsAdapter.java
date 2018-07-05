@@ -28,16 +28,14 @@ public class FavoriteEventsAdapter extends RecyclerView.Adapter<FavoriteEventsAd
     }
 
     @NonNull private ItemSelectionListener itemSelectionListener;
-    private Context context;
     private List<Event> events;
     private Drawable defaultThumbnail;
 
     public FavoriteEventsAdapter(Context context, @NonNull ItemSelectionListener itemSelectionListener) {
         this.itemSelectionListener = itemSelectionListener;
-        this.context = context;
         events = DatabaseManager.get().getEventsDBManager().getFavoriteEvents();
         defaultThumbnail = new IconDrawable(
-                this.context,
+                context,
                 IoniconsIcons.ion_android_calendar).colorRes(R.color.dark_gray);    }
 
     public void resyncWithDB() {
@@ -50,14 +48,16 @@ public class FavoriteEventsAdapter extends RecyclerView.Adapter<FavoriteEventsAd
         return events.get(position);
     }
 
+    @NonNull
     @Override
-    public EventViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(context).inflate(R.layout.event_cell, parent, false);
+    public EventViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.event_cell, parent, false);
         return new EventViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(EventViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull EventViewHolder holder, int position) {
         holder.loadEvent(position);
     }
 
@@ -74,7 +74,7 @@ public class FavoriteEventsAdapter extends RecyclerView.Adapter<FavoriteEventsAd
         EventViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
-            mEventInfoView = new EventInfoView(context, eventInfo, defaultThumbnail);
+            mEventInfoView = new EventInfoView(eventInfo, defaultThumbnail);
         }
 
         void loadEvent(int position) {

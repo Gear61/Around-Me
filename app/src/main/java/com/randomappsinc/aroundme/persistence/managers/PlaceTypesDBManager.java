@@ -54,7 +54,8 @@ public class PlaceTypesDBManager {
     public List<PlaceType> getPlaceTypes() {
         List<PlaceTypeDO> placeTypeDOs = getRealm()
                 .where(PlaceTypeDO.class)
-                .findAllSorted("text", Sort.ASCENDING);
+                .sort("text", Sort.ASCENDING)
+                .findAll();
 
         List<PlaceType> placeTypes = new ArrayList<>();
         for (PlaceTypeDO placeTypeDO : placeTypeDOs) {
@@ -102,7 +103,8 @@ public class PlaceTypesDBManager {
     public PlaceType getLastUpdatedPlaceType() {
         PlaceTypeDO placeTypeDO = getRealm()
                 .where(PlaceTypeDO.class)
-                .findAllSorted("timeLastUpdated", Sort.DESCENDING)
+                .sort("timeLastUpdated", Sort.DESCENDING)
+                .findAll()
                 .first();
         return DBConverter.getPlaceTypeFromDO(placeTypeDO);
     }

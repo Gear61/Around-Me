@@ -32,14 +32,15 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.Settin
         icons = context.getResources().getStringArray(R.array.settings_icons);
     }
 
+    @NonNull
     @Override
-    public SettingViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public SettingViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(context).inflate(R.layout.settings_list_item, parent, false);
         return new SettingViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(SettingViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull SettingViewHolder holder, int position) {
         holder.loadSetting(position);
     }
 

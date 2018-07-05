@@ -28,15 +28,13 @@ public class PlacePhotosAdapter extends RecyclerView.Adapter<PlacePhotosAdapter.
     }
 
     @NonNull private Listener listener;
-    private Context context;
     private ArrayList<String> photoUrls;
     private Drawable defaultThumbnail;
 
     public PlacePhotosAdapter(Context context, @NonNull Listener listener) {
         this.listener = listener;
-        this.context = context;
         photoUrls = new ArrayList<>();
-        defaultThumbnail = new IconDrawable(this.context, IoniconsIcons.ion_image).colorRes(R.color.dark_gray);
+        defaultThumbnail = new IconDrawable(context, IoniconsIcons.ion_image).colorRes(R.color.dark_gray);
     }
 
     public void setPhotoUrls(List<String> photoUrls) {
@@ -45,15 +43,16 @@ public class PlacePhotosAdapter extends RecyclerView.Adapter<PlacePhotosAdapter.
         notifyDataSetChanged();
     }
 
+    @NonNull
     @Override
-    public PlacePhotoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public PlacePhotoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.place_photo_cell, parent, false);
         return new PlacePhotoViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(PlacePhotoViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull PlacePhotoViewHolder holder, int position) {
         holder.loadPhoto(position);
     }
 
@@ -79,7 +78,7 @@ public class PlacePhotosAdapter extends RecyclerView.Adapter<PlacePhotosAdapter.
             } else {
                 mNoPhotos.setVisibility(View.GONE);
                 mPhotoView.setVisibility(View.VISIBLE);
-                Picasso.with(context)
+                Picasso.get()
                         .load(photoUrls.get(position))
                         .error(defaultThumbnail)
                         .fit()

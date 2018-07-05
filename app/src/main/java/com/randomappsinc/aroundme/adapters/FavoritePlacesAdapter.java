@@ -28,15 +28,13 @@ public class FavoritePlacesAdapter extends RecyclerView.Adapter<FavoritePlacesAd
     }
 
     @NonNull private ItemSelectionListener mItemSelectionListener;
-    private Context mContext;
     @NonNull private List<Place> places;
     private Drawable defaultThumbnail;
 
     public FavoritePlacesAdapter(Context context, @NonNull ItemSelectionListener itemSelectionListener) {
         mItemSelectionListener = itemSelectionListener;
-        mContext = context;
         places = DatabaseManager.get().getPlacesDBManager().getFavoritePlaces();
-        defaultThumbnail = new IconDrawable(mContext, IoniconsIcons.ion_location).colorRes(R.color.dark_gray);
+        defaultThumbnail = new IconDrawable(context, IoniconsIcons.ion_location).colorRes(R.color.dark_gray);
     }
 
     public void resyncWithDB() {
@@ -49,15 +47,16 @@ public class FavoritePlacesAdapter extends RecyclerView.Adapter<FavoritePlacesAd
         return places.get(position);
     }
 
+    @NonNull
     @Override
-    public PlaceViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public PlaceViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.place_cell, parent, false);
         return new PlaceViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(PlaceViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull PlaceViewHolder holder, int position) {
         holder.loadPlace(position);
     }
 
@@ -74,7 +73,7 @@ public class FavoritePlacesAdapter extends RecyclerView.Adapter<FavoritePlacesAd
         PlaceViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
-            mPlaceInfoView = new PlaceInfoView(mContext, placeInfo, defaultThumbnail);
+            mPlaceInfoView = new PlaceInfoView(placeInfo, defaultThumbnail);
         }
 
         void loadPlace(int position) {

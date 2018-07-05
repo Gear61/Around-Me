@@ -72,7 +72,6 @@ public class EventViewActivity extends StandardActivity implements OnMapReadyCal
         favoriteToggle.setTextColor(event.isFavorited() ? heartRed : darkGray);
 
         eventInfoView = new EventInfoView(
-                this,
                 eventInfo,
                 new IconDrawable(this, IoniconsIcons.ion_android_calendar).colorRes(R.color.dark_gray));
         eventInfoView.loadEvent(event);

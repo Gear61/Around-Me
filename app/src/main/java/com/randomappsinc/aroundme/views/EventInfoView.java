@@ -29,11 +29,9 @@ public class EventInfoView {
     @BindColor(R.color.gray_800) int darkGray;
     @BindDrawable(R.drawable.gray_border) Drawable grayBorder;
 
-    private Context mContext;
     private Drawable mDefaultThumbnail;
 
-    public EventInfoView(Context context, View view, Drawable defaultThumbnail) {
-        mContext = context;
+    public EventInfoView(View view, Drawable defaultThumbnail) {
         mDefaultThumbnail = defaultThumbnail;
         ButterKnife.bind(this, view);
     }
@@ -42,7 +40,7 @@ public class EventInfoView {
         String thumbnailUrl = event.getImageUrl();
         if (thumbnailUrl != null && !thumbnailUrl.isEmpty()) {
             thumbnail.setBackground(null);
-            Picasso.with(mContext)
+            Picasso.get()
                     .load(thumbnailUrl)
                     .error(mDefaultThumbnail)
                     .fit().centerCrop()

@@ -1,8 +1,9 @@
 package com.randomappsinc.aroundme.fragments;
 
-import android.app.Fragment;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +39,7 @@ public class PictureFullViewFragment extends Fragment {
         }
 
         @Override
-        public void onError() {
+        public void onError(Exception exception) {
             Toast.makeText(getActivity(), R.string.image_load_fail, Toast.LENGTH_LONG).show();
         }
     };
@@ -49,13 +50,13 @@ public class PictureFullViewFragment extends Fragment {
     private Unbinder unbinder;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.picture_full_view_fragment, container, false);
         unbinder = ButterKnife.bind(this, rootView);
 
         Drawable defaultThumbnail = new IconDrawable(getActivity(), IoniconsIcons.ion_image).colorRes(R.color.dark_gray);
         String imageUrl = getArguments().getString(IMAGE_URL_KEY);
-        Picasso.with(getActivity())
+        Picasso.get()
                 .load(imageUrl)
                 .error(defaultThumbnail)
                 .fit()

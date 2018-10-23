@@ -18,7 +18,7 @@ public class PictureFullViewActivity extends AppCompatActivity {
     public static final String IMAGE_URLS_KEY = "imageUrls";
     public static final String POSITION_KEY = "position";
 
-    @BindView(R.id.pictures_pager) ViewPager mPicturesPager;
+    @BindView(R.id.pictures_pager) ViewPager picturesPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,9 +29,9 @@ public class PictureFullViewActivity extends AppCompatActivity {
         ArrayList<String> imageUrls = getIntent().getStringArrayListExtra(IMAGE_URLS_KEY);
         PictureFullViewGalleryAdapter adapter =
                 new PictureFullViewGalleryAdapter(getSupportFragmentManager(), imageUrls);
-        mPicturesPager.setOffscreenPageLimit(2);
-        mPicturesPager.setAdapter(adapter);
-        mPicturesPager.setCurrentItem(getIntent().getIntExtra(POSITION_KEY, 0));
+        picturesPager.setOffscreenPageLimit(2);
+        picturesPager.setAdapter(adapter);
+        picturesPager.setCurrentItem(getIntent().getIntExtra(POSITION_KEY, 0));
     }
 
     @OnClick(R.id.close)

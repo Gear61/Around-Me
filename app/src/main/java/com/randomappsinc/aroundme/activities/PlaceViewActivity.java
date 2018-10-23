@@ -43,22 +43,22 @@ public class PlaceViewActivity extends StandardActivity implements RestClient.Ph
     public static final String PLACE_KEY = "place";
     public static final String FROM_FAVORITES = "fromFavorites";
 
-    @BindView(R.id.favorite_toggle) TextView mFavoriteToggle;
-    @BindView(R.id.place_map) MapView mPlaceMap;
-    @BindView(R.id.place_info_parent) View mPlaceInfo;
-    @BindView(R.id.photos_stub) View mPhotosStub;
-    @BindView(R.id.place_photos) RecyclerView mPhotos;
-    @BindView(R.id.reviews_stub) View mReviewsStub;
-    @BindView(R.id.reviews_container) LinearLayout mReviewsContainer;
+    @BindView(R.id.favorite_toggle) TextView favoriteToggle;
+    @BindView(R.id.place_map) MapView placeMap;
+    @BindView(R.id.place_info_parent) View placeInfo;
+    @BindView(R.id.photos_stub) View photosStub;
+    @BindView(R.id.place_photos) RecyclerView photosList;
+    @BindView(R.id.reviews_stub) View reviewsStub;
+    @BindView(R.id.reviews_container) LinearLayout reviewsContainer;
 
     @BindColor(R.color.light_red) int heartRed;
     @BindColor(R.color.dark_gray) int darkGray;
 
-    private Place mPlace;
-    private PlaceInfoView mPlaceInfoView;
-    private RestClient mRestClient;
-    private PlacePhotosAdapter mPhotosAdapter;
-    private PlaceReviewsAdapter mReviewsAdapter;
+    private Place place;
+    private PlaceInfoView placeInfoView;
+    private RestClient restClient;
+    private PlacePhotosAdapter photosAdapter;
+    private PlaceReviewsAdapter reviewsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,43 +70,43 @@ public class PlaceViewActivity extends StandardActivity implements RestClient.Ph
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        mPlace = getIntent().getParcelableExtra(PLACE_KEY);
-        setTitle(mPlace.getName());
+        place = getIntent().getParcelableExtra(PLACE_KEY);
+        setTitle(place.getName());
 
-        mPlaceMap.onCreate(savedInstanceState);
-        mPlaceMap.getMapAsync(this);
+        placeMap.onCreate(savedInstanceState);
+        placeMap.getMapAsync(this);
 
         // It's possible you're finding something in search that you've already favorited
-        mPlace.setIsFavorited(DatabaseManager.get().getPlacesDBManager().isPlaceFavorited(mPlace));
+        place.setIsFavorited(DatabaseManager.get().getPlacesDBManager().isPlaceFavorited(place));
 
-        mFavoriteToggle.setText(mPlace.isFavorited() ? R.string.heart_filled_icon : R.string.heart_icon);
-        mFavoriteToggle.setTextColor(mPlace.isFavorited() ? heartRed : darkGray);
+        favoriteToggle.setText(place.isFavorited() ? R.string.heart_filled_icon : R.string.heart_icon);
+        favoriteToggle.setTextColor(place.isFavorited() ? heartRed : darkGray);
 
-        mPhotosAdapter = new PlacePhotosAdapter(this, this);
-        mPhotos.setAdapter(mPhotosAdapter);
-        mReviewsAdapter = new PlaceReviewsAdapter(this);
+        photosAdapter = new PlacePhotosAdapter(this, this);
+        photosList.setAdapter(photosAdapter);
+        reviewsAdapter = new PlaceReviewsAdapter(this);
 
-        mRestClient = RestClient.getInstance();
-        mRestClient.registerPhotosListener(this);
-        mRestClient.fetchPlacePhotos(mPlace);
-        mRestClient.registerReviewsListener(this);
-        mRestClient.fetchPlaceReviews(mPlace);
+        restClient = RestClient.getInstance();
+        restClient.registerPhotosListener(this);
+        restClient.fetchPlacePhotos(place);
+        restClient.registerReviewsListener(this);
+        restClient.fetchPlaceReviews(place);
 
-        mPlaceInfoView = new PlaceInfoView(
-                mPlaceInfo,
+        placeInfoView = new PlaceInfoView(
+                placeInfo,
                 new IconDrawable(this, IoniconsIcons.ion_location).colorRes(R.color.dark_gray));
         boolean fromFavorites = getIntent().getBooleanExtra(FROM_FAVORITES, false);
-        mPlaceInfoView.loadPlace(mPlace, fromFavorites);
+        placeInfoView.loadPlace(place, fromFavorites);
     }
 
     @OnClick(R.id.favorite_toggle)
     public void onFavoriteClick() {
-        mPlace.toggleFavorite();
-        UIUtils.animateFavoriteToggle(mFavoriteToggle, mPlace.isFavorited());
-        if (mPlace.isFavorited()) {
-            DatabaseManager.get().getPlacesDBManager().addFavorite(mPlace);
+        place.toggleFavorite();
+        UIUtils.animateFavoriteToggle(favoriteToggle, place.isFavorited());
+        if (place.isFavorited()) {
+            DatabaseManager.get().getPlacesDBManager().addFavorite(place);
         } else {
-            DatabaseManager.get().getPlacesDBManager().removeFavorite(mPlace);
+            DatabaseManager.get().getPlacesDBManager().removeFavorite(place);
         }
     }
 
@@ -115,10 +115,10 @@ public class PlaceViewActivity extends StandardActivity implements RestClient.Ph
         googleMap.getUiSettings().setAllGesturesEnabled(false);
         googleMap.setOnMapClickListener(mMapClickListener);
 
-        LatLng place = new LatLng(mPlace.getLatitude(), mPlace.getLongitude());
+        LatLng place = new LatLng(this.place.getLatitude(), this.place.getLongitude());
         googleMap.addMarker(new MarkerOptions()
                 .position(place)
-                .title(mPlace.getName()));
+                .title(this.place.getName()));
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(place)
                 .zoom(16)
@@ -131,7 +131,7 @@ public class PlaceViewActivity extends StandardActivity implements RestClient.Ph
     private final GoogleMap.OnMapClickListener mMapClickListener = new GoogleMap.OnMapClickListener() {
         @Override
         public void onMapClick(LatLng latLng) {
-            String mapUri = "google.navigation:q=" + mPlace.getAddress() + " " + mPlace.getName();
+            String mapUri = "google.navigation:q=" + place.getAddress() + " " + place.getName();
             startActivity(Intent.createChooser(
                     new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(mapUri)),
                     getString(R.string.navigate_with)));
@@ -140,13 +140,13 @@ public class PlaceViewActivity extends StandardActivity implements RestClient.Ph
 
     @OnClick(R.id.place_thumbnail)
     public void onThumbnailClicked() {
-        if (TextUtils.isEmpty(mPlace.getImageUrl())) {
+        if (TextUtils.isEmpty(place.getImageUrl())) {
             return;
         }
 
         Intent intent = new Intent(this, PictureFullViewActivity.class);
         ArrayList<String> imageUrl = new ArrayList<>();
-        imageUrl.add(mPlace.getImageUrl());
+        imageUrl.add(place.getImageUrl());
         intent.putStringArrayListExtra(PictureFullViewActivity.IMAGE_URLS_KEY, imageUrl);
         startActivity(intent);
         overridePendingTransition(0, 0);
@@ -154,7 +154,7 @@ public class PlaceViewActivity extends StandardActivity implements RestClient.Ph
 
     @OnClick(R.id.call_button)
     public void callPlace() {
-        String phoneUri = "tel:" + mPlace.getPhoneNumber();
+        String phoneUri = "tel:" + place.getPhoneNumber();
         startActivity(Intent.createChooser(
                 new Intent(Intent.ACTION_DIAL, Uri.parse(phoneUri)),
                 getString(R.string.call_with)));
@@ -164,7 +164,7 @@ public class PlaceViewActivity extends StandardActivity implements RestClient.Ph
     public void sharePlace() {
         Intent shareIntent = ShareCompat.IntentBuilder.from(this)
                 .setType("text/plain")
-                .setText(mPlace.getUrl())
+                .setText(place.getUrl())
                 .getIntent();
         if (shareIntent.resolveActivity(getPackageManager()) != null) {
             startActivity(shareIntent);
@@ -173,15 +173,15 @@ public class PlaceViewActivity extends StandardActivity implements RestClient.Ph
 
     @Override
     public void onPhotosFetched(List<String> photos) {
-        mPhotosStub.setVisibility(View.INVISIBLE);
-        mPhotosAdapter.setPhotoUrls(photos);
-        mPhotos.setVisibility(View.VISIBLE);
+        photosStub.setVisibility(View.INVISIBLE);
+        photosAdapter.setPhotoUrls(photos);
+        photosList.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void onReviewsFetched(List<PlaceReview> reviews) {
-        mReviewsStub.setVisibility(View.GONE);
-        mReviewsAdapter.setReviews(reviews, mReviewsContainer, this);
+        reviewsStub.setVisibility(View.GONE);
+        reviewsAdapter.setReviews(reviews, reviewsContainer, this);
     }
 
     @Override
@@ -202,50 +202,50 @@ public class PlaceViewActivity extends StandardActivity implements RestClient.Ph
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        mPlaceMap.onSaveInstanceState(outState);
+        placeMap.onSaveInstanceState(outState);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        mPlaceMap.onResume();
+        placeMap.onResume();
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        mPlaceMap.onStart();
+        placeMap.onStart();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        mPlaceMap.onPause();
+        placeMap.onPause();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        mPlaceMap.onStop();
+        placeMap.onStop();
     }
 
     @Override
     public void onLowMemory() {
         super.onLowMemory();
-        mPlaceMap.onLowMemory();
+        placeMap.onLowMemory();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mPlaceMap.onDestroy();
+        placeMap.onDestroy();
 
         // Stop listening for photo fetch results
-        mRestClient.cancelPhotosFetch();
-        mRestClient.unregisterPhotosListener();
+        restClient.cancelPhotosFetch();
+        restClient.unregisterPhotosListener();
 
         // Stop listening for review fetch results
-        mRestClient.cancelReviewsFetch();
-        mRestClient.unregisterReviewsListener();
+        restClient.cancelReviewsFetch();
+        restClient.unregisterReviewsListener();
     }
 }

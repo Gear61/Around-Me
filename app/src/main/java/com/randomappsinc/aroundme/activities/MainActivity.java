@@ -31,12 +31,12 @@ public class MainActivity extends StandardActivity {
 
     private static final int SPEECH_REQUEST_CODE = 1;
 
-    @BindView(R.id.bottom_navigation) View mBottomNavigation;
+    @BindView(R.id.bottom_navigation) View bottomNavigation;
 
-    private final BottomNavigationView.Listener mListener = new BottomNavigationView.Listener() {
+    private final BottomNavigationView.Listener listener = new BottomNavigationView.Listener() {
         @Override
         public void onNavItemSelected(@IdRes int viewId) {
-            mNavigationController.onNavItemSelected(viewId);
+            navigationController.onNavItemSelected(viewId);
         }
 
         @Override
@@ -45,8 +45,7 @@ public class MainActivity extends StandardActivity {
         }
     };
 
-    private BottomNavigationView mBottomNavigationView;
-    private HomepageFragmentController mNavigationController;
+    private HomepageFragmentController navigationController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,9 +62,9 @@ public class MainActivity extends StandardActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        mNavigationController = new HomepageFragmentController(getSupportFragmentManager(), R.id.container);
-        mBottomNavigationView = new BottomNavigationView(mBottomNavigation, mListener);
-        mNavigationController.loadHome();
+        navigationController = new HomepageFragmentController(getSupportFragmentManager(), R.id.container);
+        new BottomNavigationView(bottomNavigation, listener);
+        navigationController.loadHome();
 
         if (PreferencesManager.get().shouldAskForRating()) {
             showRatingPrompt();
@@ -80,7 +79,10 @@ public class MainActivity extends StandardActivity {
         try {
             startActivityForResult(intent, SPEECH_REQUEST_CODE);
         } catch (ActivityNotFoundException exception) {
-            Toast.makeText(this, R.string.speech_not_supported, Toast.LENGTH_SHORT).show();
+            Toast.makeText(
+                    this,
+                    R.string.speech_not_supported,
+                    Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -105,9 +107,9 @@ public class MainActivity extends StandardActivity {
                 break;
             case LocationManager.LOCATION_SERVICES_CODE:
                 if (resultCode == Activity.RESULT_OK) {
-                    mNavigationController.alertEventsOfLocationServicesGrant();
+                    navigationController.alertEventsOfLocationServicesGrant();
                 } else {
-                    mNavigationController.alertEventsOfLocationServicesDenial();
+                    navigationController.alertEventsOfLocationServicesDenial();
                 }
                 break;
         }

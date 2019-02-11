@@ -163,17 +163,22 @@ public class EventSearchResults {
             return event;
         }
 
+        // Yelp time currently looks like this: 2019-03-02T20:00:00-08:00
         private long convertToUnixTime(String originalTime) {
             if (originalTime == null) {
                 return 0L;
             }
 
-            DateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.US);
+            // Remove the -HH:MM since I have no clue why that's there
+            int lastIndexOfDash = originalTime.lastIndexOf("-");
+            String cleanedUpTime = originalTime.substring(0, lastIndexOfDash);
+
+            DateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm", Locale.US);
             originalFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
 
             Date date;
             try {
-                date = originalFormat.parse(originalTime);
+                date = originalFormat.parse(cleanedUpTime);
             } catch (ParseException exception) {
                 throw new RuntimeException("Incorrect time format: " + originalTime);
             }

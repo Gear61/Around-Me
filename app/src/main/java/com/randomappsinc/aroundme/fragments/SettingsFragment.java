@@ -25,7 +25,7 @@ import butterknife.Unbinder;
 
 public class SettingsFragment extends Fragment implements SettingsAdapter.ItemSelectionListener {
 
-    public static final String SUPPORT_EMAIL = "chessnone@gmail.com";
+    public static final String SUPPORT_EMAIL = "randomappsinc61@gmail.com";
     public static final String OTHER_APPS_URL = "https://play.google.com/store/apps/dev?id=9093438553713389916";
     public static final String REPO_URL = "https://github.com/Gear61/Around-Me";
 

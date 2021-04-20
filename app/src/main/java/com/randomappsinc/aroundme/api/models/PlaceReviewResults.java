@@ -1,5 +1,7 @@
 package com.randomappsinc.aroundme.api.models;
 
+import androidx.annotation.Keep;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.randomappsinc.aroundme.models.PlaceReview;
@@ -15,6 +17,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
+@Keep
 public class PlaceReviewResults {
 
     @SerializedName("reviews")

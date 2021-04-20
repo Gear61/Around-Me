@@ -9,8 +9,6 @@ import com.joanzapata.iconify.fonts.IoniconsModule;
 import com.randomappsinc.aroundme.persistence.DatabaseManager;
 import com.randomappsinc.aroundme.persistence.PreferencesManager;
 
-import io.realm.Realm;
-
 public final class MyApplication extends Application {
 
     private static Context instance;

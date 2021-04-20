@@ -4,8 +4,9 @@ import android.Manifest;
 import android.app.Activity;
 import android.location.Location;
 import android.os.Handler;
+
 import androidx.annotation.NonNull;
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;

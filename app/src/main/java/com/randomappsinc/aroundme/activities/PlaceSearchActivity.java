@@ -3,12 +3,13 @@ package com.randomappsinc.aroundme.activities;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import android.support.annotation.Nullable;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.joanzapata.iconify.fonts.IoniconsIcons;
 import com.randomappsinc.aroundme.R;

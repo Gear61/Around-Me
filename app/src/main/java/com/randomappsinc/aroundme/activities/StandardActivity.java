@@ -1,8 +1,9 @@
 package com.randomappsinc.aroundme.activities;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.randomappsinc.aroundme.R;
 import com.randomappsinc.aroundme.utils.UIUtils;

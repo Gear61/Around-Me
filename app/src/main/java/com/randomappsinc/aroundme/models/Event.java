@@ -2,10 +2,11 @@ package com.randomappsinc.aroundme.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.Nullable;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
+
+import androidx.annotation.Nullable;
 
 import com.randomappsinc.aroundme.R;
 import com.randomappsinc.aroundme.persistence.models.EventDO;

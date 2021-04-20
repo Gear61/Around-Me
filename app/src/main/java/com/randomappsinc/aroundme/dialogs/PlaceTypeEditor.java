@@ -1,8 +1,9 @@
 package com.randomappsinc.aroundme.dialogs;
 
 import android.content.Context;
-import androidx.annotation.NonNull;
 import android.text.InputType;
+
+import androidx.annotation.NonNull;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;

@@ -1,7 +1,6 @@
 package com.randomappsinc.aroundme.dialogs;
 
 import android.content.Context;
-
 import android.text.InputType;
 
 import androidx.annotation.NonNull;

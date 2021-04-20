@@ -4,8 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.provider.Settings;
-import androidx.annotation.NonNull;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.ResolvableApiException;

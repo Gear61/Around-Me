@@ -6,12 +6,11 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
-import android.support.annotation.IdRes;
-import androidx.annotation.NonNull;
 import android.view.View;
 import android.widget.Toast;
 
-import com.afollestad.materialdialogs.DialogAction;
+import androidx.annotation.IdRes;
+
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.randomappsinc.aroundme.R;
 import com.randomappsinc.aroundme.fragments.HomepageFragmentController;
@@ -120,17 +119,14 @@ public class MainActivity extends StandardActivity {
                 .content(R.string.please_rate)
                 .negativeText(R.string.no_im_good)
                 .positiveText(R.string.will_rate)
-                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        Uri uri =  Uri.parse("market://details?id=" + getApplicationContext().getPackageName());
-                        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                        if (!(getPackageManager().queryIntentActivities(intent, 0).size() > 0)) {
-                            UIUtils.showToast(R.string.play_store_error);
-                            return;
-                        }
-                        startActivity(intent);
+                .onPositive((dialog, which) -> {
+                    Uri uri =  Uri.parse("market://details?id=" + getApplicationContext().getPackageName());
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                    if (!(getPackageManager().queryIntentActivities(intent, 0).size() > 0)) {
+                        UIUtils.showToast(R.string.play_store_error);
+                        return;
                     }
+                    startActivity(intent);
                 })
                 .show();
     }

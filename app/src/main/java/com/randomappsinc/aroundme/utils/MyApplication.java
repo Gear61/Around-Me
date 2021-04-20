@@ -9,6 +9,8 @@ import com.joanzapata.iconify.fonts.IoniconsModule;
 import com.randomappsinc.aroundme.persistence.DatabaseManager;
 import com.randomappsinc.aroundme.persistence.PreferencesManager;
 
+import io.realm.Realm;
+
 public final class MyApplication extends Application {
 
     private static Context instance;
@@ -17,6 +19,7 @@ public final class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         Iconify.with(new IoniconsModule()).with(new FontAwesomeModule());
+        Realm.init(this);
         instance = getApplicationContext();
 
         if (PreferencesManager.get().isFirstAppOpen()) {

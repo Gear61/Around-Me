@@ -7,17 +7,7 @@ public class BusinessInfoFetchError {
 
     @SerializedName("error")
     @Expose
-    private Error error;
-
-    class Error {
-        @SerializedName("code")
-        @Expose
-        private String code;
-
-        String getCode() {
-            return code;
-        }
-    }
+    private BusinessApiError error;
 
     public String getCode() {
         return error.getCode();

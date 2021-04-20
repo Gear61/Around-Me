@@ -5,12 +5,14 @@
     android:background="@color/theater_black"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:ignore="SpUsage">
+    tools:ignore="SpUsage"
+    >
 
-    <android.support.v4.view.ViewPager
+    <androidx.viewpager.widget.ViewPager
         android:id="@+id/pictures_pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        />
 
     <com.joanzapata.iconify.widget.IconTextView
         android:id="@+id/close"
@@ -24,5 +26,6 @@
         android:shadowColor="@color/shadow_black"
         android:shadowDx="3"
         android:shadowDy="3"
-        android:shadowRadius="1"/>
+        android:shadowRadius="1"
+        />
 </FrameLayout>

@@ -19,7 +19,6 @@ public final class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         Iconify.with(new IoniconsModule()).with(new FontAwesomeModule());
-        Realm.init(this);
         instance = getApplicationContext();
 
         if (PreferencesManager.get().isFirstAppOpen()) {

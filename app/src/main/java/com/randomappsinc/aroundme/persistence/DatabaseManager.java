@@ -44,6 +44,7 @@ public class DatabaseManager {
         RealmConfiguration realmConfig = new RealmConfiguration.Builder()
                 .schemaVersion(CURRENT_REALM_VERSION)
                 .migration(migration)
+                .allowWritesOnUiThread(true)
                 .build();
         Realm.setDefaultConfiguration(realmConfig);
 

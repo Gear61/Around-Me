@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.text.TextUtils;
+import android.text.util.Linkify;
 import android.view.View;
 import android.widget.TextView;
 
@@ -78,6 +79,7 @@ public class EventViewActivity extends StandardActivity implements OnMapReadyCal
         eventInfoView.loadEvent(event);
 
         descriptionText.setText(event.getDescriptionText());
+        Linkify.addLinks(descriptionText, Linkify.ALL);
         numAttending.setText(String.valueOf(event.getNumAttending()));
         numInterested.setText(String.valueOf(event.getNumInterested()));
 

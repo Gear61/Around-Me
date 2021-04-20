@@ -4,13 +4,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    >
 
-    <android.support.design.widget.AppBarLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:elevation="0dp">
+        app:elevation="0dp"
+        >
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
@@ -18,14 +20,15 @@
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
-    </android.support.design.widget.AppBarLayout>
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            />
+    </com.google.android.material.appbar.AppBarLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.design.widget.TabLayout
+        <com.google.android.material.tabs.TabLayout
             android:id="@+id/favorite_tabs_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -36,18 +39,21 @@
             app:tabIndicatorColor="@color/colorAccent"
             app:tabIndicatorHeight="4dp"
             app:tabTextColor="@color/half_white"
-            app:tabSelectedTextColor="@color/white"/>
+            app:tabSelectedTextColor="@color/white"
+            />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:layout_below="@id/favorite_tabs_layout"
-            android:background="@drawable/toolbar_shadow"/>
+            android:background="@drawable/toolbar_shadow"
+            />
 
-        <android.support.v4.view.ViewPager
+        <androidx.viewpager.widget.ViewPager
             android:id="@+id/favorites_pager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/favorite_tabs_layout"/>
+            android:layout_below="@id/favorite_tabs_layout"
+            />
     </RelativeLayout>
 </LinearLayout>

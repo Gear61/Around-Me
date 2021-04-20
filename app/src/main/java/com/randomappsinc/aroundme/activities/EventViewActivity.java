@@ -4,10 +4,11 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.CalendarContract;
-import android.support.v4.app.ShareCompat;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
+
+import androidx.core.app.ShareCompat;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;

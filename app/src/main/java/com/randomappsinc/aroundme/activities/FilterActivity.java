@@ -1,11 +1,12 @@
 package com.randomappsinc.aroundme.activities;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.randomappsinc.aroundme.R;
 import com.randomappsinc.aroundme.constants.DistanceUnit;

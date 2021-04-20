@@ -1,6 +1,6 @@
 package com.randomappsinc.aroundme.utils;
 
-import android.support.annotation.StringRes;
+import androidx.annotation.StringRes;
 
 import java.util.Currency;
 import java.util.Locale;

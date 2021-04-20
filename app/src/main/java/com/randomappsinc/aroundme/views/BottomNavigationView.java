@@ -1,9 +1,9 @@
 package com.randomappsinc.aroundme.views;
 
-import android.support.annotation.IdRes;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 
 import com.randomappsinc.aroundme.R;

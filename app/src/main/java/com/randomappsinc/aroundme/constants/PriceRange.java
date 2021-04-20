@@ -1,6 +1,6 @@
 package com.randomappsinc.aroundme.constants;
 
-import android.support.annotation.StringDef;
+import androidx.annotation.StringDef;
 
 @StringDef({
     PriceRange.CHEAP,

@@ -5,8 +5,7 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
-import android.support.annotation.StringRes;
-import android.support.design.widget.Snackbar;
+import androidx.annotation.StringRes;
 import android.view.Menu;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
@@ -16,6 +15,7 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.joanzapata.iconify.Icon;
 import com.joanzapata.iconify.IconDrawable;
 import com.randomappsinc.aroundme.R;
@@ -52,8 +52,6 @@ public class UIUtils {
         Snackbar snackbar = Snackbar.make(parent, message, Snackbar.LENGTH_LONG);
         View rootView = snackbar.getView();
         rootView.setBackgroundColor(context.getResources().getColor(R.color.colorPrimary));
-        TextView snackText = rootView.findViewById(android.support.design.R.id.snackbar_text);
-        snackText.setTextColor(context.getResources().getColor(R.color.white));
         snackbar.show();
     }
 

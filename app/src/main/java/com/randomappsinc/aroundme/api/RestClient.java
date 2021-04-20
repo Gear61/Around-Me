@@ -2,7 +2,7 @@ package com.randomappsinc.aroundme.api;
 
 import android.os.Handler;
 import android.os.HandlerThread;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.randomappsinc.aroundme.api.callbacks.FetchPhotosCallback;
 import com.randomappsinc.aroundme.api.callbacks.FetchReviewsCallback;

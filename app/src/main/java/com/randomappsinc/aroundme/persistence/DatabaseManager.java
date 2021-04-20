@@ -1,6 +1,6 @@
 package com.randomappsinc.aroundme.persistence;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.randomappsinc.aroundme.R;
 import com.randomappsinc.aroundme.persistence.managers.EventsDBManager;

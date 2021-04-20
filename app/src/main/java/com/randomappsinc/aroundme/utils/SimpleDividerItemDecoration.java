@@ -3,7 +3,7 @@ package com.randomappsinc.aroundme.utils;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 
 import com.randomappsinc.aroundme.R;

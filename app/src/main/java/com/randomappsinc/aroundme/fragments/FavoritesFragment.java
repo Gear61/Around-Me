@@ -1,15 +1,16 @@
 package com.randomappsinc.aroundme.fragments;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
-import android.support.v7.widget.Toolbar;
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.material.tabs.TabLayout;
 import com.randomappsinc.aroundme.R;
 import com.randomappsinc.aroundme.adapters.FavoriteTabsAdapter;
 
@@ -25,7 +26,8 @@ public class FavoritesFragment extends Fragment {
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.favorite_tabs_layout) TabLayout favoritesTypes;
-    @BindView(R.id.favorites_pager) ViewPager favoritesPager;
+    @BindView(R.id.favorites_pager)
+    ViewPager favoritesPager;
 
     private Unbinder unbinder;
 

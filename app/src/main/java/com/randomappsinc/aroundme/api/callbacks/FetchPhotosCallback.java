@@ -1,6 +1,6 @@
 package com.randomappsinc.aroundme.api.callbacks;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.randomappsinc.aroundme.api.ApiConstants;
 import com.randomappsinc.aroundme.api.RestClient;

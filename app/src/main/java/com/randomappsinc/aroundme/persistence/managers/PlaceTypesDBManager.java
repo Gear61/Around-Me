@@ -1,6 +1,6 @@
 package com.randomappsinc.aroundme.persistence.managers;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.randomappsinc.aroundme.models.PlaceType;
 import com.randomappsinc.aroundme.persistence.DBConverter;

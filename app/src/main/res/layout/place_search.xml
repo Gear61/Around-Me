@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/parent"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    >
 
     <LinearLayout
         android:id="@+id/skeleton_results"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="-8dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        >
 
         <include layout="@layout/skeleton_place_cell"/>
 
@@ -28,15 +30,16 @@
         <include layout="@layout/skeleton_place_cell"/>
     </LinearLayout>
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/search_results"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        />
 
     <com.joanzapata.iconify.widget.IconTextView
         android:id="@+id/no_places"
         android:text="@string/no_places"
         style="@style/no_content_text"/>
-</android.support.design.widget.CoordinatorLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

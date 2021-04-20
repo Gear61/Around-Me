@@ -28,19 +28,13 @@ public class LocationForm {
                 .positiveText(android.R.string.yes)
                 .negativeText(android.R.string.cancel)
                 .alwaysCallInputCallback()
-                .input(location, "", new MaterialDialog.InputCallback() {
-                    @Override
-                    public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
-                        boolean inputEnabled = !input.toString().trim().isEmpty();
-                        dialog.getActionButton(DialogAction.POSITIVE).setEnabled(inputEnabled);
-                    }
+                .input(location, "", (dialog, input) -> {
+                    boolean inputEnabled = !input.toString().trim().isEmpty();
+                    dialog.getActionButton(DialogAction.POSITIVE).setEnabled(inputEnabled);
                 })
-                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        String locationInput = dialog.getInputEditText().getText().toString().trim();
-                        LocationForm.this.listener.onLocationEntered(locationInput);
-                    }
+                .onPositive((dialog, which) -> {
+                    String locationInput = dialog.getInputEditText().getText().toString().trim();
+                    LocationForm.this.listener.onLocationEntered(locationInput);
                 })
                 .build();
     }

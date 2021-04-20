@@ -38,7 +38,7 @@
 
         <include layout="@layout/event_cell"/>
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             android:id="@+id/description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -65,7 +65,7 @@
                     android:textSize="17dp"
                     android:textColor="@color/dark_gray"/>
             </LinearLayout>
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
         <LinearLayout
             android:layout_marginTop="4dp"
@@ -75,7 +75,7 @@
             android:paddingLeft="8dp"
             android:paddingRight="8dp">
 
-            <android.support.v7.widget.CardView
+            <androidx.cardview.widget.CardView
                 android:id="@+id/add_to_calendar_button"
                 android:layout_marginRight="4dp"
                 style="@style/action_card">
@@ -99,9 +99,9 @@
                         android:singleLine="true"
                         android:ellipsize="end"/>
                 </LinearLayout>
-            </android.support.v7.widget.CardView>
+            </androidx.cardview.widget.CardView>
 
-            <android.support.v7.widget.CardView
+            <androidx.cardview.widget.CardView
                 android:id="@+id/share_button"
                 android:layout_marginLeft="4dp"
                 style="@style/action_card">
@@ -125,7 +125,7 @@
                         android:singleLine="true"
                         android:ellipsize="end"/>
                 </LinearLayout>
-            </android.support.v7.widget.CardView>
+            </androidx.cardview.widget.CardView>
         </LinearLayout>
 
         <LinearLayout
@@ -136,7 +136,7 @@
             android:paddingLeft="8dp"
             android:paddingRight="8dp">
 
-            <android.support.v7.widget.CardView
+            <androidx.cardview.widget.CardView
                 android:layout_marginRight="4dp"
                 style="@style/action_card">
 
@@ -158,9 +158,9 @@
                         android:singleLine="true"
                         android:ellipsize="end"/>
                 </LinearLayout>
-            </android.support.v7.widget.CardView>
+            </androidx.cardview.widget.CardView>
 
-            <android.support.v7.widget.CardView
+            <androidx.cardview.widget.CardView
                 android:layout_marginLeft="4dp"
                 style="@style/action_card">
 
@@ -182,10 +182,10 @@
                         android:singleLine="true"
                         android:ellipsize="end"/>
                 </LinearLayout>
-            </android.support.v7.widget.CardView>
+            </androidx.cardview.widget.CardView>
         </LinearLayout>
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             android:id="@+id/buy_tickets"
             android:layout_marginTop="4dp"
             android:layout_width="match_parent"
@@ -222,6 +222,6 @@
                     android:singleLine="true"
                     android:ellipsize="end"/>
             </LinearLayout>
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
     </LinearLayout>
 </ScrollView>

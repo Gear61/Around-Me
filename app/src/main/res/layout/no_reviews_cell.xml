@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
+<androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/parent"
@@ -20,4 +20,4 @@
         android:text="@string/no_reviews"
         android:textSize="21sp"
         android:textColor="@color/dark_gray"/>
-</android.support.v7.widget.CardView>
+</androidx.cardview.widget.CardView>

@@ -6,5 +6,4 @@
 /build
 /captures
 .externalNativeBuild
-*YelpToken.java
 *api_keys.xml
